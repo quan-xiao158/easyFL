@@ -1,0 +1,20 @@
+2024-07-27 15:52:24,533 fflow.py init [line:691] INFO PROCESS ID:	8404
+2024-07-27 15:52:24,534 fflow.py init [line:692] INFO Initializing devices: cpu will be used for this running.
+2024-07-27 15:52:24,534 fflow.py init [line:695] INFO BENCHMARK:	flgo.benchmark.mnist_classification
+2024-07-27 15:52:24,534 fflow.py init [line:696] INFO TASK:			./my_task
+2024-07-27 15:52:24,534 fflow.py init [line:697] INFO MODEL:		flgo.benchmark.mnist_classification.model.cnn
+2024-07-27 15:52:24,539 fflow.py init [line:698] INFO ALGORITHM:	fedavg
+2024-07-27 15:52:26,208 fflow.py init [line:737] INFO SCENE:		horizontal FL with 1 <class 'flgo.algorithm.fedbase.BasicServer'>, 100 <class 'flgo.algorithm.fedbase.BasicClient'>
+2024-07-27 15:52:26,234 fflow.py init [line:754] INFO SIMULATOR:	<class 'flgo.simulator.default_simulator.Simulator'>
+2024-07-27 15:52:26,236 fflow.py init [line:767] INFO Ready to start.
+2024-07-27 15:52:45,833 fedbase.py run [line:242] INFO --------------Initial Evaluation--------------
+2024-07-27 15:52:45,834 simple_logger.py log_once [line:14] INFO Current_time:0
+2024-07-27 15:52:54,374 simple_logger.py log_once [line:28] INFO test_accuracy                 0.0845
+2024-07-27 15:52:54,374 simple_logger.py log_once [line:28] INFO test_loss                     2.3038
+2024-07-27 15:52:54,374 simple_logger.py log_once [line:28] INFO val_accuracy                  0.0772
+2024-07-27 15:52:54,375 simple_logger.py log_once [line:28] INFO mean_val_accuracy             0.0772
+2024-07-27 15:52:54,375 simple_logger.py log_once [line:28] INFO std_val_accuracy              0.0365
+2024-07-27 15:52:54,375 simple_logger.py log_once [line:28] INFO val_loss                      2.3038
+2024-07-27 15:52:54,375 simple_logger.py log_once [line:28] INFO mean_val_loss                 2.3038
+2024-07-27 15:52:54,376 simple_logger.py log_once [line:28] INFO std_val_loss                  0.0076
+2024-07-27 15:52:54,376 fedbase.py run [line:245] INFO Eval Time Cost:               8.5416s

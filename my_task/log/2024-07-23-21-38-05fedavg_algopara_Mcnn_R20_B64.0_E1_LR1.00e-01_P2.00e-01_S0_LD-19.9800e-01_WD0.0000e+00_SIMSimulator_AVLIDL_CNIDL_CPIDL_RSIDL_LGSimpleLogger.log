@@ -1,0 +1,7 @@
+2024-07-23 21:38:05,526 fflow.py init [line:691] INFO PROCESS ID:	4212
+2024-07-23 21:38:05,526 fflow.py init [line:692] INFO Initializing devices: cuda:0 will be used for this running.
+2024-07-23 21:38:05,526 fflow.py init [line:695] INFO BENCHMARK:	flgo.benchmark.mnist_classification
+2024-07-23 21:38:05,526 fflow.py init [line:696] INFO TASK:			./my_task
+2024-07-23 21:38:05,526 fflow.py init [line:697] INFO MODEL:		flgo.benchmark.mnist_classification.model.cnn
+2024-07-23 21:38:05,526 fflow.py init [line:698] INFO ALGORITHM:	fedavg
+2024-07-23 21:38:05,557 fflow.py init [line:737] INFO SCENE:		horizontal FL with 1 <class 'flgo.algorithm.fedbase.BasicServer'>, 100 <class 'flgo.algorithm.fedbase.BasicClient'>
