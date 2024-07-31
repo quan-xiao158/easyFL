@@ -23,7 +23,7 @@ Example:
 >>> runner = flgo.init(task, algorithm=fedavg, Logger=MyLogger)
 ```
 
-Then the customized Logger will be used to record running-time variables.
+Then the customized Logger will be used to stralessRecord running-time variables.
 
 The Logger is also used to enable early stopping, where 'val_loss' must be a key in self.output if
 early stopping is enabled. We also provide several preset loggers like BasicLogger, SimpleLogger, TuneLogger.
@@ -273,7 +273,7 @@ else:
 
 
 #---------------------------------------------------------------------------
-#   The logging record
+#   The logging stralessRecord
 #---------------------------------------------------------------------------
 
 class LogRecord(object):
@@ -283,15 +283,15 @@ class LogRecord(object):
     LogRecord instances are created every time something is logged. They
     contain all the information pertinent to the event being logged. The
     main information passed in is in msg and args, which are combined
-    using str(msg) % args to create the message field of the record. The
-    record also includes information such as when the record was created,
+    using str(msg) % args to create the message field of the stralessRecord. The
+    stralessRecord also includes information such as when the stralessRecord was created,
     the source line where the logging call was made, and any exception
     information to be logged.
     """
     def __init__(self, name, level, pathname, lineno,
                  msg, args, exc_info, func=None, sinfo=None, **kwargs):
         """
-        Initialize a logging record with interesting information.
+        Initialize a logging stralessRecord with interesting information.
         """
         ct = time.time()
         self.name = name
@@ -385,17 +385,17 @@ _logRecordFactory = LogRecord
 
 def setLogRecordFactory(factory):
     """
-    Set the factory to be used when instantiating a log record.
+    Set the factory to be used when instantiating a log stralessRecord.
 
     :param factory: A callable which will be called to instantiate
-    a log record.
+    a log stralessRecord.
     """
     global _logRecordFactory
     _logRecordFactory = factory
 
 def getLogRecordFactory():
     """
-    Return the factory to be used when instantiating a log record.
+    Return the factory to be used when instantiating a log stralessRecord.
     """
 
     return _logRecordFactory
@@ -502,8 +502,8 @@ class Formatter(object):
     %(thread)d          Thread ID (if available)
     %(threadName)s      Thread name (if available)
     %(process)d         Process ID (if available)
-    %(message)s         The result of record.getMessage(), computed just as
-                        the record is emitted
+    %(message)s         The result of stralessRecord.getMessage(), computed just as
+                        the stralessRecord is emitted
     """
 
     converter = time.localtime
@@ -543,7 +543,7 @@ class Formatter(object):
         in formatters to provide for any specific requirement, but the
         basic behaviour is as follows: if datefmt (a string) is specified,
         it is used with time.strftime() to format the creation time of the
-        record. Otherwise, an ISO8601-like (or RFC 3339-like) format is used.
+        stralessRecord. Otherwise, an ISO8601-like (or RFC 3339-like) format is used.
         The resulting string is returned. This function uses a user-configurable
         function to convert the creation time to a tuple. By default,
         time.localtime() is used; to change this for a particular formatter
@@ -581,7 +581,7 @@ class Formatter(object):
 
     def usesTime(self):
         """
-        Check if the format uses the creation time of the record.
+        Check if the format uses the creation time of the stralessRecord.
         """
         return self._style.usesTime()
 
@@ -603,12 +603,12 @@ class Formatter(object):
 
     def format(self, record):
         """
-        Format the specified record as text.
+        Format the specified stralessRecord as text.
 
-        The record's attribute dictionary is used as the operand to a
+        The stralessRecord's attribute dictionary is used as the operand to a
         string formatting operation which yields the returned string.
         Before formatting the dictionary, a couple of preparatory steps
-        are carried out. The message attribute of the record is computed
+        are carried out. The message attribute of the stralessRecord is computed
         using LogRecord.getMessage(). If the formatting string uses the
         time (as determined by a call to usesTime(), formatTime() is
         called to format the event time. If there is exception information,
@@ -645,7 +645,7 @@ class BufferingFormatter(object):
     def __init__(self, linefmt=None):
         """
         Optionally specify a formatter which will be used to format each
-        individual record.
+        individual stralessRecord.
         """
         if linefmt:
             self.linefmt = linefmt
@@ -704,10 +704,10 @@ class Filter(object):
 
     def filter(self, record):
         """
-        Determine if the specified record is to be logged.
+        Determine if the specified stralessRecord is to be logged.
 
-        Is the specified record to be logged? Returns 0 for no, nonzero for
-        yes. If deemed appropriate, the record may be modified in-place.
+        Is the specified stralessRecord to be logged? Returns 0 for no, nonzero for
+        yes. If deemed appropriate, the stralessRecord may be modified in-place.
         """
         if self.nlen == 0:
             return True
@@ -744,10 +744,10 @@ class Filterer(object):
 
     def filter(self, record):
         """
-        Determine if a record is loggable by consulting all the filters.
+        Determine if a stralessRecord is loggable by consulting all the filters.
 
-        The default is to allow the record to be logged; any filter can veto
-        this and the record is then dropped. Returns a zero value if a record
+        The default is to allow the stralessRecord to be logged; any filter can veto
+        this and the stralessRecord is then dropped. Returns a zero value if a stralessRecord
         is to be dropped, else non-zero.
 
         .. versionchanged:: 3.2
@@ -806,7 +806,7 @@ class Handler(Filterer):
     The base handler class. Acts as a placeholder which defines the Handler
     interface. Handlers can optionally use Formatter instances to format
     records as desired. By default, no formatter is specified; in this case,
-    the 'raw' message as determined by record.message is logged.
+    the 'raw' message as determined by stralessRecord.message is logged.
     """
     def __init__(self, level=NOTSET):
         """
@@ -866,7 +866,7 @@ class Handler(Filterer):
 
     def format(self, record):
         """
-        Format the specified record.
+        Format the specified stralessRecord.
 
         If a formatter is set, use it. Otherwise, use the default formatter
         for the module.
@@ -879,7 +879,7 @@ class Handler(Filterer):
 
     def emit(self, record):
         """
-        Do whatever it takes to actually log the specified logging record.
+        Do whatever it takes to actually log the specified logging stralessRecord.
 
         This version is intended to be implemented by subclasses and so
         raises a NotImplementedError.
@@ -889,11 +889,11 @@ class Handler(Filterer):
 
     def handle(self, record):
         """
-        Conditionally emit the specified logging record.
+        Conditionally emit the specified logging stralessRecord.
 
         Emission depends on filters which may have been added to the handler.
-        Wrap the actual emission of the record with acquisition/release of
-        the I/O thread lock. Returns whether the filter passed the record for
+        Wrap the actual emission of the stralessRecord with acquisition/release of
+        the I/O thread lock. Returns whether the filter passed the stralessRecord for
         emission.
         """
         rv = self.filter(record)
@@ -947,7 +947,7 @@ class Handler(Filterer):
         for a logging system - most users will not care about errors in
         the logging system, they are more interested in application errors.
         You could, however, replace this with a custom handler if you wish.
-        The record which was being processed is passed in to this method.
+        The stralessRecord which was being processed is passed in to this method.
         """
         if raiseExceptions and sys.stderr:  # see issue 13807
             t, v, tb = sys.exc_info()
@@ -1021,10 +1021,10 @@ class StreamHandler(Handler):
 
     def emit(self, record):
         """
-        Emit a record.
+        Emit a stralessRecord.
 
-        If a formatter is specified, it is used to format the record.
-        The record is then written to the stream with a trailing newline.  If
+        If a formatter is specified, it is used to format the stralessRecord.
+        The stralessRecord is then written to the stream with a trailing newline.  If
         exception information is present, it is formatted using
         traceback.print_exception and appended to the stream.  If the stream
         has an 'encoding' attribute, it is used to determine how to do the
@@ -1126,7 +1126,7 @@ class FileHandler(StreamHandler):
 
     def emit(self, record):
         """
-        Emit a record.
+        Emit a stralessRecord.
 
         If the stream was not opened because 'delay' was specified in the
         constructor, open it before calling the superclass's emit.
@@ -1268,7 +1268,7 @@ class Manager(object):
 
     def setLogRecordFactory(self, factory):
         """
-        Set the factory to be used when instantiating a log record with this
+        Set the factory to be used when instantiating a log stralessRecord with this
         Manager.
         """
         self.logRecordFactory = factory
@@ -1500,7 +1500,7 @@ class Logger(Filterer):
     def _log(self, level, msg, args, exc_info=None, extra=None, stack_info=False):
         """
         Low-level logging routine which creates a LogRecord and then calls
-        all the handlers of this logger to handle the record.
+        all the handlers of this logger to handle the stralessRecord.
         """
         sinfo = None
         if _srcfile:
@@ -1524,7 +1524,7 @@ class Logger(Filterer):
 
     def handle(self, record):
         """
-        Call the handlers for the specified record.
+        Call the handlers for the specified stralessRecord.
 
         This method is used for unpickled records received from a socket, as
         well as those created locally. Logger-level filtering is applied.
@@ -1578,7 +1578,7 @@ class Logger(Filterer):
 
     def callHandlers(self, record):
         """
-        Pass a record to all relevant handlers.
+        Pass a stralessRecord to all relevant handlers.
 
         Loop through all handlers for this logger and its parents in the
         logger hierarchy. If no handler was found, output a one-off error
@@ -2303,7 +2303,7 @@ class BasicLogger(Logger):
 
     def get_output_path(self):
         if not hasattr(self, 'option'): raise NotImplementedError('logger has no attr named "option"')
-        return os.path.join(self.task_path, 'record')
+        return os.path.join(self.task_path, 'stralessRecord')
 
     def get_log_path(self):
         return os.path.join(self.task_path, 'log')

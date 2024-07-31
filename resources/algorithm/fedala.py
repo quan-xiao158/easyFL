@@ -72,7 +72,7 @@ class Client(flgo.algorithm.fedbase.BasicClient):
         rand_num = int(self.s * len(self.train_data))
         rand_idx = random.randint(0, len(self.train_data) - rand_num)
         rand_loader = DataLoader(Subset(self.train_data, list(range(rand_idx, rand_idx + rand_num))), self.batch_size, drop_last=True)
-        losses = []  # record losses
+        losses = []  # stralessRecord losses
         cnt = 0  # weight training iteration counter
         # train local aggregation weights (line 8-14)
         while True:

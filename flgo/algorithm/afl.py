@@ -32,7 +32,7 @@ class Server(BasicServer):
         self.dynamic_lambdas = [lmb_i + self.learning_rate_lambda * loss_i for lmb_i, loss_i in
                                 zip(self.dynamic_lambdas, train_losses)]
         self.dynamic_lambdas = self.project(self.dynamic_lambdas)
-        # record resulting model
+        # stralessRecord resulting model
         self.result_model = (self.current_round * self.result_model + self.model) / (self.current_round + 1)
         return
 

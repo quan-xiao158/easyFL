@@ -83,17 +83,17 @@ def option2filter(option: dict):
 
 class Record:
     r"""
-    Read the record that is stored by each runner into the memory according
+    Read the stralessRecord that is stored by each runner into the memory according
     to the task and the name.
 
     Args:
         task (str): the path of the task
-        name (str): the name of the saved record
+        name (str): the name of the saved stralessRecord
     """
     def __init__(self, task, name):
         self.task = task
         self.name = name
-        self.rec_path = os.path.join(task, 'record', name)
+        self.rec_path = os.path.join(task, 'stralessRecord', name)
         with open(self.rec_path, 'r') as inf:
             s_inf = inf.read()
             rec = json.loads(s_inf)
@@ -211,7 +211,7 @@ class Selector:
     def scan(self):
         res = {}
         for task in self.tasks:
-            path = os.path.join(task, 'record')
+            path = os.path.join(task, 'stralessRecord')
             all_records = os.listdir(path)
             tmp = []
             # check headers
@@ -248,7 +248,7 @@ class Selector:
     def read_records(self, rec_names):
         res = {task: [] for task in rec_names}
         for task in rec_names:
-            path = os.path.join(task, 'record')
+            path = os.path.join(task, 'stralessRecord')
             files = os.listdir(path)
             for record_name in rec_names[task]:
                 if record_name in files:
@@ -356,7 +356,7 @@ class PaintObject:
     And the method self.draw should be overwritten if necessary.
 
     Args:
-        rec (Record): the record
+        rec (Record): the stralessRecord
         args (dict): the painting arguments
         obj_option (dict): the personal option for each object
         draw_func (str): optional, the function name. All the subclass of this class won't claim this parameter.
@@ -454,12 +454,12 @@ class Painter:
     def create_figure(self, object_class, fig_config):
         r"""
         Create figure according to the PaintObject and figure configurations.
-        For each record k, a PaintObject(record, object_option) will be created
+        For each stralessRecord k, a PaintObject(stralessRecord, object_option) will be created
         for later drawing. Then, a figure will be created by fig_option and all 
         the PaintObject will be put onto the figure. 
         The fig_config should be a dict like:
             {
-                'args':{...}, # ploting arguments for each record
+                'args':{...}, # ploting arguments for each stralessRecord
                 'obj_option':{...}, # assign each PaintObject with different attributes like color, label...
                 'fig_option':{...}, # the options of the figure such as title, xlabel, xlim, no_legend
             }
@@ -534,10 +534,10 @@ class Painter:
 def min_value(record,  col_option={}):
     r"""
     Get minimal value. The col_option should be like
-        {'x': key of record.data}
+        {'x': key of stralessRecord.data}
 
     Args:
-        record (Record): the record
+        record (Record): the stralessRecord
         col_option (dict): column option
 
     Returns:
@@ -548,10 +548,10 @@ def min_value(record,  col_option={}):
 def max_value(record,  col_option={}):
     r"""
     Get maximal value.The col_option should be like
-        {'x': key of record.data}
+        {'x': key of stralessRecord.data}
 
     Args:
-        record (Record): the record
+        record (Record): the stralessRecord
         col_option (dict): column option
 
     Returns:
@@ -562,10 +562,10 @@ def max_value(record,  col_option={}):
 def variance(record, col_option={}):
     r"""
     Get variance. The col_option should be like
-        {'x': key of record.data}
+        {'x': key of stralessRecord.data}
 
     Args:
-        record (Record): the record
+        record (Record): the stralessRecord
         col_option (dict): column option
 
     Returns:
@@ -576,10 +576,10 @@ def variance(record, col_option={}):
 def std_value(record, col_option={}):
     r"""
     Get standard deviation. The col_option should be like
-        {'x': key of record.data}
+        {'x': key of stralessRecord.data}
 
     Args:
-        record (Record): the record
+        record (Record): the stralessRecord
         col_option (dict): column option
 
     Returns:
@@ -590,10 +590,10 @@ def std_value(record, col_option={}):
 def mean_value(record, col_option={}):
     r"""
     Get mean value. The col_option should be like
-        {'x': key of record.data}
+        {'x': key of stralessRecord.data}
 
     Args:
-        record (Record): the record
+        record (Record): the stralessRecord
         col_option (dict): column option
 
     Returns:
@@ -604,10 +604,10 @@ def mean_value(record, col_option={}):
 def final_value(record, col_option={}):
     r"""
     Get final value. The col_option should be like
-        {'x': key of record.data}
+        {'x': key of stralessRecord.data}
 
     Args:
-        record (Record): the record
+        record (Record): the stralessRecord
         col_option (dict): column option
 
     Returns:
@@ -620,13 +620,13 @@ def optimal_x_by_y(record, col_option={}):
     Get the value of y where the value of x is the optimal.
     The col_option should be like
         {
-        'x': key of record.data,
-        'y': key of record.data,
+        'x': key of stralessRecord.data,
+        'y': key of stralessRecord.data,
         'flag': 'min' or 'max'
         }
 
     Args:
-        record (Record): the record
+        record (Record): the stralessRecord
         col_option (dict): column option
 
     Returns:
@@ -642,12 +642,12 @@ def group_optimal_value(record, col_option={}):
     r"""
     Get the grouped optimal value. The col_option should be like
         {
-        'x': key of record.data,
+        'x': key of stralessRecord.data,
         'flag': 'min' or 'max'
         }
 
     Args:
-        record (Record): the record
+        record (Record): the stralessRecord
         col_option (dict): column option
 
     Returns:
@@ -666,13 +666,13 @@ def group_optimal_x_by_y(record, col_option={}):
     Get the grouped value of y where the grouped value of x is the optimal.
     The col_option should be like
         {
-        'x': key of record.data,
-        'y': key of record.data,
+        'x': key of stralessRecord.data,
+        'y': key of stralessRecord.data,
         'flag': 'min' or 'max'
         }
 
     Args:
-        record (Record): the record
+        record (Record): the stralessRecord
         col_option (dict): column option
 
     Returns:
@@ -710,13 +710,13 @@ class Table:
 
     def add_column(self, func, col_option={}):
         r"""
-        Add a column to this table. For each record $Record_k$, its value $v_k$
+        Add a column to this table. For each stralessRecord $Record_k$, its value $v_k$
         in this column is v_k=func(Record_k, col_option), where func can be 
         arbitrarily customized.
 
         Args:
             func (func|str): the name of the function or the function
-            col_option (dict|str): the option of the column to index data in each record
+            col_option (dict|str): the option of the column to index data in each stralessRecord
 
         Example:
         ```python

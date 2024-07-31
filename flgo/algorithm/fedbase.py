@@ -532,11 +532,23 @@ class BasicServer(BasicParty):
             w = fmodule._model_sum([model_k * pk for model_k, pk in zip(models, p)])
             return (1.0 - sum(p)) * self.model + w
         else:
+            ###按比例聚合
+            # p = [1.0 * local_data_vols[cid] / total_data_vol for cid in self.received_clients]
+            # sump = sum(p)
+            # p = [pk / sump for pk in p]
+            # return fmodule._model_sum([model_k * pk for model_k, pk in zip(models, p)])
+            #改动
+            alpha = 5.0
             p = [1.0 * local_data_vols[cid] / total_data_vol for cid in self.received_clients]
+            # 调整范围0-19的客户端比例
+            p = [pk / alpha if 0 <= cid <= 35 else pk for cid, pk in zip(self.received_clients, p)]
+            # 重新计算比例总和
             sump = sum(p)
+            # 归一化比例
             p = [pk / sump for pk in p]
-            return fmodule._model_sum([model_k * pk for model_k, pk in zip(models, p)])
-
+            # 聚合模型
+            aggregated_model = fmodule._model_sum([model_k * pk for model_k, pk in zip(models, p)])
+            return aggregated_model
     def global_test(self, model=None, flag: str = 'val'):
         r"""
         Collect local_movielens_recommendation testing result of all the clients.
@@ -775,10 +787,10 @@ class BasicClient(BasicParty):
         Args:
             model (FModule): the global model
         """
-        ####改动使用陈旧模型
+        ###改动使用陈旧模型
 
         # 生成随机数，如果随机数小于0.4，则输出True，否则输出False
-        # result = random.random() < 0.8
+        # result = random.random() < 0.9
         # if result:
         #     return
 

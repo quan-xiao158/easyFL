@@ -60,9 +60,9 @@ class BaseRotatingHandler(logging.FileHandler):
 
     def emit(self, record):
         """
-        Emit a record.
+        Emit a stralessRecord.
 
-        Output the record to the file, catering for rollover as described
+        Output the stralessRecord to the file, catering for rollover as described
         in doRollover().
         """
         try:
@@ -176,7 +176,7 @@ class RotatingFileHandler(BaseRotatingHandler):
         """
         Determine if rollover should occur.
 
-        Basically, see if the supplied record would cause the file to exceed
+        Basically, see if the supplied stralessRecord would cause the file to exceed
         the size limit we have.
         """
         if self.stream is None:                 # delay was set...
@@ -330,7 +330,7 @@ class TimedRotatingFileHandler(BaseRotatingHandler):
         """
         Determine if rollover should occur.
 
-        record is not used, as we are just comparing times, but it is needed so
+        stralessRecord is not used, as we are just comparing times, but it is needed so
         the method signatures are the same
         """
         t = int(time.time())
@@ -471,10 +471,10 @@ class WatchedFileHandler(logging.FileHandler):
 
     def emit(self, record):
         """
-        Emit a record.
+        Emit a stralessRecord.
 
         If underlying file has changed, reopen the file before emitting the
-        record to it.
+        stralessRecord to it.
         """
         self.reopenIfNeeded()
         logging.FileHandler.emit(self, record)
@@ -489,7 +489,7 @@ class SocketHandler(logging.Handler):
     (__dict__), so that the receiver does not need to have the logging module
     installed in order to process the logging event.
 
-    To unpickle the record at the receiving end into a LogRecord, use the
+    To unpickle the stralessRecord at the receiving end into a LogRecord, use the
     makeLogRecord function.
     """
 
@@ -584,12 +584,12 @@ class SocketHandler(logging.Handler):
 
     def makePickle(self, record):
         """
-        Pickles the record in binary format with a length prefix, and
+        Pickles the stralessRecord in binary format with a length prefix, and
         returns it ready for transmission across the socket.
         """
         ei = record.exc_info
         if ei:
-            # just to get traceback text into record.exc_text ...
+            # just to get traceback text into stralessRecord.exc_text ...
             dummy = self.format(record)
         # See issue #14436: If msg or args are objects, they may not be
         # available on the receiving end. So we convert the msg % args
@@ -620,9 +620,9 @@ class SocketHandler(logging.Handler):
 
     def emit(self, record):
         """
-        Emit a record.
+        Emit a stralessRecord.
 
-        Pickles the record and writes it to the socket in binary format.
+        Pickles the stralessRecord and writes it to the socket in binary format.
         If there is an error with the socket, silently drop the packet.
         If there was a problem with the socket, re-establishes the
         socket.
@@ -654,7 +654,7 @@ class DatagramHandler(SocketHandler):
     attribute dictionary (__dict__), so that the receiver does not need to
     have the logging module installed in order to process the logging event.
 
-    To unpickle the record at the receiving end into a LogRecord, use the
+    To unpickle the stralessRecord at the receiving end into a LogRecord, use the
     makeLogRecord function.
 
     """
@@ -909,9 +909,9 @@ class SysLogHandler(logging.Handler):
 
     def emit(self, record):
         """
-        Emit a record.
+        Emit a stralessRecord.
 
-        The record is formatted, and then sent to the syslog server. If
+        The stralessRecord is formatted, and then sent to the syslog server. If
         exception information is present, it is NOT sent to the server.
         """
         try:
@@ -921,7 +921,7 @@ class SysLogHandler(logging.Handler):
             if self.append_nul:
                 msg += '\000'
 
-            # We need to convert record level to lowercase, maybe this will
+            # We need to convert stralessRecord level to lowercase, maybe this will
             # change in the future.
             prio = '<%d>' % self.encodePriority(self.facility,
                                                 self.mapPriority(record.levelname))
@@ -986,16 +986,16 @@ class SMTPHandler(logging.Handler):
         """
         Determine the subject for the email.
 
-        If you want to specify a subject line which is record-dependent,
+        If you want to specify a subject line which is stralessRecord-dependent,
         override this method.
         """
         return self.subject
 
     def emit(self, record):
         """
-        Emit a record.
+        Emit a stralessRecord.
 
-        Format the record and send it to the specified addressees.
+        Format the stralessRecord and send it to the specified addressees.
         """
         try:
             import smtplib
@@ -1061,7 +1061,7 @@ class NTEventLogHandler(logging.Handler):
 
     def getMessageID(self, record):
         """
-        Return the message ID for the event record. If you are using your
+        Return the message ID for the event stralessRecord. If you are using your
         own messages, you could do this by having the msg passed to the
         logger being an ID rather than a formatting string. Then, in here,
         you could use a dictionary lookup to get the message ID. This
@@ -1071,7 +1071,7 @@ class NTEventLogHandler(logging.Handler):
 
     def getEventCategory(self, record):
         """
-        Return the event category for the record.
+        Return the event category for the stralessRecord.
 
         Override this if you want to specify your own categories. This version
         returns 0.
@@ -1080,7 +1080,7 @@ class NTEventLogHandler(logging.Handler):
 
     def getEventType(self, record):
         """
-        Return the event type for the record.
+        Return the event type for the stralessRecord.
 
         Override this if you want to specify your own types. This version does
         a mapping using the handler's typemap attribute, which is set up in
@@ -1093,7 +1093,7 @@ class NTEventLogHandler(logging.Handler):
 
     def emit(self, record):
         """
-        Emit a record.
+        Emit a stralessRecord.
 
         Determine the message ID, event category and event type. Then
         log the message in the NT event log.
@@ -1148,7 +1148,7 @@ class HTTPHandler(logging.Handler):
 
     def mapLogRecord(self, record):
         """
-        Default implementation of mapping the log record into a dict
+        Default implementation of mapping the log stralessRecord into a dict
         that is sent as the CGI data. Overwrite in your class.
         Contributed by Franz Glasner.
         """
@@ -1156,9 +1156,9 @@ class HTTPHandler(logging.Handler):
 
     def emit(self, record):
         """
-        Emit a record.
+        Emit a stralessRecord.
 
-        Send the record to the Web server as a percent-encoded dictionary
+        Send the stralessRecord to the Web server as a percent-encoded dictionary
         """
         try:
             import http.client, urllib.parse
@@ -1203,7 +1203,7 @@ class HTTPHandler(logging.Handler):
 class BufferingHandler(logging.Handler):
     """
   A handler class which buffers logging records in memory. Whenever each
-  record is added to the buffer, a check is made to see if the buffer should
+  stralessRecord is added to the buffer, a check is made to see if the buffer should
   be flushed. If it should, then flush() is expected to do what's needed.
     """
     def __init__(self, capacity):
@@ -1225,9 +1225,9 @@ class BufferingHandler(logging.Handler):
 
     def emit(self, record):
         """
-        Emit a record.
+        Emit a stralessRecord.
 
-        Append the record. If shouldFlush() tells us to, call flush() to process
+        Append the stralessRecord. If shouldFlush() tells us to, call flush() to process
         the buffer.
         """
         self.buffer.append(record)
@@ -1285,7 +1285,7 @@ class MemoryHandler(BufferingHandler):
 
     def shouldFlush(self, record):
         """
-        Check for buffer full or a record at the flushLevel or higher.
+        Check for buffer full or a stralessRecord at the flushLevel or higher.
         """
         return (len(self.buffer) >= self.capacity) or \
                 (record.levelno >= self.flushLevel)
@@ -1302,7 +1302,7 @@ class MemoryHandler(BufferingHandler):
         records to the target, if there is one. Override if you want
         different behaviour.
 
-        The record buffer is also cleared by this operation.
+        The stralessRecord buffer is also cleared by this operation.
         """
         self.acquire()
         try:
@@ -1350,7 +1350,7 @@ class QueueHandler(logging.Handler):
 
     def enqueue(self, record):
         """
-        Enqueue a record.
+        Enqueue a stralessRecord.
 
         The base implementation uses put_nowait. You may want to override
         this method if you want to use blocking, timeouts or custom queue
@@ -1360,25 +1360,25 @@ class QueueHandler(logging.Handler):
 
     def prepare(self, record):
         """
-        Prepares a record for queuing. The object returned by this method is
+        Prepares a stralessRecord for queuing. The object returned by this method is
         enqueued.
 
-        The base implementation formats the record to merge the message
-        and arguments, and removes unpickleable items from the record
+        The base implementation formats the stralessRecord to merge the message
+        and arguments, and removes unpickleable items from the stralessRecord
         in-place.
 
         You might want to override this method if you want to convert
-        the record to a dict or JSON string, or send a modified copy
-        of the record while leaving the original intact.
+        the stralessRecord to a dict or JSON string, or send a modified copy
+        of the stralessRecord while leaving the original intact.
         """
-        # The format operation gets traceback text into record.exc_text
+        # The format operation gets traceback text into stralessRecord.exc_text
         # (if there's exception data), and also returns the formatted
         # message. We can then use this to replace the original
         # msg + args, as these might be unpickleable. We also zap the
         # exc_info and exc_text attributes, as they are no longer
         # needed and, if not None, will typically not be pickleable.
         msg = self.format(record)
-        # bpo-35726: make copy of record to avoid affecting other handlers in the chain.
+        # bpo-35726: make copy of stralessRecord to avoid affecting other handlers in the chain.
         record = copy.copy(record)
         record.message = msg
         record.msg = msg
@@ -1389,7 +1389,7 @@ class QueueHandler(logging.Handler):
 
     def emit(self, record):
         """
-        Emit a record.
+        Emit a stralessRecord.
 
         Writes the LogRecord to the queue, preparing it for pickling first.
         """
@@ -1419,7 +1419,7 @@ class QueueListener(object):
 
     def dequeue(self, block):
         """
-        Dequeue a record and return it, optionally blocking.
+        Dequeue a stralessRecord and return it, optionally blocking.
 
         The base implementation uses get. You may want to override this method
         if you want to use timeouts or work with custom queue implementations.
@@ -1439,19 +1439,19 @@ class QueueListener(object):
 
     def prepare(self , record):
         """
-        Prepare a record for handling.
+        Prepare a stralessRecord for handling.
 
-        This method just returns the passed-in record. You may want to
+        This method just returns the passed-in stralessRecord. You may want to
         override this method if you need to do any custom marshalling or
-        manipulation of the record before passing it to the handlers.
+        manipulation of the stralessRecord before passing it to the handlers.
         """
         return record
 
     def handle(self, record):
         """
-        Handle a record.
+        Handle a stralessRecord.
 
-        This just loops through the handlers offering them the record
+        This just loops through the handlers offering them the stralessRecord
         to handle.
         """
         record = self.prepare(record)
@@ -1488,7 +1488,7 @@ class QueueListener(object):
 
     def enqueue_sentinel(self):
         """
-        This is used to enqueue the sentinel record.
+        This is used to enqueue the sentinel stralessRecord.
 
         The base implementation uses put_nowait. You may want to override this
         method if you want to use timeouts or work with custom queue
