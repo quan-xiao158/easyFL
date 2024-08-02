@@ -538,7 +538,7 @@ class BasicServer(BasicParty):
             # p = [pk / sump for pk in p]
             # return fmodule._model_sum([model_k * pk for model_k, pk in zip(models, p)])
             #改动
-            alpha = 5.0
+            alpha = 20
             p = [1.0 * local_data_vols[cid] / total_data_vol for cid in self.received_clients]
             # 调整范围0-19的客户端比例
             p = [pk / alpha if 0 <= cid <= 35 else pk for cid, pk in zip(self.received_clients, p)]
