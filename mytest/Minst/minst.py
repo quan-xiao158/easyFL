@@ -5,7 +5,7 @@ import flgo.benchmark.mnist_classification as mnist
 import flgo.benchmark.partition as fbp
 import flgo.experiment.analyzer as al
 
-task = './bias/dir0.3_mnist_bias20_ratio35%' # task name
+task = './bias_straless/dir0.3_mnist_bias20_starless0.4' # task name
 flgo.gen_task_by_(mnist, fbp.DirichletPartitioner(num_clients=100, alpha=0.01), task)
 #100选20客户端
 

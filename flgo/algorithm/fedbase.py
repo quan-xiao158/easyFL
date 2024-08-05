@@ -790,9 +790,9 @@ class BasicClient(BasicParty):
         ###改动使用陈旧模型
 
         # 生成随机数，如果随机数小于0.4，则输出True，否则输出False
-        # result = random.random() < 0.9
-        # if result:
-        #     return
+        result = random.random() < 0.4
+        if result:
+            return
 
         ###改动
         model.train()

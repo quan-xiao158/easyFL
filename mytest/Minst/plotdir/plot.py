@@ -31,8 +31,12 @@ import matplotlib.pyplot as plt
 #     '0.6_staleness', '0.7_staleness', '0.8_staleness', '0.9_staleness'
 # ]
 line_names = [
-    '0bias', '1000bias'
+    '0bias','10bias','15bias','17bias','20bias'
 ]
+
+# line_names = [
+#     '0biasAndStraless','17bias','0.4straless','biasAndStraless'
+# ]
 
 # 创建一个新的图形对象和一个轴对象
 fig, ax = plt.subplots(figsize=(8, 6))
