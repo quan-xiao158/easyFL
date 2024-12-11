@@ -1,0 +1,28 @@
+import numpy as np
+from scipy.stats import norm
+
+def select_clients(all_clients, num_select=2):
+    n = len(all_clients)
+    if n < num_select:
+        raise ValueError("客户端数量不足以选择所需数量的客户端。")
+
+    # 为每个客户端分配一个x值，这里使用索引并居中
+    x_values = np.arange(n) - (n - 1) / 2  # 使x值在-mean到+mean之间
+
+    # 计算标准正态分布的概率密度
+    pdf_values = norm.pdf(x_values)
+
+    # 计算选择概率
+    probabilities = pdf_values / pdf_values.sum()
+
+    # 选择两个不重复的客户端
+    selected_indices = np.random.choice(n, size=num_select, replace=False, p=probabilities)
+
+    selected_clients = [all_clients[i] for i in selected_indices]
+    return selected_clients
+
+# 示例用法
+if __name__ == "__main__":
+    all_clients = ['client1', 'client2', 'client3', 'client4', 'client5']
+    selected = select_clients(all_clients, num_select=2)
+    print("选择的客户端:", selected)

@@ -3,17 +3,21 @@ from flgo.algorithm.fedbase import BasicClient as Client
 import numpy as np
 
 
-class AsyncServer(BasicServer):
+class FedbalenceServer(BasicServer):
     def __init__(self, option={}):
-        super(AsyncServer, self).__init__(option)
-        self.concurrent_clients = set()  #正在被选择的客户端
-        self.buffered_clients = set()  #缓冲的客户端
+        super(FedbalenceServer, self).__init__(option)
+        self.concurrent_clients = set()#正在被选择的客户端
+        self.buffered_clients = set()#缓冲的客户端
 
     def sample(self):
-        all_clients = self.available_clients if 'available' in self.sample_option else [cid for cid in
-                                                                                        range(self.num_clients)]
+        """
+        Sample clients under the limitation of the maximum numder of concurrent clients.
+        Returns:
+            Selected clients.
+        """
+        all_clients = self.available_clients if 'available' in self.sample_option else [cid for cid in                                                                           range(self.num_clients)]
         all_clients = list(set(all_clients).difference(self.buffered_clients))
-        selected_clients = self.select_two_clients_by_group(all_clients)
+        selected_clients=self.select_two_clients_by_group(all_clients)
         return selected_clients
 
     def package_handler(self, received_packages: dict):
@@ -54,8 +58,11 @@ class AsyncServer(BasicServer):
             'Select clients {} at time {}.'.format(self.selected_clients, self.gv.clock.current_time))
         #如果有客户端被选中，记录一条日志，显示被选中的客户端及当前时间
         self.model._round = self.current_round  #将模型的 _round 属性设置为当前的回合数
-
-
+        '''
+        改动，
+        原来：received_packages为选择的客户端进行训练后发给服务器进行聚合
+        新： received_packages为选择的客户端进行训练，服务器依据客户端性能概率挑选两个客户端进行聚合
+        '''
         received_packages = self.communicate(self.selected_clients,
                                              asynchronous=True)  #选定的客户端进行通信，发送当前的全局模型并接收客户端的更新。asynchronous=True 表明这是一次异步通信，不会阻塞等待所有客户端的响应。
         #received_packages 是一个包含来自客户端的更新数据的字典，特别是客户端的标识符 __cid。
@@ -70,7 +77,7 @@ class AsyncServer(BasicServer):
         if is_model_updated: self.buffered_clients = set()  #如果全局模型已更新，清空 self.buffered_clients 集合。这可能意味着所有已接收的更新已被整合，准备接受新的客户端更新。
         return is_model_updated
 
-    def select_two_clients_by_group(self, all_clients):
+    def select_two_clients_by_group(all_clients):
         """
         按照每25个为一组，并根据指定的组概率从all_clients中选择两个不同的客户端。
 
@@ -117,6 +124,6 @@ class AsyncServer(BasicServer):
             weights = weights / total_weight
 
         # 使用 numpy 的 choice 函数进行不重复抽样
-        selected = np.random.choice(all_clients, size=1, replace=False, p=weights)
+        selected = np.random.choice(all_clients, size=2, replace=False, p=weights)
 
         return selected.tolist()

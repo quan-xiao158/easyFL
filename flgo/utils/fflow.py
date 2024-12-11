@@ -124,7 +124,7 @@ def read_option_from_command():
     parser.add_argument('--aggregate', help='methods for aggregating models', type=str, choices=agg_list, default='other')
     # hyper-parameters of training in server side
     parser.add_argument('--num_rounds', help='number of communication rounds', type=int, default=20)
-    parser.add_argument('--proportion', help='proportion of clients sampled per round', type=float, default=0.2)
+    parser.add_argument('--proportion', help='proportion of clients sampled per round', type=float, default=0.01)
     parser.add_argument('--learning_rate_decay', help='learning rate decay for the training process;', type=float, default=0.998)
     parser.add_argument('--lr_scheduler', help='type of the global learning rate scheduler', type=str, default='-1')
     parser.add_argument('--early_stop', help='stop training if there is no improvement for no smaller than the maximum rounds', type=int, default=-1)
