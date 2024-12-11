@@ -237,7 +237,7 @@ class BasicServer(BasicParty):
             self.gv.logger.time_start('Eval Time Cost')
             self.gv.logger.log_once()
             self.gv.logger.time_end('Eval Time Cost')
-        while self.current_round <= self.num_rounds:
+        while self.current_round <= self.num_rounds:#执行轮次
             self.gv.clock.step()
             # iterate
             updated = self.iterate()
@@ -657,6 +657,7 @@ class BasicClient(BasicParty):
             model (FModule): the global model
         """
         model.train()
+        self.gv.logger.info("--------------train！！！--------------")
         optimizer = self.calculator.get_optimizer(model, lr=self.learning_rate, weight_decay=self.weight_decay,
                                                   momentum=self.momentum)
         for iter in range(self.num_steps):

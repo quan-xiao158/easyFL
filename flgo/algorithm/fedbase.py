@@ -255,7 +255,7 @@ class BasicServer(BasicParty):
             if self._if_exit(): break
             self.gv.clock.step()
             # iterate
-            updated = self.iterate()  # 进行客户端选择迭代训练和模型聚合
+            updated = self. iterate()  # 进行客户端选择迭代训练和模型聚合
             # using logger to evaluate the model if the model is updated
             if updated is True or updated is None:
                 self.gv.logger.info("--------------Round {}--------------".format(self.current_round))
@@ -324,24 +324,41 @@ class BasicServer(BasicParty):
 
         Returns:
             :the unpacked response from clients that is created ny self.unpack()
+            communicate 方法负责模拟服务器与选定客户端之间的通信过程。该方法支持同步和异步通信模式，并且包含模拟客户端掉线（dropout）的功能。其主要任务包括：
+            准备与客户端通信的包：将全局模型或其他信息发送给客户端。
+            与客户端进行通信：根据并行度选择同步或并行的通信方式。
+            接收并处理客户端的响应：收集客户端的模型更新或其他响应。
+            处理并返回收集到的数据：将收到的包进行解包处理，以供后续的模型聚合使用。
+
+            selected_clients：需要通信的客户端列表。
+            mtype：消息类型，默认为 0，可以用于区分不同类型的通信。
+            asynchronous：布尔值，指示是否采用异步通信模式，虽然在当前实现中未直接使用。
+            返回值：调用 self.unpack() 方法解包并返回从客户端接收到的响应数据。
         """
-        packages_received_from_clients = []
-        received_package_buffer = {}
-        communicate_clients = list(set(selected_clients))  # 需要通信的客户端
+        packages_received_from_clients = []#用于存储从客户端接收到的数据包。
+        received_package_buffer = {}#用于临时存储每个客户端的响应，便于后续处理。
+        communicate_clients = list(set(selected_clients))  # 去重后的客户端列表，确保每个客户端只通信一次
         # prepare packages for clients
         for client_id in communicate_clients:
-            received_package_buffer[client_id] = None
+            received_package_buffer[client_id] = None #初始化 received_package_buffer，为每个需要通信的客户端预留一个空值位置，以存储其响应。
         # communicate with selected clients
-        if self.num_parallels <= 1:
+        if self.num_parallels <= 1:#，采用迭代方式与客户端逐一通信,使用 tqdm 显示进度条，跟踪与客户端通信的进度
             # computing iteratively
             for client_id in tqdm(communicate_clients,
                                   desc="Local Training on {} Clients".format(len(communicate_clients)), leave=False):
-                server_pkg = self.pack(client_id, mtype)
+                server_pkg = self.pack(client_id, mtype)#全局模型
                 server_pkg['__mtype__'] = mtype
                 response_from_client_id = self.communicate_with(self.clients[client_id].id,
                                                                 package=server_pkg)  # 与客户端进行通信，下发全局模型到本机训练，获取客户端上的模型
                 packages_received_from_clients.append(response_from_client_id)
-        else:
+                '''
+                使用 tqdm 显示进度条，跟踪与客户端通信的进度。
+                调用 self.pack(client_id, mtype) 为每个客户端准备通信包 server_pkg。
+                设置消息类型 __mtype__。
+                调用 self.communicate_with 方法与客户端进行通信，发送包并接收响应。
+                将响应添加到 packages_received_from_clients 列表中。
+'''
+        else:#采用并行方式与多个客户端同时通信。
             self.model = self.model.to(torch.device('cpu'))
             # computing in parallel with torch.multiprocessing
             paratype = self.option.get('parallel_type', None)
@@ -371,7 +388,7 @@ class BasicServer(BasicParty):
         packages_received_from_clients = [received_package_buffer[cid] for cid in selected_clients if
                                           received_package_buffer[cid]]
         self.received_clients = selected_clients
-        return self.unpack(packages_received_from_clients)
+        return self.unpack(packages_received_from_clients)#将收到的响应数据进行解包处理，返回给调用者。
 
     def communicate_with(self, target_id, package={}):
         r"""Communicate with the object under system simulator that simulates the
@@ -532,23 +549,23 @@ class BasicServer(BasicParty):
             w = fmodule._model_sum([model_k * pk for model_k, pk in zip(models, p)])
             return (1.0 - sum(p)) * self.model + w
         else:
-            ###按比例聚合
-            # p = [1.0 * local_data_vols[cid] / total_data_vol for cid in self.received_clients]
-            # sump = sum(p)
-            # p = [pk / sump for pk in p]
-            # return fmodule._model_sum([model_k * pk for model_k, pk in zip(models, p)])
-            #改动
-            alpha = 20
+            ##按比例聚合
             p = [1.0 * local_data_vols[cid] / total_data_vol for cid in self.received_clients]
-            # 调整范围0-19的客户端比例
-            p = [pk / alpha if 0 <= cid <= 35 else pk for cid, pk in zip(self.received_clients, p)]
-            # 重新计算比例总和
             sump = sum(p)
-            # 归一化比例
             p = [pk / sump for pk in p]
-            # 聚合模型
-            aggregated_model = fmodule._model_sum([model_k * pk for model_k, pk in zip(models, p)])
-            return aggregated_model
+            return fmodule._model_sum([model_k * pk for model_k, pk in zip(models, p)])
+            #改动
+            # alpha = 20
+            # p = [1.0 * local_data_vols[cid] / total_data_vol for cid in self.received_clients]
+            # # 调整范围0-19的客户端比例
+            # p = [pk / alpha if 0 <= cid <= 35 else pk for cid, pk in zip(self.received_clients, p)]
+            # # 重新计算比例总和
+            # sump = sum(p)
+            # # 归一化比例
+            # p = [pk / sump for pk in p]
+            # # 聚合模型
+            # aggregated_model = fmodule._model_sum([model_k * pk for model_k, pk in zip(models, p)])
+            # return aggregated_model
     def global_test(self, model=None, flag: str = 'val'):
         r"""
         Collect local_movielens_recommendation testing result of all the clients.
@@ -788,11 +805,10 @@ class BasicClient(BasicParty):
             model (FModule): the global model
         """
         ###改动使用陈旧模型
-
-        # 生成随机数，如果随机数小于0.4，则输出True，否则输出False
-        result = random.random() < 0.4
-        if result:
-            return
+        # # 生成随机数，如果随机数小于0.4，则输出True，否则输出False
+        # result = random.random() < 0.4
+        # if result:
+        #     return
 
         ###改动
         model.train()
