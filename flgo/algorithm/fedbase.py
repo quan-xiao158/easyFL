@@ -243,6 +243,7 @@ class BasicServer(BasicParty):
     def run(self):
         """
         Running the FL symtem where the global model is trained and evaluated iteratively.
+
         """
         self.gv.logger.time_start('Total Time Cost')
         if not self._load_checkpoint() and self.eval_interval > 0:
@@ -794,6 +795,7 @@ class BasicClient(BasicParty):
         self.option = option
         self.actions = {0: self.reply}
         self.default_action = self.reply
+        self.server_epoch = 0
 
     @fmodule.with_multi_gpus
     def train(self, model):
