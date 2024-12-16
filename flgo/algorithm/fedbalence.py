@@ -1,16 +1,16 @@
 from flgo.utils import fmodule
-
-from flgo.algorithm.fedbase import BasicServer
-from flgo.algorithm.fedbase import BasicClient
+from flgo.algorithm.asyncbase import AsyncServer
+from flgo.algorithm.fedbase import BasicServer, BasicClient
+from flgo.algorithm.fedprox import Client
 import numpy as np
 from collections import deque
 import copy
 import flgo.simulator.base as ss
 
 
-class FedbalenceServer(BasicServer):
+class Server(AsyncServer):
     def __init__(self, option={}):
-        super(FedbalenceServer, self).__init__(option)
+        super(Server, self).__init__(option)
         self.concurrent_clients = set()  #正在被选择的客户端
         self.buffered_clients = set()  #缓冲的客户端
         self.server_send_round = [0] * 100  # 服务器下发模型round记录
@@ -88,7 +88,7 @@ class FedbalenceServer(BasicServer):
         lh_tag = self.compute_hl(client_id, client_lambda)
         return self.core_select_algorithm(client_id, fs_tag, lh_tag, client_model)
 
-    def select_two_clients_by_group(all_clients):
+    def select_two_clients_by_group(self, all_clients):
         """
         按照每25个为一组，并根据指定的组概率从all_clients中选择两个不同的客户端。
 
@@ -135,7 +135,7 @@ class FedbalenceServer(BasicServer):
             weights = weights / total_weight
 
         # 使用 numpy 的 choice 函数进行不重复抽样
-        selected = np.random.choice(all_clients, size=2, replace=False, p=weights)
+        selected = np.random.choice(all_clients, size=1, replace=False, p=weights)
 
         return selected.tolist()
 
@@ -150,6 +150,10 @@ class FedbalenceServer(BasicServer):
             self.gv.logger.time_start('Eval Time Cost')
             self.gv.logger.log_once()  # 初始评估全局模型的准确度
             self.gv.logger.time_end('Eval Time Cost')
+        all_clients = self.available_clients if 'available' in self.sample_option else [cid for cid in
+                                                                                        range(self.num_clients)]
+        all_clients = list(set(all_clients).difference(self.buffered_clients))
+        self.communicate(all_clients,self.model,1)
         while True:
             if self._if_exit(): break
             self.gv.clock.step()
@@ -217,6 +221,7 @@ class FedbalenceServer(BasicServer):
         current_round = self.current_round
         time_delay = current_round - round_send
         self.server_send_round[self.selected_clients[0]] = self.current_round
+        self.client_fs_list[client_id] = time_delay
         media = self.median(self.client_fs_list)
 
         if time_delay <= media:
@@ -336,11 +341,11 @@ class FedbalenceServer(BasicServer):
         return final_model
 
     @ss.with_clock
-    def communicate(self, client_id, model, mtype=0, asynchronous=False):
-
-        server_pkg = self.fedbalance_pack_model(client_id, model, mtype)  #全局模型
-        server_pkg['__mtype__'] = mtype
-        self.communicate_with(client_id, package=server_pkg)  # 与客户端进行通信，下发全局模型到本机训练，获取客户端上的模型
+    def communicate(self, client_id_list, model, mtype, asynchronous=False):
+        for client_id in client_id_list:
+            server_pkg = self.fedbalance_pack_model(client_id, model, mtype)  #全局模型
+            server_pkg['__mtype__'] = mtype
+            self.communicate_with(client_id, package=server_pkg)  # 与客户端进行通信，下发全局模型到本机训练，获取客户端上的模型
 
     def fedbalance_pack_model(self, client_id, send_model, mtype=0, *args, **kwargs):
         return {
@@ -349,5 +354,13 @@ class FedbalenceServer(BasicServer):
 
 
 class Client(BasicClient):
-    def __init__(self):
-        pass
+    def initialize(self, *args, **kwargs):
+        self.actions = {0: self.reply, 1: self.send_model, 2: self.model_train}
+
+    def send_model(self, servermodel):
+        self.model = servermodel
+
+    def model_train(self):
+        self.train(self.model)
+        cpkg = self.pack(self.model)
+        return cpkg
