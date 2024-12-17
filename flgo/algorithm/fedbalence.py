@@ -1,3 +1,5 @@
+import torch
+
 from flgo.utils import fmodule
 from flgo.algorithm.asyncbase import AsyncServer
 from flgo.algorithm.fedbase import BasicServer, BasicClient
@@ -20,15 +22,20 @@ class Server(AsyncServer):
         self.fh_queue = deque()
         self.sl_queue = deque()
         self.sh_queue = deque()
+        '''
+        fedbalance  超参数：
+        
+        '''
+        self.alpha=0.85
+        self.agg_num=20
 
-    def sample(self):
+    def sample_balance(self):
         """
         Sample clients under the limitation of the maximum numder of concurrent clients.
         Returns:
             Selected clients.
         """
-        all_clients = self.available_clients if 'available' in self.sample_option else [cid for cid in
-                                                                                        range(self.num_clients)]
+        all_clients = [cid for cid in range(self.num_clients)]
         all_clients = list(set(all_clients).difference(self.buffered_clients))
         selected_clients = self.select_two_clients_by_group(all_clients)
         return selected_clients
@@ -62,30 +69,17 @@ class Server(AsyncServer):
         4、package_handler（）对模型进行聚合（并下发）
         5、返回全局模型是否更新
         """
-        self.selected_clients = self.sample()
-        self.concurrent_clients.update(
-            set(self.selected_clients))  #将选中的客户端添加到 self.concurrent_clients 集合中，表示这些客户端正在进行训练或通信。
-        if len(self.selected_clients) > 0: self.gv.logger.info(
-            'Select clients {} at time {}.'.format(self.selected_clients, self.gv.clock.current_time))
+        self.selected_clients = self.sample_balance()
         #如果有客户端被选中，记录一条日志，显示被选中的客户端及当前时间
         self.model._round = self.current_round  #将模型的 _round 属性设置为当前的回合数
-        '''
-        改动，
-        原来：received_packages为选择的客户端进行训练后发给服务器进行聚合
-        新： received_packages为选择的客户端进行训练，服务器依据客户端性能概率挑选两个客户端进行聚合
-        '''
-        '''
-        更新时延列表
-        '''
         client_id = self.selected_clients[0]
         fs_tag = self.compute_fs(client_id)
 
-        received_packages = self.communicate(self.selected_clients, asynchronous=True)
-        #选定的客户端进行通信，发送当前的全局模型并接收客户端的更新。asynchronous=True 表明这是一次异步通信，不会阻塞等待所有客户端的响应。
-        #received_packages 是一个包含来自客户端的更新数据的字典，特别是客户端的标识符 __cid。
-        client_model = received_packages['model'][0]
+        received_packages = self.communicate(self.selected_clients, None, 2)
+        client_model = received_packages['model']
         client_lambda = self.compute_lambda(client_model)
         lh_tag = self.compute_hl(client_id, client_lambda)
+        self.current_round = self.current_round + 1
         return self.core_select_algorithm(client_id, fs_tag, lh_tag, client_model)
 
     def select_two_clients_by_group(self, all_clients):
@@ -134,9 +128,10 @@ class Server(AsyncServer):
             # 归一化权重
             weights = weights / total_weight
 
+        selected = None
         # 使用 numpy 的 choice 函数进行不重复抽样
-        selected = np.random.choice(all_clients, size=1, replace=False, p=weights)
-
+        while selected is None or selected[0] in self.concurrent_clients:
+            selected = np.random.choice(all_clients, size=1, replace=False, p=weights)
         return selected.tolist()
 
     def run(self):
@@ -153,7 +148,8 @@ class Server(AsyncServer):
         all_clients = self.available_clients if 'available' in self.sample_option else [cid for cid in
                                                                                         range(self.num_clients)]
         all_clients = list(set(all_clients).difference(self.buffered_clients))
-        self.communicate(all_clients,self.model,1)
+        self.communicate(all_clients, self.model, 1)  #下发所有模型到客户端上
+        self.gv.logger.info("--------------全局模型下发--------------")
         while True:
             if self._if_exit(): break
             self.gv.clock.step()
@@ -173,8 +169,6 @@ class Server(AsyncServer):
                 self.current_round += 1
                 # decay learning rate
                 self.global_lr_scheduler(self.current_round)
-            else:
-                self.gv.logger.info("进行模型交换")
         self.gv.logger.info("=================End==================")
         self.gv.logger.time_end('Total Time Cost')
         # save results as .json file
@@ -195,15 +189,9 @@ class Server(AsyncServer):
 
     def compute_lambda(self, w_local):
         w_global = self.model
-        dot_product = np.dot(w_local, w_global)
+        l2_norm_squared = self.compute_l2_difference(w_global, w_local)
 
-        # 计算全局模型的 L2 范数平方
-        l2_norm_squared = np.linalg.norm(w_global) ** 2
-
-        # 计算 λ_i
-        lambda_i = (dot_product / l2_norm_squared) - 1
-
-        return abs(lambda_i)
+        return abs(l2_norm_squared)
 
     def compute_hl(self, client_id, lambda_i):
         self.client_lh_list[client_id] = lambda_i
@@ -230,47 +218,48 @@ class Server(AsyncServer):
             return "S"
 
     def core_select_algorithm(self, client_id, fs_tag, lh_tag, model):
-        if lh_tag == "S" and fs_tag == "H":
+        agg_num=self.agg_num
+        if lh_tag == "H" and fs_tag == "S":
             if len(self.fl_queue) != 0:
                 th = self.fl_queue.pop()
                 client2_id = th["client_id"]
                 client2_model = th["model"]
-                self.communicate(client_id, client2_model)
-                self.communicate(client2_id, model)
+                self.communicate([client_id], client2_model, 1)
+                self.communicate([client2_id], model, 1)
+                self.concurrent_clients.difference_update([client_id,client2_id])
                 return False
             else:
                 self.sh_queue.append({"client_id": client_id, "model": model})
                 return False
-        elif lh_tag == "F" and fs_tag == "H":
+        elif lh_tag == "H" and fs_tag == "F":
             if len(self.fh_queue) != 0:
                 th = self.fh_queue.pop()
                 client2_id = th["client_id"]
                 client2_model = th["model"]
-                self.communicate(client_id, client2_model)
-                self.communicate(client2_id, model)
+                self.communicate([client_id], client2_model, 1)
+                self.communicate([client2_id], model, 1)
+                self.concurrent_clients.difference_update([client_id, client2_id])
                 return False
             elif len(self.fl_queue) != 0:
                 th = self.fl_queue.pop()
                 client2_id = th["client_id"]
                 client2_model = th["model"]
-                self.communicate(client_id, client2_model)
-                self.communicate(client2_id, model)
+                self.communicate([client_id], client2_model, 1)
+                self.communicate([client2_id], model, 1)
+                self.concurrent_clients.difference_update([client_id, client2_id])
                 return False
             else:
                 self.fh_queue.append({"client_id": client_id, "model": model})
                 return False
-        elif lh_tag == "S" and fs_tag == "L":
-            if len(self.fl_queue) != 0:
-                th = self.fl_queue.pop()
-                client2_id = th["client_id"]
-                client2_model = th["model"]
-                self.model = self.fedbalance_aggregate(model, client2_model, client_id, client2_id)
-                return True
-            elif len(self.sl_queue) != 0:
-                th = self.sl_queue.pop()
-                client2_id = th["client_id"]
-                client2_model = th["model"]
-                self.model = self.fedbalance_aggregate(model, client2_model, client_id, client2_id)
+        elif lh_tag == "L" and fs_tag == "S":
+            #1、将模型入队，如果模型数量长度
+            if len(self.sl_queue) + len(self.fl_queue) == agg_num:
+                self.sl_queue.append({"client_id": client_id, "model": model})
+                id_list, model_list = self.queue_pop(self.sl_queue, self.fl_queue)
+                agg_model=self.fedbalance_aggregate(model_list,id_list)
+                self.model=agg_model
+                self.communicate(id_list,agg_model,1)
+                self.concurrent_clients.difference_update(id_list)
                 return True
             else:
                 self.sl_queue.append({"client_id": client_id, "model": model})
@@ -280,87 +269,136 @@ class Server(AsyncServer):
                 th = self.sh_queue.pop()
                 client2_id = th["client_id"]
                 client2_model = th["model"]
-                self.communicate(client_id, client2_model)
-                self.communicate(client2_id, model)
+                self.communicate([client_id], client2_model, 1)
+                self.communicate([client2_id], model, 1)
+                self.concurrent_clients.difference_update([client_id, client2_id])
                 return False
             elif len(self.fh_queue) != 0:
-                th = self.fl_queue.pop()
+                th = self.fh_queue.pop()
                 client2_id = th["client_id"]
                 client2_model = th["model"]
-                self.communicate(client_id, client2_model)
-                self.communicate(client2_id, model)
+                self.communicate([client_id], client2_model, 1)
+                self.communicate([client2_id], model, 1)
+                self.concurrent_clients.difference_update([client_id, client2_id])
                 return False
-            elif len(self.sl_queue) != 0:
-                th = self.sl_queue.pop()
-                client2_id = th["client_id"]
-                client2_model = th["model"]
-                self.model = self.fedbalance_aggregate(model, client2_model, client_id, client2_id)
-                return True
-            elif len(self.fl_queue) != 0:
-                th = self.fl_queue.pop()
-                client2_id = th["client_id"]
-                client2_model = th["model"]
-                self.model = self.fedbalance_aggregate(model, client2_model, client_id, client2_id)
+                # 1、将模型入队，如果模型数量长度
+            elif len(self.sl_queue) + len(self.fl_queue) == agg_num:
+                self.fl_queue.append({"client_id": client_id, "model": model})
+                id_list, model_list = self.queue_pop(self.sl_queue, self.fl_queue)
+                agg_model = self.fedbalance_aggregate(model_list, id_list)
+                self.model=agg_model
+                self.communicate(id_list, agg_model, 1)
+                self.concurrent_clients.difference_update(id_list)
                 return True
             else:
                 self.fl_queue.append({"client_id": client_id, "model": model})
                 return False
 
-    def fedbalance_aggregate(self, model1, model2, client1_id, client2_id):
+    def fedbalance_aggregate(self, models, client_ids):
         """
-        聚合两个客户端的模型，并将结果与 self.model 进行 1:1 的聚合。
+        聚合多个客户端的模型，并将结果与 self.model 进行加权聚合。
 
         参数：
-            model1 (dict): 第一个客户端的模型参数（PyTorch tensors）。
-            model2 (dict): 第二个客户端的模型参数（PyTorch tensors）。
-            client1_id (int/str): 第一个客户端的标识符。
-            client2_id (int/str): 第二个客户端的标识符。
+            models (list): 包含多个客户端模型参数的列表（PyTorch tensors）。
+            client_ids (list): 包含多个客户端标识符的列表。
 
         返回：
             dict: 聚合后的最终模型。
         """
-        # 获取两个客户端的数据量
-        data_vol1 = self.clients[client1_id].datavol
-        data_vol2 = self.clients[client2_id].datavol
-        total_data_vol = data_vol1 + data_vol2
+        # 计算所有客户端的数据量总和
+        total_data_vol = sum([self.clients[client_id].datavol for client_id in client_ids])
 
-        # 计算权重
-        p1 = data_vol1 / total_data_vol
-        p2 = data_vol2 / total_data_vol
+        # 计算每个客户端模型的权重
+        weights = [self.clients[client_id].datavol / total_data_vol for client_id in client_ids]
 
-        # 加权聚合 model1 和 model2
-        weighted_model1 = {key: value * p1 for key, value in model1.items()}
-        weighted_model2 = {key: value * p2 for key, value in model2.items()}
-        aggregated_model = fmodule._model_sum([weighted_model1, weighted_model2])
+        # 加权聚合所有模型
+        weighted_models = [weight * model for weight, model in zip(weights, models)]
+        aggregated_model = fmodule._model_sum(weighted_models)
 
-        # 将 aggregated_model 与 self.model 进行 1:1 聚合
-        weighted_aggregated_model = {key: value * 0.5 for key, value in aggregated_model.items()}
-        weighted_self_model = {key: value * 0.5 for key, value in self.model.items()}
+        # 将 aggregated_model 与 self.model 进行加权聚合
+        weighted_aggregated_model = aggregated_model * (1-self.alpha)
+        weighted_self_model = self.model * self.alpha
         final_model = fmodule._model_sum([weighted_aggregated_model, weighted_self_model])
 
         return final_model
 
-    @ss.with_clock
-    def communicate(self, client_id_list, model, mtype, asynchronous=False):
+    def communicate(self, client_id_list, send_model, mtype):
         for client_id in client_id_list:
-            server_pkg = self.fedbalance_pack_model(client_id, model, mtype)  #全局模型
+            server_pkg = self.fedbalance_pack_model(send_model)  #全局模型
             server_pkg['__mtype__'] = mtype
-            self.communicate_with(client_id, package=server_pkg)  # 与客户端进行通信，下发全局模型到本机训练，获取客户端上的模型
+            client_model = self.communicate_with(client_id, package=server_pkg)  # 与客户端进行通信，下发全局模型到本机训练，获取客户端上的模型
+            if mtype == 2:
+                return client_model
 
-    def fedbalance_pack_model(self, client_id, send_model, mtype=0, *args, **kwargs):
+    def fedbalance_pack_model(self, send_model):
         return {
             "model": copy.deepcopy(send_model),
         }
 
+    def compute_l2_difference(self, model1, model2):
+        # 获取模型的所有参数
+        params1 = [p.data for p in model1.parameters()]
+        params2 = [p.data for p in model2.parameters()]
+
+        # 用来存储总的 L2 范数差异
+        total_l2_diff = 0.0
+
+        # 对每一层的权重和偏置计算 L2 范数差异
+        for p1, p2 in zip(params1, params2):
+            # 计算 L2 范数差异并加到总差异中
+            l2_diff = torch.norm(p1 - p2, p=2)  # L2范数
+            total_l2_diff += l2_diff.item() ** 2  # L2范数的平方和
+
+        # 取平方根得到最终的 L2 范数差异
+        total_l2_diff = torch.sqrt(torch.tensor(total_l2_diff))
+        return total_l2_diff
+
+    def queue_pop(self, sl_queue, fl_queue):
+        id_list = []
+        model_list = []
+        # 处理 self.sl_queue
+        for item in self.sl_queue:
+            id_list.append(item['client_id'])
+            model_list.append(item['model'])
+
+        # 处理 self.fl_queue
+        for item in self.fl_queue:
+            id_list.append(item['client_id'])
+            model_list.append(item['model'])
+
+        # 清空队列
+        self.sl_queue.clear()
+        self.fl_queue.clear()
+        return id_list, model_list
+
 
 class Client(BasicClient):
+    def __init__(self, option={}):
+        super().__init__(option)
+        self.mu = None
+
     def initialize(self, *args, **kwargs):
         self.actions = {0: self.reply, 1: self.send_model, 2: self.model_train}
+        self.mu = 0.1
 
     def send_model(self, servermodel):
-        self.model = servermodel
+        model = self.unpack(servermodel)
+        self.model = model
 
-    def model_train(self):
-        self.train(self.model)
+    def model_train(self, servermodel):
+        model = self.model
+        model.train()
+        optimizer = self.calculator.get_optimizer(model, lr=self.learning_rate, weight_decay=self.weight_decay,
+                                                  momentum=self.momentum)
+        for iter in range(self.num_epochs):
+            # get a batch of data
+            batch_data = self.get_batch_data()
+            model.zero_grad()
+            # calculate the loss of the model on batched dataset through task-specified calculator
+            loss = self.calculator.compute_loss(model, batch_data)['loss']
+            loss.backward()
+            if self.clip_grad > 0: torch.nn.utils.clip_grad_norm_(parameters=model.parameters(),
+                                                                  max_norm=self.clip_grad)
+            optimizer.step()
         cpkg = self.pack(self.model)
         return cpkg
