@@ -357,7 +357,7 @@ class BasicTaskPipe(AbstractTaskPipe):
         """Create the directories of the task."""
         if not self.task_exists():
             os.mkdir(self.task_path)
-            os.mkdir(os.path.join(self.task_path, 'stralessRecord'))
+            os.mkdir(os.path.join(self.task_path, 'Record'))
             os.mkdir(os.path.join(self.task_path, 'log'))
         else:
             raise FileExistsError("federated task {} already exists!".format(self.task_path))

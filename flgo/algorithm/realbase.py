@@ -263,7 +263,7 @@ class Server(fedavg.Server):
         if not hasattr(self, '_zipped_task'): return None
         return b"".join(self._zipped_task)
 
-    def run(self, ip:str='*', port:str='5555', port_task:str='', protocol:str='tcp', no_zip_flags:list=['data.json', '__pycache__', 'checkpoint', 'stralessRecord', 'log']):
+    def run(self, ip:str='*', port:str='5555', port_task:str='', protocol:str='tcp', no_zip_flags:list=['data.json', '__pycache__', 'checkpoint', 'Record', 'log']):
         """
         Start the parameter server process that listens to the public address 'server_ip:server:port' for clients. Each client can connect to this public address to join in training.
         >>> import flgo.algorithm.realbase as realbase

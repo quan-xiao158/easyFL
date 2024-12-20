@@ -735,7 +735,7 @@ class BasicClient(BasicParty):
 
     def is_idle(self):
         r"""
-        Check if the client is available to participate training.
+        Check if the client is available to participate retraining.
 
         Returns:
             True if the client is available according to the active_rate else False

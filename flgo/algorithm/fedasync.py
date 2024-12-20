@@ -11,7 +11,8 @@ class Server(AsyncServer):
         if self.is_package_empty(received_packages): return False
         received_models = received_packages['model']
         taus = [m._round for m in received_models]
-        alpha_ts = [self.alpha * self.s(self.current_round - tau) for tau in taus]
+        # alpha_ts = [self.alpha * self.s(self.current_round - tau) for tau in taus]
+        alpha_ts =[0.6]*15
         currently_updated_models = [(1 - alpha_t) * self.model + alpha_t * model_k for alpha_t, model_k in zip(alpha_ts, received_models)]
         self.model = self.aggregate(currently_updated_models)
         return True

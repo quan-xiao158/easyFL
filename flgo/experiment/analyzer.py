@@ -93,7 +93,7 @@ class Record:
     def __init__(self, task, name):
         self.task = task
         self.name = name
-        self.rec_path = os.path.join(task, 'stralessRecord', name)
+        self.rec_path = os.path.join(task, 'Record', name)
         with open(self.rec_path, 'r') as inf:
             s_inf = inf.read()
             rec = json.loads(s_inf)
@@ -211,7 +211,7 @@ class Selector:
     def scan(self):
         res = {}
         for task in self.tasks:
-            path = os.path.join(task, 'stralessRecord')
+            path = os.path.join(task, 'Record')
             all_records = os.listdir(path)
             tmp = []
             # check headers
@@ -248,7 +248,7 @@ class Selector:
     def read_records(self, rec_names):
         res = {task: [] for task in rec_names}
         for task in rec_names:
-            path = os.path.join(task, 'stralessRecord')
+            path = os.path.join(task, 'Record')
             files = os.listdir(path)
             for record_name in rec_names[task]:
                 if record_name in files:

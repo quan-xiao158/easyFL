@@ -8,6 +8,9 @@ class AsyncServer(BasicServer):
         super(AsyncServer, self).__init__(option)
         self.concurrent_clients = set()  #正在被选择的客户端
         self.buffered_clients = set()  #缓冲的客户端
+        self.selected_client = None
+        self.selected_clients=[]
+        self.buff_len=15
 
     def sample(self):
         all_clients = self.available_clients if 'available' in self.sample_option else [cid for cid in
@@ -70,7 +73,19 @@ class AsyncServer(BasicServer):
         if is_model_updated: self.buffered_clients = set()  #如果全局模型已更新，清空 self.buffered_clients 集合。这可能意味着所有已接收的更新已被整合，准备接受新的客户端更新。
         return is_model_updated
 
-    def select_two_clients_by_group(self, all_clients):
+
+    def sample_async(self):
+        """
+        Sample clients under the limitation of the maximum numder of concurrent clients.
+        Returns:
+            Selected clients.
+        """
+        all_clients = [cid for cid in range(self.num_clients)]
+        all_clients = list(set(all_clients).difference(self.buffered_clients))
+        selected_clients = self.sample_one_client(all_clients)
+        return selected_clients
+
+    def sample_one_client(self, all_clients):
         """
         按照每25个为一组，并根据指定的组概率从all_clients中选择两个不同的客户端。
 
@@ -116,7 +131,8 @@ class AsyncServer(BasicServer):
             # 归一化权重
             weights = weights / total_weight
 
+        selected = None
         # 使用 numpy 的 choice 函数进行不重复抽样
-        selected = np.random.choice(all_clients, size=1, replace=False, p=weights)
-
-        return selected.tolist()
+        while selected is None or selected[0] in self.concurrent_clients:
+            selected = np.random.choice(all_clients, size=1, replace=False, p=weights)
+        return selected[0]

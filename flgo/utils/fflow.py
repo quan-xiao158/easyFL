@@ -1359,7 +1359,7 @@ def gen_empty_task(benchmark, task_path:str, scene:str="unknown"):
         return task_path
     info = {'benchmark':benchmark.__name__, "scene":scene, 'bmk_path': os.path.dirname(benchmark.__file__)}
     os.makedirs(os.path.join(task_path, 'log'))
-    os.makedirs(os.path.join(task_path, 'stralessRecord'))
+    os.makedirs(os.path.join(task_path, 'Record'))
     with open(os.path.join(task_path, 'info'), 'w') as outinfo:
         json.dump(info, outinfo)
     with open(os.path.join(task_path, 'dataset.py'), 'w') as outf:

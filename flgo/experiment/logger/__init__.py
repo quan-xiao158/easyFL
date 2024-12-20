@@ -2303,7 +2303,7 @@ class BasicLogger(Logger):
 
     def get_output_path(self):
         if not hasattr(self, 'option'): raise NotImplementedError('logger has no attr named "option"')
-        return os.path.join(self.task_path, 'stralessRecord')
+        return os.path.join(self.task_path, 'Record')
 
     def get_log_path(self):
         return os.path.join(self.task_path, 'log')
