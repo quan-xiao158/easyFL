@@ -1,6 +1,0 @@
-2024-07-27 15:12:44,814 fflow.py init [line:691] INFO PROCESS ID:	18584
-2024-07-27 15:12:44,815 fflow.py init [line:692] INFO Initializing devices: cpu will be used for this running.
-2024-07-27 15:12:44,815 fflow.py init [line:695] INFO BENCHMARK:	flgo.benchmark.mnist_classification
-2024-07-27 15:12:44,815 fflow.py init [line:696] INFO TASK:			./my_task
-2024-07-27 15:12:44,815 fflow.py init [line:697] INFO MODEL:		flgo.benchmark.mnist_classification.model.cnn
-2024-07-27 15:12:44,816 fflow.py init [line:698] INFO ALGORITHM:	fedavg

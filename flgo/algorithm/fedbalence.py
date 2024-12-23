@@ -15,8 +15,8 @@ class Server(AsyncServer):
     def __init__(self, option={}):
         super(Server, self).__init__(option)
         self.server_send_round = [0] * 100  # 服务器下发模型round记录
-        self.client_fs_list = [-1] * 100  #服务器记录客户端时间差列表
-        self.client_lh_list = [-1] * 100  #服务器记录客户端上传模型陈旧度列表
+        self.client_fs_list = [0] * 100  #服务器记录客户端时间差列表
+        self.client_lh_list = [999] * 100  #服务器记录客户端上传模型陈旧度列表
         self.commit_num = [0] * 100
         self.fl_queue = deque()
         self.fh_queue = deque()
@@ -24,6 +24,8 @@ class Server(AsyncServer):
         self.sh_queue = deque()
         self.round_number = 0
         self.maxlambda = 0
+
+        self.lambdalist = []
         '''
         fedbalance  超参数：
         
@@ -91,12 +93,10 @@ class Server(AsyncServer):
         all_clients = self.available_clients if 'available' in self.sample_option else [cid for cid in
                                                                                         range(self.num_clients)]
         all_clients = list(set(all_clients).difference(self.buffered_clients))
-        '''
-        todo:做一次favg然后将全局模型下发
-        '''
-        # self.gv.logger.info("-------------- 执行fedavg--------------")
-        # favmodel = self.fedavg_agg(all_clients)
-        # self.model = favmodel
+        #todo 高陈旧度模型与全局模型聚合一次后发给快客户端训练
+        self.gv.logger.info("-------------- 执行fedavg--------------")
+        favmodel = self.fedavg_agg(all_clients)
+        self.model = favmodel
         self.gv.logger.info("--------------Initial Evaluation--------------")
         self.gv.logger.time_start('Eval Time Cost')
         self.gv.logger.log_once()  # 初始评估全局模型的准确度
@@ -131,16 +131,10 @@ class Server(AsyncServer):
         return
 
     def median(self, lst):
-        new_lst = [x for x in lst if x != -1]
-        new_lst.sort()
-        n = len(new_lst)
-        if n % 2 == 0:
-            mid1 = new_lst[n // 2 - 1]
-            mid2 = new_lst[n // 2]
-            median = (mid1 + mid2) / 2
-        else:
-            median = new_lst[n // 2]
-        return median
+        import copy
+        dp=copy.deepcopy(lst)
+        dp.sort()
+        return dp[75]
 
     def compute_lambda(self, w_local):
         w_global = self.model
@@ -149,25 +143,27 @@ class Server(AsyncServer):
         return abs(l2_norm_squared)
 
     def compute_hl(self, client_id, lambda_i):
-        if lambda_i > self.maxlambda:
-            self.maxlambda = lambda_i
-            print(self.maxlambda)
+        self.lambdalist.append(lambda_i)
         self.client_lh_list[client_id] = lambda_i
-        filtered_list = list(filter(lambda x: x != -1, self.client_lh_list))
-
-        # 计算均值
-        mean_value = sum(filtered_list) / len(filtered_list) if filtered_list else 0
-        if lambda_i <= 9999:
+        # filtered_list = list(filter(lambda x: x != -1, self.client_lh_list))
+        # # 计算均值
+        # mean_value = sum(filtered_list) / len(filtered_list) if filtered_list else 0
+        copy_lh_list=copy.deepcopy(self.client_lh_list)
+        copy_lh_list.sort()
+        #todo 固定值或排名前k个的均值
+        if lambda_i <= copy_lh_list[75]:
             return "L"
         else:
             return "H"
 
     def compute_fs(self, client_id):
-        round_send = self.server_send_round[client_id]
-        current_round = self.current_round
-        time_delay = current_round - round_send
+        for id in range(100):
+            self.client_fs_list[id] = self.current_round - self.server_send_round[id]
+
+        time_delay = self.current_round - self.server_send_round[client_id]
         self.server_send_round[self.selected_client] = self.current_round
         self.client_fs_list[client_id] = time_delay
+
         media = self.median(self.client_fs_list)
 
         if time_delay <= media:
@@ -190,30 +186,39 @@ class Server(AsyncServer):
                 self.sh_queue.append({"client_id": client_id, "model": model})
                 return False
         elif lh_tag == "H" and fs_tag == "F":
-            if len(self.fh_queue) != 0:
-                th = self.fh_queue.pop()
-                client2_id = th["client_id"]
-                client2_model = th["model"]
-                self.communicate([client_id], client2_model, 1)
-                self.communicate([client2_id], model, 1)
-                self.concurrent_clients.difference_update([client_id, client2_id])
-                return False
-            elif len(self.fl_queue) != 0:
-                th = self.fl_queue.pop()
-                client2_id = th["client_id"]
-                client2_model = th["model"]
-                self.communicate([client_id], client2_model, 1)
-                self.communicate([client2_id], model, 1)
-                self.concurrent_clients.difference_update([client_id, client2_id])
-                return False
+            # if len(self.fh_queue) != 0:
+            #     th = self.fh_queue.pop()
+            #     client2_id = th["client_id"]
+            #     client2_model = th["model"]
+            #     self.communicate([client_id], client2_model, 1)
+            #     self.communicate([client2_id], model, 1)
+            #     self.concurrent_clients.difference_update([client_id, client2_id])
+            #     return False
+            # elif len(self.fl_queue) != 0:
+            #     th = self.fl_queue.pop()
+            #     client2_id = th["client_id"]
+            #     client2_model = th["model"]
+            #     self.communicate([client_id], client2_model, 1)
+            #     self.communicate([client2_id], model, 1)
+            #     self.concurrent_clients.difference_update([client_id, client2_id])
+            #     return False
+            if len(self.sl_queue) + len(self.fl_queue)+len(self.fh_queue) == agg_num:
+                self.fh_queue.append({"client_id": client_id, "model": model})
+                id_list, model_list = self.queue_pop()
+                agg_model = self.fedbalance_late_aggregate(model_list, id_list)
+                self.model = agg_model
+                self.communicate(id_list, agg_model, 1)
+                self.concurrent_clients.difference_update(id_list)
+                self.round_number += 1
+                return True
             else:
                 self.fh_queue.append({"client_id": client_id, "model": model})
                 return False
         elif lh_tag == "L" and fs_tag == "S":
             #1、将模型入队，如果模型数量长度
-            if len(self.sl_queue) + len(self.fl_queue) == agg_num:
+            if len(self.sl_queue) + len(self.fl_queue)+len(self.fh_queue) == agg_num:
                 self.sl_queue.append({"client_id": client_id, "model": model})
-                id_list, model_list = self.queue_pop(self.sl_queue, self.fl_queue)
+                id_list, model_list = self.queue_pop()
                 agg_model = self.fedbalance_late_aggregate(model_list, id_list)
                 self.model = agg_model
                 self.communicate(id_list, agg_model, 1)
@@ -223,7 +228,7 @@ class Server(AsyncServer):
             else:
                 self.sl_queue.append({"client_id": client_id, "model": model})
                 return False
-        else:
+        else:  #LF
             if len(self.sh_queue) != 0:
                 th = self.sh_queue.pop()
                 client2_id = th["client_id"]
@@ -232,18 +237,18 @@ class Server(AsyncServer):
                 self.communicate([client2_id], model, 1)
                 self.concurrent_clients.difference_update([client_id, client2_id])
                 return False
-            elif len(self.fh_queue) != 0:
-                th = self.fh_queue.pop()
-                client2_id = th["client_id"]
-                client2_model = th["model"]
-                self.communicate([client_id], client2_model, 1)
-                self.communicate([client2_id], model, 1)
-                self.concurrent_clients.difference_update([client_id, client2_id])
-                return False
+            # elif len(self.fh_queue) != 0:
+            #     th = self.fh_queue.pop()
+            #     client2_id = th["client_id"]
+            #     client2_model = th["model"]
+            #     self.communicate([client_id], client2_model, 1)
+            #     self.communicate([client2_id], model, 1)
+            #     self.concurrent_clients.difference_update([client_id, client2_id])
+            #     return False
                 # 1、将模型入队，如果模型数量长度
-            elif len(self.sl_queue) + len(self.fl_queue) == agg_num:
+            elif len(self.sl_queue) + len(self.fl_queue)+len(self.fh_queue) == agg_num:
                 self.fl_queue.append({"client_id": client_id, "model": model})
-                id_list, model_list = self.queue_pop(self.sl_queue, self.fl_queue)
+                id_list, model_list = self.queue_pop()
                 agg_model = self.fedbalance_late_aggregate(model_list, id_list)
                 self.model = agg_model
                 self.communicate(id_list, agg_model, 1)
@@ -266,10 +271,12 @@ class Server(AsyncServer):
         返回:
         - bool: 如果聚合成功，返回True；如果输入为空或不合法，返回False。
         """
-        # late_list = []
-        # for id in client_ids:
-        #     late_list.append(self.current_round - self.server_send_round[id])
+        # dl = []
+        # for id in self.selected_clients:
+        #     dl.append(self.round_number - self.server_send_round[id])
+        #     self.server_send_round[id] = self.round_number
         #
+        # alpha_ts = [self.alpha * self.s(late) for late in dl]
 
         # commmit_avg=sum(self.commit_num)/100
         # commit_num_list=[]
@@ -289,6 +296,9 @@ class Server(AsyncServer):
         # 5. 聚合所有更新后的模型，更新当前模型
 
         return self.fedbalance_aggregate(currently_updated_models, client_ids)
+
+    def help_agg(self, model, cid):
+        pass
 
     def s(self, delta_tau):
         return (delta_tau + 1) ** (-0.5)
@@ -349,7 +359,7 @@ class Server(AsyncServer):
         total_l2_diff = torch.sqrt(torch.tensor(total_l2_diff))
         return total_l2_diff
 
-    def queue_pop(self, sl_queue, fl_queue):
+    def queue_pop(self):
         id_list = []
         model_list = []
         # 处理 self.sl_queue
@@ -361,10 +371,14 @@ class Server(AsyncServer):
         for item in self.fl_queue:
             id_list.append(item['client_id'])
             model_list.append(item['model'])
+        for item in self.fh_queue:
+            id_list.append(item['client_id'])
+            model_list.append(item['model'])
 
         # 清空队列
         self.sl_queue.clear()
         self.fl_queue.clear()
+        self.fh_queue.clear()
         return id_list, model_list
 
     def fedavg_agg(self, all_clients):
