@@ -1,5 +1,5 @@
-a=[1,23,43,2,4,5,6]
-import copy
-b=copy.deepcopy(a)
-b.sort()
-print(b)
+import sys
+project_root='F:\easyFL\\flgo\\algorithm'
+sys.path.append('F:\easyFL\\flgo\\algorithm')
+sys.path.insert(0,project_root)
+print(sys.path)

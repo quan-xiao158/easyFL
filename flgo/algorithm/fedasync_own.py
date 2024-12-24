@@ -14,6 +14,7 @@ class Server(AsyncServer):
     def __init__(self, option={}):
         super(Server, self).__init__(option)
 
+        self.totoal_traffic = 0
         self.concurrent_clients = set()  # 正在被选择的客户端
         self.buffered_clients = set()  # 缓冲的客户端
         self.server_send_round = [0] * 100  # 服务器下发模型round记录
@@ -122,6 +123,7 @@ class Server(AsyncServer):
         # save results as .json file
 
         self.gv.logger.save_output_as_json()
+        print("总通信量：{}".format(self.totoal_traffic))
         return
 
     def fedasync_late_aggregate(self, models, client_ids):
@@ -182,6 +184,7 @@ class Server(AsyncServer):
         return aggregated_model
 
     def communicate(self, client_id_list, send_model, mtype):
+        self.totoal_traffic+=len(client_id_list)
         model_list = []
         for client_id in client_id_list:
             server_pkg = self.fedbalance_pack_model(send_model)  # 全局模型

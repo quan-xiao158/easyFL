@@ -1,13 +1,9 @@
 import torch
-
 from flgo.utils import fmodule
 from flgo.algorithm.asyncbase import AsyncServer
 from flgo.algorithm.fedbase import BasicServer, BasicClient
-from flgo.algorithm.fedprox import Client
-import numpy as np
 from collections import deque
 import copy
-import flgo.simulator.base as ss
 from tqdm import tqdm
 
 
@@ -24,14 +20,17 @@ class Server(AsyncServer):
         self.sh_queue = deque()
         self.round_number = 0
         self.maxlambda = 0
-
+        self.total_traffic = 0
+        self.additional_traffic = 0
         self.lambdalist = []
         '''
         fedbalance  超参数：
         
         '''
-        self.alpha = 0.3
-        self.agg_num = 15
+        self.alpha = self.option['alpha']
+        self.agg_num = self.option['agg_num']
+        self.fs_index = self.option['fs_index']
+        self.hl_index = self.option['hl_index']
 
     def package_handler(self, received_packages: dict):
         """
@@ -128,13 +127,16 @@ class Server(AsyncServer):
         self.gv.logger.time_end('Total Time Cost')
         # save results as .json file
         self.gv.logger.save_output_as_json()
+        print("总通信量{}".format(self.total_traffic))
+        print("额外通信量{}".format(self.additional_traffic))
+        print("占比{}".format(self.total_traffic/self.total_traffic))
         return
 
     def median(self, lst):
         import copy
-        dp=copy.deepcopy(lst)
+        dp = copy.deepcopy(lst)
         dp.sort()
-        return dp[75]
+        return dp[self.fs_index]
 
     def compute_lambda(self, w_local):
         w_global = self.model
@@ -148,10 +150,9 @@ class Server(AsyncServer):
         # filtered_list = list(filter(lambda x: x != -1, self.client_lh_list))
         # # 计算均值
         # mean_value = sum(filtered_list) / len(filtered_list) if filtered_list else 0
-        copy_lh_list=copy.deepcopy(self.client_lh_list)
+        copy_lh_list = copy.deepcopy(self.client_lh_list)
         copy_lh_list.sort()
-        #todo 固定值或排名前k个的均值
-        if lambda_i <= copy_lh_list[75]:
+        if lambda_i <= copy_lh_list[self.hl_index]:
             return "L"
         else:
             return "H"
@@ -180,34 +181,19 @@ class Server(AsyncServer):
                 client2_model = th["model"]
                 self.communicate([client_id], client2_model, 1)
                 self.communicate([client2_id], model, 1)
+                self.additional_traffic += 4
                 self.concurrent_clients.difference_update([client_id, client2_id])
                 return False
             else:
                 self.sh_queue.append({"client_id": client_id, "model": model})
                 return False
         elif lh_tag == "H" and fs_tag == "F":
-            # if len(self.fh_queue) != 0:
-            #     th = self.fh_queue.pop()
-            #     client2_id = th["client_id"]
-            #     client2_model = th["model"]
-            #     self.communicate([client_id], client2_model, 1)
-            #     self.communicate([client2_id], model, 1)
-            #     self.concurrent_clients.difference_update([client_id, client2_id])
-            #     return False
-            # elif len(self.fl_queue) != 0:
-            #     th = self.fl_queue.pop()
-            #     client2_id = th["client_id"]
-            #     client2_model = th["model"]
-            #     self.communicate([client_id], client2_model, 1)
-            #     self.communicate([client2_id], model, 1)
-            #     self.concurrent_clients.difference_update([client_id, client2_id])
-            #     return False
-            if len(self.sl_queue) + len(self.fl_queue)+len(self.fh_queue) == agg_num:
+            if len(self.fh_queue) == agg_num:
                 self.fh_queue.append({"client_id": client_id, "model": model})
-                id_list, model_list = self.queue_pop()
+                id_list, model_list = self.queue_pop([self.fh_queue])
                 agg_model = self.fedbalance_late_aggregate(model_list, id_list)
-                self.model = agg_model
                 self.communicate(id_list, agg_model, 1)
+                self.additional_traffic+=len(id_list)*2
                 self.concurrent_clients.difference_update(id_list)
                 self.round_number += 1
                 return True
@@ -216,9 +202,9 @@ class Server(AsyncServer):
                 return False
         elif lh_tag == "L" and fs_tag == "S":
             #1、将模型入队，如果模型数量长度
-            if len(self.sl_queue) + len(self.fl_queue)+len(self.fh_queue) == agg_num:
+            if len(self.sl_queue) + len(self.fl_queue) == agg_num:
                 self.sl_queue.append({"client_id": client_id, "model": model})
-                id_list, model_list = self.queue_pop()
+                id_list, model_list = self.queue_pop([self.sl_queue, self.fl_queue])
                 agg_model = self.fedbalance_late_aggregate(model_list, id_list)
                 self.model = agg_model
                 self.communicate(id_list, agg_model, 1)
@@ -237,24 +223,15 @@ class Server(AsyncServer):
                 self.communicate([client2_id], model, 1)
                 self.concurrent_clients.difference_update([client_id, client2_id])
                 return False
-            # elif len(self.fh_queue) != 0:
-            #     th = self.fh_queue.pop()
-            #     client2_id = th["client_id"]
-            #     client2_model = th["model"]
-            #     self.communicate([client_id], client2_model, 1)
-            #     self.communicate([client2_id], model, 1)
-            #     self.concurrent_clients.difference_update([client_id, client2_id])
-            #     return False
-                # 1、将模型入队，如果模型数量长度
-            elif len(self.sl_queue) + len(self.fl_queue)+len(self.fh_queue) == agg_num:
+            # 1、将模型入队，如果模型数量长度
+            elif len(self.sl_queue) + len(self.fl_queue) == agg_num:
                 self.fl_queue.append({"client_id": client_id, "model": model})
-                id_list, model_list = self.queue_pop()
+                id_list, model_list = self.queue_pop([self.sl_queue, self.fl_queue])
                 agg_model = self.fedbalance_late_aggregate(model_list, id_list)
                 self.model = agg_model
                 self.communicate(id_list, agg_model, 1)
                 self.concurrent_clients.difference_update(id_list)
-                self.round_number += 1
-                return True
+                return False
             else:
                 self.fl_queue.append({"client_id": client_id, "model": model})
                 return False
@@ -328,7 +305,7 @@ class Server(AsyncServer):
         return aggregated_model
 
     def communicate(self, client_id_list, send_model, mtype):
-
+        self.total_traffic += len(client_id_list)
         for client_id in client_id_list:
             server_pkg = self.fedbalance_pack_model(send_model)  #全局模型
             server_pkg['__mtype__'] = mtype
@@ -359,26 +336,15 @@ class Server(AsyncServer):
         total_l2_diff = torch.sqrt(torch.tensor(total_l2_diff))
         return total_l2_diff
 
-    def queue_pop(self):
+    def queue_pop(self, queue_list):
         id_list = []
         model_list = []
-        # 处理 self.sl_queue
-        for item in self.sl_queue:
-            id_list.append(item['client_id'])
-            model_list.append(item['model'])
+        for q in queue_list:
+            while len(q) != 0:
+                th = q.pop()
+                id_list.append(th['client_id'])
+                model_list.append(th['model'])
 
-        # 处理 self.fl_queue
-        for item in self.fl_queue:
-            id_list.append(item['client_id'])
-            model_list.append(item['model'])
-        for item in self.fh_queue:
-            id_list.append(item['client_id'])
-            model_list.append(item['model'])
-
-        # 清空队列
-        self.sl_queue.clear()
-        self.fl_queue.clear()
-        self.fh_queue.clear()
         return id_list, model_list
 
     def fedavg_agg(self, all_clients):
