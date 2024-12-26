@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/flgo/algorithm/fedbalance.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mytest/Minst/fedbalance_minst.py" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/mytest/Minst/mnist_experiment/log/2024-12-25-19-06-29fedbalance_epochs_20_alpha_0.6_aggnum_15_fs_index_75_hl_index_75.log" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/mytest/Minst/mnist_experiment/log/2024-12-26-12-45-22fedbalance_epochs_20_alpha_0.7_aggnum_15_fs_index_75_hl_index_75.log" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/mytest/Minst/mnist_experiment/log/2024-12-26-12-45-22fedbalance_epochs_20_alpha_0.8_aggnum_15_fs_index_75_hl_index_75.log" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/mytest/Minst/mnist_experiment/log/2024-12-26-13-59-01fedbalance_epochs_20_alpha_0.7_aggnum_15_fs_index_75_hl_index_50.log" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/mytest/Minst/mnist_experiment/log/2024-12-26-15-13-07fedbalance_epochs_20_alpha_0.3_aggnum_15_fs_index_75_hl_index_75.log" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/mytest/Minst/mnist_experiment/log/2024-12-26-16-35-34fedbalance_epochs_20_alpha_0.3_aggnum_15_fs_index_75_hl_index_75.log" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/mytest/Minst/mnist_experiment/log/2024-12-26-18-51-44fedbalance_epochs_20_alpha_0.3_aggnum_15_fs_index_65_hl_index_65.log" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/mytest/Minst/mnist_experiment/log/2024-12-26-18-56-20fedbalance_epochs_20_alpha_0.6_aggnum_15_fs_index_65_hl_index_65.log" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/mytest/Minst/mnist_experiment/log/2024-12-26-18-57-36fedbalance_epochs_20_alpha_0.6_aggnum_15_fs_index_75_hl_index_75.log" charset="GBK" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

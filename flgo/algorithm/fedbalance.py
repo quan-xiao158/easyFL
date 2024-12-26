@@ -23,6 +23,7 @@ class Server(AsyncServer):
         self.total_traffic = 0
         self.additional_traffic = 0
         self.lambdalist = []
+        self.buffer_queue = deque(maxlen=self.option['helpLen'])
         '''
         fedbalance  超参数：
         
@@ -83,19 +84,8 @@ class Server(AsyncServer):
         Running the FL symtem where the global model is trained and evaluated iteratively.
         """
         self.gv.logger.time_start('Total Time Cost')
-        if not self._load_checkpoint() and self.eval_interval > 0:
-            # evaluating initial model performance
-            self.gv.logger.info("--------------Initial Evaluation--------------")
-            self.gv.logger.time_start('Eval Time Cost')
-            self.gv.logger.log_once()  # 初始评估全局模型的准确度
-            self.gv.logger.time_end('Eval Time Cost')
-        all_clients = self.available_clients if 'available' in self.sample_option else [cid for cid in
-                                                                                        range(self.num_clients)]
+        all_clients = self.available_clients if 'available' in self.sample_option else [cid for cid in                                                                               range(self.num_clients)]
         all_clients = list(set(all_clients).difference(self.buffered_clients))
-        #todo 高陈旧度模型与全局模型聚合一次后发给快客户端训练
-        self.gv.logger.info("-------------- 执行fedavg--------------")
-        favmodel = self.fedavg_agg(all_clients)
-        self.model = favmodel
         self.gv.logger.info("--------------Initial Evaluation--------------")
         self.gv.logger.time_start('Eval Time Cost')
         self.gv.logger.log_once()  # 初始评估全局模型的准确度
@@ -123,13 +113,12 @@ class Server(AsyncServer):
                 self.global_lr_scheduler(self.current_round)
                 if self.round_number % 50 == 0:
                     self.gv.logger.save_output_as_json()
+                self.gv.logger.info("总通信量{}".format(self.total_traffic))
+                self.gv.logger.info("额外通信量{}".format(self.additional_traffic))
         self.gv.logger.info("=================End==================")
         self.gv.logger.time_end('Total Time Cost')
         # save results as .json file
         self.gv.logger.save_output_as_json()
-        print("总通信量{}".format(self.total_traffic))
-        print("额外通信量{}".format(self.additional_traffic))
-        print("占比{}".format(self.total_traffic/self.total_traffic))
         return
 
     def median(self, lst):
@@ -191,16 +180,19 @@ class Server(AsyncServer):
             if len(self.fh_queue) == agg_num:
                 self.fh_queue.append({"client_id": client_id, "model": model})
                 id_list, model_list = self.queue_pop([self.fh_queue])
+                for i in range(len(self.buffer_queue)):
+                    id_list.append(self.buffer_queue[i]['client_id'])
+                    model_list.append(self.buffer_queue[i]['model'])
                 agg_model = self.fedbalance_late_aggregate(model_list, id_list)
                 self.communicate(id_list, agg_model, 1)
                 self.additional_traffic+=len(id_list)*2
                 self.concurrent_clients.difference_update(id_list)
-                self.round_number += 1
-                return True
+                return False
             else:
                 self.fh_queue.append({"client_id": client_id, "model": model})
                 return False
         elif lh_tag == "L" and fs_tag == "S":
+            self.buffer_queue.append({"client_id": client_id, "model": model})
             #1、将模型入队，如果模型数量长度
             if len(self.sl_queue) + len(self.fl_queue) == agg_num:
                 self.sl_queue.append({"client_id": client_id, "model": model})
@@ -215,6 +207,7 @@ class Server(AsyncServer):
                 self.sl_queue.append({"client_id": client_id, "model": model})
                 return False
         else:  #LF
+            self.buffer_queue.append({"client_id": client_id, "model": model})
             if len(self.sh_queue) != 0:
                 th = self.sh_queue.pop()
                 client2_id = th["client_id"]
@@ -231,7 +224,8 @@ class Server(AsyncServer):
                 self.model = agg_model
                 self.communicate(id_list, agg_model, 1)
                 self.concurrent_clients.difference_update(id_list)
-                return False
+                self.round_number += 1
+                return True
             else:
                 self.fl_queue.append({"client_id": client_id, "model": model})
                 return False
@@ -261,7 +255,7 @@ class Server(AsyncServer):
         #     commit_num_list.append(abs(self.commit_num[id]-commmit_avg))
 
         # alpha_ts = [self.alpha * self.s(late) for late in commit_num_list]
-        alpha_ts = [0.6] * 16
+        alpha_ts = [self.option['alpha']] * 16
         # 4. 更新每个接收到的模型，与当前模型进行加权融合
 
         currently_updated_models = []
@@ -273,9 +267,6 @@ class Server(AsyncServer):
         # 5. 聚合所有更新后的模型，更新当前模型
 
         return self.fedbalance_aggregate(currently_updated_models, client_ids)
-
-    def help_agg(self, model, cid):
-        pass
 
     def s(self, delta_tau):
         return (delta_tau + 1) ** (-0.5)

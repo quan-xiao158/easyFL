@@ -58,7 +58,6 @@ class AsyncServer(BasicServer):
         #如果有客户端被选中，记录一条日志，显示被选中的客户端及当前时间
         self.model._round = self.current_round  #将模型的 _round 属性设置为当前的回合数
 
-
         received_packages = self.communicate(self.selected_clients,
                                              asynchronous=True)  #选定的客户端进行通信，发送当前的全局模型并接收客户端的更新。asynchronous=True 表明这是一次异步通信，不会阻塞等待所有客户端的响应。
         #received_packages 是一个包含来自客户端的更新数据的字典，特别是客户端的标识符 __cid。
@@ -72,7 +71,6 @@ class AsyncServer(BasicServer):
         is_model_updated = self.package_handler(received_packages)  #调用 方法处理接收到的客户端更新包。这可能涉及聚合客户端的模型更新（如平均化权重）并更新全局模型。
         if is_model_updated: self.buffered_clients = set()  #如果全局模型已更新，清空 self.buffered_clients 集合。这可能意味着所有已接收的更新已被整合，准备接受新的客户端更新。
         return is_model_updated
-
 
     def sample_async(self):
         """
@@ -101,6 +99,7 @@ class AsyncServer(BasicServer):
         返回：
         list: 选中的两个不同客户端的列表。
         """
+        np.random.seed(42)
         if len(all_clients) != 100:
             raise ValueError("all_clients 的长度必须为100。")
 
