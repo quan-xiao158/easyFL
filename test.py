@@ -537,10 +537,4 @@
 # ax.set_yticks([0,0.1, 0.2,0.3, 0.4,0.5, 0.6, 0.7,0.8,0.9, 1])
 # # 显示图形
 # plt.show()
-import np
-
-# 设置随机种子为42
-np.random.seed(42)
-# 生成5个随机整数
-for i in range(5):
-    print(random.randint(1, 10))
+print(len(range(0,9)))

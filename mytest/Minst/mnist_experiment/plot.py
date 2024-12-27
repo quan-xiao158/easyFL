@@ -16,15 +16,15 @@ for file_name in file_list:
             # 检查固定字段是否存在并获取其值
             # if 'val_accuracy' in data:
             if 'test_loss' in data:
-                # fixed_field_value = data['test_loss'][:50]
-                fixed_field_value = data['test_accuracy'][:50]
+                fixed_field_value = data['test_loss'][:500]
+                # fixed_field_value = data['test_accuracy'][:500]
                 record_list.append(fixed_field_value)
 
 # 假设data是你的包含8个列表的列表
 import matplotlib.pyplot as plt
 
 line_names = [
-    "fedasync", "a","b","c","d"
+    "fedasync", "a"
 ]
 
 # 创建一个新的图形对象和一个轴对象

@@ -227,6 +227,7 @@ class BasicServer(BasicParty):
         self.id = -1
 
     def run(self):
+        np.random.seed(42)
         """
         Running the FL symtem where the global model is trained and evaluated iteratively.
         """

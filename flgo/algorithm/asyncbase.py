@@ -99,16 +99,22 @@ class AsyncServer(BasicServer):
         返回：
         list: 选中的两个不同客户端的列表。
         """
-        np.random.seed(42)
+
         if len(all_clients) != 100:
             raise ValueError("all_clients 的长度必须为100。")
 
         # 定义组及其对应的概率
         groups = [
-            {'range': range(0, 25), 'prob': 0.4},  # 组1: ID 0-24
-            {'range': range(25, 50), 'prob': 0.3},  # 组2: ID 25-49
-            {'range': range(50, 75), 'prob': 0.2},  # 组3: ID 50-74
-            {'range': range(75, 100), 'prob': 0.1}  # 组4: ID 75-99
+            {'range': range(0, 10), 'prob': 1},
+            {'range': range(10, 20), 'prob': 0.9},
+            {'range': range(20, 30), 'prob': 0.8},
+            {'range': range(30, 40), 'prob': 0.7},
+            {'range': range(40, 50), 'prob': 0.6},
+            {'range': range(50, 60), 'prob': 0.5},
+            {'range': range(60, 70), 'prob': 0.4},
+            {'range': range(70, 80), 'prob': 0.3},
+            {'range': range(80, 90), 'prob': 0.2},
+            {'range': range(90, 100), 'prob': 0.1},
         ]
 
         # 初始化权重列表

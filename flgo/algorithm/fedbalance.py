@@ -1,3 +1,4 @@
+import numpy as np
 import torch
 from flgo.utils import fmodule
 from flgo.algorithm.asyncbase import AsyncServer
@@ -80,6 +81,7 @@ class Server(AsyncServer):
         return self.core_select_algorithm(self.selected_client, fs_tag, lh_tag, client_model)
 
     def run(self):
+        np.random.seed(42)
         """
         Running the FL symtem where the global model is trained and evaluated iteratively.
         """

@@ -1,0 +1,620 @@
+2024-12-27 11:15:24,767 fflow.py init [line:691] INFO PROCESS ID:	16192
+2024-12-27 11:15:24,767 fflow.py init [line:692] INFO Initializing devices: cuda:0 will be used for this running.
+2024-12-27 11:15:24,768 fflow.py init [line:695] INFO BENCHMARK:	flgo.benchmark.mnist_classification
+2024-12-27 11:15:24,768 fflow.py init [line:696] INFO TASK:			./mnist_experiment
+2024-12-27 11:15:24,768 fflow.py init [line:697] INFO MODEL:		flgo.benchmark.mnist_classification.model.cnn
+2024-12-27 11:15:24,768 fflow.py init [line:698] INFO ALGORITHM:	fedbalance
+2024-12-27 11:15:25,261 fflow.py init [line:737] INFO SCENE:		horizontal FL with 1 <class 'flgo.algorithm.fedbalance.Server'>, 100 <class 'flgo.algorithm.fedbalance.Client'>
+2024-12-27 11:15:26,067 fflow.py init [line:754] INFO SIMULATOR:	<class 'flgo.simulator.default_simulator.Simulator'>
+2024-12-27 11:15:26,068 fflow.py init [line:767] INFO Ready to start.
+2024-12-27 11:15:26,068 fedbalance.py run [line:91] INFO --------------Initial Evaluation--------------
+2024-12-27 11:15:31,557 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.0845
+2024-12-27 11:15:31,557 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.3038
+2024-12-27 11:15:31,557 fedbalance.py run [line:94] INFO Eval Time Cost:               5.4891s
+2024-12-27 11:15:31,735 fedbalance.py run [line:96] INFO --------------全局模型下发--------------
+2024-12-27 11:15:37,722 fedbalance.py run [line:104] INFO --------------Round 1--------------
+2024-12-27 11:15:41,336 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.1865
+2024-12-27 11:15:41,336 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2852
+2024-12-27 11:15:41,336 fedbalance.py run [line:109] INFO Eval Time Cost:               3.6140s
+2024-12-27 11:15:41,336 fedbalance.py run [line:118] INFO 总通信量132
+2024-12-27 11:15:41,410 fedbalance.py run [line:119] INFO 额外通信量0
+2024-12-27 11:15:45,444 fedbalance.py run [line:104] INFO --------------Round 2--------------
+2024-12-27 11:15:47,769 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.1032
+2024-12-27 11:15:47,769 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2607
+2024-12-27 11:15:47,769 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3254s
+2024-12-27 11:15:47,769 fedbalance.py run [line:118] INFO 总通信量164
+2024-12-27 11:15:47,769 fedbalance.py run [line:119] INFO 额外通信量0
+2024-12-27 11:15:51,688 fedbalance.py run [line:104] INFO --------------Round 3--------------
+2024-12-27 11:15:53,918 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.2452
+2024-12-27 11:15:53,918 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.3516
+2024-12-27 11:15:53,918 fedbalance.py run [line:109] INFO Eval Time Cost:               2.2300s
+2024-12-27 11:15:53,918 fedbalance.py run [line:118] INFO 总通信量196
+2024-12-27 11:15:53,918 fedbalance.py run [line:119] INFO 额外通信量0
+2024-12-27 11:15:57,959 fedbalance.py run [line:104] INFO --------------Round 4--------------
+2024-12-27 11:16:04,025 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.0980
+2024-12-27 11:16:04,025 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2357
+2024-12-27 11:16:04,025 fedbalance.py run [line:109] INFO Eval Time Cost:               6.0660s
+2024-12-27 11:16:04,025 fedbalance.py run [line:118] INFO 总通信量228
+2024-12-27 11:16:04,025 fedbalance.py run [line:119] INFO 额外通信量0
+2024-12-27 11:16:08,092 fedbalance.py run [line:104] INFO --------------Round 5--------------
+2024-12-27 11:16:11,144 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.1625
+2024-12-27 11:16:11,145 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2289
+2024-12-27 11:16:11,145 fedbalance.py run [line:109] INFO Eval Time Cost:               3.0532s
+2024-12-27 11:16:11,145 fedbalance.py run [line:118] INFO 总通信量260
+2024-12-27 11:16:11,145 fedbalance.py run [line:119] INFO 额外通信量0
+2024-12-27 11:16:15,305 fedbalance.py run [line:104] INFO --------------Round 6--------------
+2024-12-27 11:16:17,574 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.1585
+2024-12-27 11:16:17,574 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1986
+2024-12-27 11:16:17,574 fedbalance.py run [line:109] INFO Eval Time Cost:               2.2693s
+2024-12-27 11:16:17,574 fedbalance.py run [line:118] INFO 总通信量292
+2024-12-27 11:16:17,574 fedbalance.py run [line:119] INFO 额外通信量0
+2024-12-27 11:16:21,489 fedbalance.py run [line:104] INFO --------------Round 7--------------
+2024-12-27 11:16:23,659 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3499
+2024-12-27 11:16:23,659 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2094
+2024-12-27 11:16:23,659 fedbalance.py run [line:109] INFO Eval Time Cost:               2.1699s
+2024-12-27 11:16:23,659 fedbalance.py run [line:118] INFO 总通信量324
+2024-12-27 11:16:23,659 fedbalance.py run [line:119] INFO 额外通信量0
+2024-12-27 11:16:27,521 fedbalance.py run [line:104] INFO --------------Round 8--------------
+2024-12-27 11:16:29,754 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3416
+2024-12-27 11:16:29,755 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1945
+2024-12-27 11:16:29,755 fedbalance.py run [line:109] INFO Eval Time Cost:               2.2339s
+2024-12-27 11:16:29,755 fedbalance.py run [line:118] INFO 总通信量356
+2024-12-27 11:16:29,755 fedbalance.py run [line:119] INFO 额外通信量0
+2024-12-27 11:16:33,927 fedbalance.py run [line:104] INFO --------------Round 9--------------
+2024-12-27 11:16:36,251 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.2049
+2024-12-27 11:16:36,251 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1821
+2024-12-27 11:16:36,251 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3232s
+2024-12-27 11:16:36,251 fedbalance.py run [line:118] INFO 总通信量388
+2024-12-27 11:16:36,251 fedbalance.py run [line:119] INFO 额外通信量0
+2024-12-27 11:16:40,499 fedbalance.py run [line:104] INFO --------------Round 10--------------
+2024-12-27 11:16:42,700 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.2577
+2024-12-27 11:16:42,700 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1707
+2024-12-27 11:16:42,700 fedbalance.py run [line:109] INFO Eval Time Cost:               2.2008s
+2024-12-27 11:16:42,700 fedbalance.py run [line:118] INFO 总通信量420
+2024-12-27 11:16:42,700 fedbalance.py run [line:119] INFO 额外通信量0
+2024-12-27 11:16:46,531 fedbalance.py run [line:104] INFO --------------Round 11--------------
+2024-12-27 11:16:48,773 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.2514
+2024-12-27 11:16:48,773 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1796
+2024-12-27 11:16:48,773 fedbalance.py run [line:109] INFO Eval Time Cost:               2.2417s
+2024-12-27 11:16:48,773 fedbalance.py run [line:118] INFO 总通信量452
+2024-12-27 11:16:48,773 fedbalance.py run [line:119] INFO 额外通信量0
+2024-12-27 11:16:52,777 fedbalance.py run [line:104] INFO --------------Round 12--------------
+2024-12-27 11:16:54,917 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3429
+2024-12-27 11:16:54,918 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1592
+2024-12-27 11:16:54,918 fedbalance.py run [line:109] INFO Eval Time Cost:               2.1412s
+2024-12-27 11:16:54,918 fedbalance.py run [line:118] INFO 总通信量484
+2024-12-27 11:16:54,918 fedbalance.py run [line:119] INFO 额外通信量0
+2024-12-27 11:16:59,213 fedbalance.py run [line:104] INFO --------------Round 13--------------
+2024-12-27 11:17:01,400 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3402
+2024-12-27 11:17:01,400 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1237
+2024-12-27 11:17:01,400 fedbalance.py run [line:109] INFO Eval Time Cost:               2.1865s
+2024-12-27 11:17:01,400 fedbalance.py run [line:118] INFO 总通信量517
+2024-12-27 11:17:01,400 fedbalance.py run [line:119] INFO 额外通信量0
+2024-12-27 11:17:05,681 fedbalance.py run [line:104] INFO --------------Round 14--------------
+2024-12-27 11:17:07,863 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4463
+2024-12-27 11:17:07,863 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0722
+2024-12-27 11:17:07,863 fedbalance.py run [line:109] INFO Eval Time Cost:               2.1819s
+2024-12-27 11:17:07,863 fedbalance.py run [line:118] INFO 总通信量550
+2024-12-27 11:17:07,863 fedbalance.py run [line:119] INFO 额外通信量0
+2024-12-27 11:17:11,720 fedbalance.py run [line:104] INFO --------------Round 15--------------
+2024-12-27 11:17:13,918 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.2965
+2024-12-27 11:17:13,918 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0541
+2024-12-27 11:17:13,918 fedbalance.py run [line:109] INFO Eval Time Cost:               2.1976s
+2024-12-27 11:17:13,918 fedbalance.py run [line:118] INFO 总通信量582
+2024-12-27 11:17:13,918 fedbalance.py run [line:119] INFO 额外通信量0
+2024-12-27 11:17:17,920 fedbalance.py run [line:104] INFO --------------Round 16--------------
+2024-12-27 11:17:24,256 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5450
+2024-12-27 11:17:24,256 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0301
+2024-12-27 11:17:24,256 fedbalance.py run [line:109] INFO Eval Time Cost:               6.3360s
+2024-12-27 11:17:24,256 fedbalance.py run [line:118] INFO 总通信量615
+2024-12-27 11:17:24,256 fedbalance.py run [line:119] INFO 额外通信量0
+2024-12-27 11:17:29,419 fedbalance.py run [line:104] INFO --------------Round 17--------------
+2024-12-27 11:17:33,628 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5091
+2024-12-27 11:17:33,628 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0136
+2024-12-27 11:17:33,628 fedbalance.py run [line:109] INFO Eval Time Cost:               4.2084s
+2024-12-27 11:17:33,628 fedbalance.py run [line:118] INFO 总通信量655
+2024-12-27 11:17:33,628 fedbalance.py run [line:119] INFO 额外通信量4
+2024-12-27 11:17:38,740 fedbalance.py run [line:104] INFO --------------Round 18--------------
+2024-12-27 11:17:42,004 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3092
+2024-12-27 11:17:42,004 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0735
+2024-12-27 11:17:42,004 fedbalance.py run [line:109] INFO Eval Time Cost:               3.2640s
+2024-12-27 11:17:42,004 fedbalance.py run [line:118] INFO 总通信量692
+2024-12-27 11:17:42,004 fedbalance.py run [line:119] INFO 额外通信量4
+2024-12-27 11:17:47,051 fedbalance.py run [line:104] INFO --------------Round 19--------------
+2024-12-27 11:17:49,477 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.2987
+2024-12-27 11:17:49,478 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0927
+2024-12-27 11:17:49,478 fedbalance.py run [line:109] INFO Eval Time Cost:               2.4257s
+2024-12-27 11:17:49,478 fedbalance.py run [line:118] INFO 总通信量727
+2024-12-27 11:17:49,478 fedbalance.py run [line:119] INFO 额外通信量4
+2024-12-27 11:17:55,348 fedbalance.py run [line:104] INFO --------------Round 20--------------
+2024-12-27 11:17:57,679 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.2498
+2024-12-27 11:17:57,679 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0726
+2024-12-27 11:17:57,679 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3313s
+2024-12-27 11:17:57,679 fedbalance.py run [line:118] INFO 总通信量780
+2024-12-27 11:17:57,679 fedbalance.py run [line:119] INFO 额外通信量40
+2024-12-27 11:18:03,495 fedbalance.py run [line:104] INFO --------------Round 21--------------
+2024-12-27 11:18:05,889 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4368
+2024-12-27 11:18:05,889 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.9171
+2024-12-27 11:18:05,889 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3950s
+2024-12-27 11:18:05,889 fedbalance.py run [line:118] INFO 总通信量820
+2024-12-27 11:18:05,889 fedbalance.py run [line:119] INFO 额外通信量40
+2024-12-27 11:18:11,838 fedbalance.py run [line:104] INFO --------------Round 22--------------
+2024-12-27 11:18:14,615 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3790
+2024-12-27 11:18:14,616 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.9794
+2024-12-27 11:18:14,616 fedbalance.py run [line:109] INFO Eval Time Cost:               2.7774s
+2024-12-27 11:18:14,616 fedbalance.py run [line:118] INFO 总通信量861
+2024-12-27 11:18:14,616 fedbalance.py run [line:119] INFO 额外通信量44
+2024-12-27 11:18:20,792 fedbalance.py run [line:104] INFO --------------Round 23--------------
+2024-12-27 11:18:23,300 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3668
+2024-12-27 11:18:23,300 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.9374
+2024-12-27 11:18:23,300 fedbalance.py run [line:109] INFO Eval Time Cost:               2.5066s
+2024-12-27 11:18:23,300 fedbalance.py run [line:118] INFO 总通信量912
+2024-12-27 11:18:23,300 fedbalance.py run [line:119] INFO 额外通信量76
+2024-12-27 11:18:28,690 fedbalance.py run [line:104] INFO --------------Round 24--------------
+2024-12-27 11:18:31,043 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3372
+2024-12-27 11:18:31,043 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.9568
+2024-12-27 11:18:31,044 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3525s
+2024-12-27 11:18:31,044 fedbalance.py run [line:118] INFO 总通信量951
+2024-12-27 11:18:31,044 fedbalance.py run [line:119] INFO 额外通信量80
+2024-12-27 11:18:36,140 fedbalance.py run [line:104] INFO --------------Round 25--------------
+2024-12-27 11:18:41,212 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3237
+2024-12-27 11:18:41,212 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.9158
+2024-12-27 11:18:41,212 fedbalance.py run [line:109] INFO Eval Time Cost:               5.0717s
+2024-12-27 11:18:41,212 fedbalance.py run [line:118] INFO 总通信量991
+2024-12-27 11:18:41,212 fedbalance.py run [line:119] INFO 额外通信量88
+2024-12-27 11:18:47,150 fedbalance.py run [line:104] INFO --------------Round 26--------------
+2024-12-27 11:18:51,594 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4027
+2024-12-27 11:18:51,594 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.8367
+2024-12-27 11:18:51,594 fedbalance.py run [line:109] INFO Eval Time Cost:               4.4440s
+2024-12-27 11:18:51,595 fedbalance.py run [line:118] INFO 总通信量1031
+2024-12-27 11:18:51,595 fedbalance.py run [line:119] INFO 额外通信量88
+2024-12-27 11:18:58,083 fedbalance.py run [line:104] INFO --------------Round 27--------------
+2024-12-27 11:19:00,476 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.2939
+2024-12-27 11:19:00,476 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.8928
+2024-12-27 11:19:00,477 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3940s
+2024-12-27 11:19:00,477 fedbalance.py run [line:118] INFO 总通信量1084
+2024-12-27 11:19:00,477 fedbalance.py run [line:119] INFO 额外通信量120
+2024-12-27 11:19:07,518 fedbalance.py run [line:104] INFO --------------Round 28--------------
+2024-12-27 11:19:13,712 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4230
+2024-12-27 11:19:13,713 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.7763
+2024-12-27 11:19:13,713 fedbalance.py run [line:109] INFO Eval Time Cost:               6.1950s
+2024-12-27 11:19:13,713 fedbalance.py run [line:118] INFO 总通信量1134
+2024-12-27 11:19:13,713 fedbalance.py run [line:119] INFO 额外通信量128
+2024-12-27 11:19:20,989 fedbalance.py run [line:104] INFO --------------Round 29--------------
+2024-12-27 11:19:26,968 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4526
+2024-12-27 11:19:26,969 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.7603
+2024-12-27 11:19:26,969 fedbalance.py run [line:109] INFO Eval Time Cost:               5.9802s
+2024-12-27 11:19:26,969 fedbalance.py run [line:118] INFO 总通信量1174
+2024-12-27 11:19:26,969 fedbalance.py run [line:119] INFO 额外通信量132
+2024-12-27 11:19:34,818 fedbalance.py run [line:104] INFO --------------Round 30--------------
+2024-12-27 11:19:40,481 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3745
+2024-12-27 11:19:40,482 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.8196
+2024-12-27 11:19:40,482 fedbalance.py run [line:109] INFO Eval Time Cost:               5.6644s
+2024-12-27 11:19:40,482 fedbalance.py run [line:118] INFO 总通信量1237
+2024-12-27 11:19:40,482 fedbalance.py run [line:119] INFO 额外通信量172
+2024-12-27 11:19:47,572 fedbalance.py run [line:104] INFO --------------Round 31--------------
+2024-12-27 11:19:53,068 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6748
+2024-12-27 11:19:53,068 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.6502
+2024-12-27 11:19:53,068 fedbalance.py run [line:109] INFO Eval Time Cost:               5.4958s
+2024-12-27 11:19:53,068 fedbalance.py run [line:118] INFO 总通信量1284
+2024-12-27 11:19:53,068 fedbalance.py run [line:119] INFO 额外通信量180
+2024-12-27 11:19:58,000 fedbalance.py run [line:104] INFO --------------Round 32--------------
+2024-12-27 11:20:01,286 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5199
+2024-12-27 11:20:01,286 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.6702
+2024-12-27 11:20:01,286 fedbalance.py run [line:109] INFO Eval Time Cost:               3.2857s
+2024-12-27 11:20:01,286 fedbalance.py run [line:118] INFO 总通信量1318
+2024-12-27 11:20:01,286 fedbalance.py run [line:119] INFO 额外通信量180
+2024-12-27 11:20:10,669 fedbalance.py run [line:104] INFO --------------Round 33--------------
+2024-12-27 11:20:14,844 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4344
+2024-12-27 11:20:14,845 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.7262
+2024-12-27 11:20:14,845 fedbalance.py run [line:109] INFO Eval Time Cost:               4.1760s
+2024-12-27 11:20:14,845 fedbalance.py run [line:118] INFO 总通信量1377
+2024-12-27 11:20:14,845 fedbalance.py run [line:119] INFO 额外通信量220
+2024-12-27 11:20:21,409 fedbalance.py run [line:104] INFO --------------Round 34--------------
+2024-12-27 11:20:24,232 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.2936
+2024-12-27 11:20:24,233 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.7801
+2024-12-27 11:20:24,233 fedbalance.py run [line:109] INFO Eval Time Cost:               2.8244s
+2024-12-27 11:20:24,233 fedbalance.py run [line:118] INFO 总通信量1421
+2024-12-27 11:20:24,233 fedbalance.py run [line:119] INFO 额外通信量228
+2024-12-27 11:20:31,111 fedbalance.py run [line:104] INFO --------------Round 35--------------
+2024-12-27 11:20:33,523 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4371
+2024-12-27 11:20:33,524 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.6851
+2024-12-27 11:20:33,524 fedbalance.py run [line:109] INFO Eval Time Cost:               2.4133s
+2024-12-27 11:20:33,524 fedbalance.py run [line:118] INFO 总通信量1467
+2024-12-27 11:20:33,524 fedbalance.py run [line:119] INFO 额外通信量232
+2024-12-27 11:20:38,334 fedbalance.py run [line:104] INFO --------------Round 36--------------
+2024-12-27 11:20:40,790 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6364
+2024-12-27 11:20:40,790 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.6043
+2024-12-27 11:20:40,790 fedbalance.py run [line:109] INFO Eval Time Cost:               2.4566s
+2024-12-27 11:20:40,791 fedbalance.py run [line:118] INFO 总通信量1501
+2024-12-27 11:20:40,791 fedbalance.py run [line:119] INFO 额外通信量232
+2024-12-27 11:20:47,980 fedbalance.py run [line:104] INFO --------------Round 37--------------
+2024-12-27 11:20:50,595 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4649
+2024-12-27 11:20:50,595 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.6642
+2024-12-27 11:20:50,595 fedbalance.py run [line:109] INFO Eval Time Cost:               2.6150s
+2024-12-27 11:20:50,595 fedbalance.py run [line:118] INFO 总通信量1558
+2024-12-27 11:20:50,595 fedbalance.py run [line:119] INFO 额外通信量268
+2024-12-27 11:20:56,651 fedbalance.py run [line:104] INFO --------------Round 38--------------
+2024-12-27 11:20:59,265 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4178
+2024-12-27 11:20:59,265 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.6167
+2024-12-27 11:20:59,265 fedbalance.py run [line:109] INFO Eval Time Cost:               2.6129s
+2024-12-27 11:20:59,265 fedbalance.py run [line:118] INFO 总通信量1595
+2024-12-27 11:20:59,266 fedbalance.py run [line:119] INFO 额外通信量268
+2024-12-27 11:21:05,049 fedbalance.py run [line:104] INFO --------------Round 39--------------
+2024-12-27 11:21:07,614 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4661
+2024-12-27 11:21:07,614 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.5092
+2024-12-27 11:21:07,616 fedbalance.py run [line:109] INFO Eval Time Cost:               2.5669s
+2024-12-27 11:21:07,616 fedbalance.py run [line:118] INFO 总通信量1630
+2024-12-27 11:21:07,616 fedbalance.py run [line:119] INFO 额外通信量268
+2024-12-27 11:21:12,311 fedbalance.py run [line:104] INFO --------------Round 40--------------
+2024-12-27 11:21:17,949 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5998
+2024-12-27 11:21:17,949 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.4942
+2024-12-27 11:21:17,949 fedbalance.py run [line:109] INFO Eval Time Cost:               5.6366s
+2024-12-27 11:21:17,950 fedbalance.py run [line:118] INFO 总通信量1664
+2024-12-27 11:21:17,950 fedbalance.py run [line:119] INFO 额外通信量268
+2024-12-27 11:21:22,591 fedbalance.py run [line:104] INFO --------------Round 41--------------
+2024-12-27 11:21:24,852 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6012
+2024-12-27 11:21:24,852 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.4245
+2024-12-27 11:21:24,853 fedbalance.py run [line:109] INFO Eval Time Cost:               2.2620s
+2024-12-27 11:21:24,853 fedbalance.py run [line:118] INFO 总通信量1698
+2024-12-27 11:21:24,853 fedbalance.py run [line:119] INFO 额外通信量268
+2024-12-27 11:21:30,623 fedbalance.py run [line:104] INFO --------------Round 42--------------
+2024-12-27 11:21:32,897 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6429
+2024-12-27 11:21:32,897 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.4157
+2024-12-27 11:21:32,897 fedbalance.py run [line:109] INFO Eval Time Cost:               2.2730s
+2024-12-27 11:21:32,897 fedbalance.py run [line:118] INFO 总通信量1748
+2024-12-27 11:21:32,897 fedbalance.py run [line:119] INFO 额外通信量300
+2024-12-27 11:21:37,416 fedbalance.py run [line:104] INFO --------------Round 43--------------
+2024-12-27 11:21:39,902 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4765
+2024-12-27 11:21:39,902 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.6420
+2024-12-27 11:21:39,902 fedbalance.py run [line:109] INFO Eval Time Cost:               2.4858s
+2024-12-27 11:21:39,903 fedbalance.py run [line:118] INFO 总通信量1781
+2024-12-27 11:21:39,903 fedbalance.py run [line:119] INFO 额外通信量300
+2024-12-27 11:21:45,645 fedbalance.py run [line:104] INFO --------------Round 44--------------
+2024-12-27 11:21:48,109 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6115
+2024-12-27 11:21:48,109 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.4961
+2024-12-27 11:21:48,109 fedbalance.py run [line:109] INFO Eval Time Cost:               2.4639s
+2024-12-27 11:21:48,109 fedbalance.py run [line:118] INFO 总通信量1825
+2024-12-27 11:21:48,109 fedbalance.py run [line:119] INFO 额外通信量312
+2024-12-27 11:21:52,970 fedbalance.py run [line:104] INFO --------------Round 45--------------
+2024-12-27 11:21:55,299 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5799
+2024-12-27 11:21:55,300 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.4709
+2024-12-27 11:21:55,300 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3303s
+2024-12-27 11:21:55,300 fedbalance.py run [line:118] INFO 总通信量1863
+2024-12-27 11:21:55,300 fedbalance.py run [line:119] INFO 额外通信量316
+2024-12-27 11:22:00,912 fedbalance.py run [line:104] INFO --------------Round 46--------------
+2024-12-27 11:22:03,187 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5695
+2024-12-27 11:22:03,188 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.4338
+2024-12-27 11:22:03,188 fedbalance.py run [line:109] INFO Eval Time Cost:               2.2760s
+2024-12-27 11:22:03,188 fedbalance.py run [line:118] INFO 总通信量1906
+2024-12-27 11:22:03,188 fedbalance.py run [line:119] INFO 额外通信量324
+2024-12-27 11:22:09,439 fedbalance.py run [line:104] INFO --------------Round 47--------------
+2024-12-27 11:22:14,961 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6595
+2024-12-27 11:22:14,961 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.3177
+2024-12-27 11:22:14,962 fedbalance.py run [line:109] INFO Eval Time Cost:               5.5231s
+2024-12-27 11:22:14,962 fedbalance.py run [line:118] INFO 总通信量1948
+2024-12-27 11:22:14,962 fedbalance.py run [line:119] INFO 额外通信量328
+2024-12-27 11:22:22,965 fedbalance.py run [line:104] INFO --------------Round 48--------------
+2024-12-27 11:22:26,323 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5926
+2024-12-27 11:22:26,323 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.3546
+2024-12-27 11:22:26,323 fedbalance.py run [line:109] INFO Eval Time Cost:               3.3572s
+2024-12-27 11:22:26,324 fedbalance.py run [line:118] INFO 总通信量2015
+2024-12-27 11:22:26,324 fedbalance.py run [line:119] INFO 额外通信量372
+2024-12-27 11:22:32,305 fedbalance.py run [line:104] INFO --------------Round 49--------------
+2024-12-27 11:22:35,604 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6348
+2024-12-27 11:22:35,604 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.3443
+2024-12-27 11:22:35,604 fedbalance.py run [line:109] INFO Eval Time Cost:               3.2981s
+2024-12-27 11:22:35,605 fedbalance.py run [line:118] INFO 总通信量2058
+2024-12-27 11:22:35,605 fedbalance.py run [line:119] INFO 额外通信量376
+2024-12-27 11:22:40,438 fedbalance.py run [line:104] INFO --------------Round 50--------------
+2024-12-27 11:22:45,789 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6168
+2024-12-27 11:22:45,789 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.4087
+2024-12-27 11:22:45,789 fedbalance.py run [line:109] INFO Eval Time Cost:               5.3507s
+2024-12-27 11:22:45,790 fedbalance.py run [line:118] INFO 总通信量2093
+2024-12-27 11:22:45,790 fedbalance.py run [line:119] INFO 额外通信量376
+2024-12-27 11:22:50,678 fedbalance.py run [line:104] INFO --------------Round 51--------------
+2024-12-27 11:22:53,823 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4661
+2024-12-27 11:22:53,823 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.4780
+2024-12-27 11:22:53,823 fedbalance.py run [line:109] INFO Eval Time Cost:               3.1456s
+2024-12-27 11:22:53,823 fedbalance.py run [line:118] INFO 总通信量2130
+2024-12-27 11:22:53,823 fedbalance.py run [line:119] INFO 额外通信量380
+2024-12-27 11:23:00,771 fedbalance.py run [line:104] INFO --------------Round 52--------------
+2024-12-27 11:23:03,019 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6020
+2024-12-27 11:23:03,019 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.3749
+2024-12-27 11:23:03,019 fedbalance.py run [line:109] INFO Eval Time Cost:               2.2477s
+2024-12-27 11:23:03,019 fedbalance.py run [line:118] INFO 总通信量2190
+2024-12-27 11:23:03,019 fedbalance.py run [line:119] INFO 额外通信量420
+2024-12-27 11:23:07,931 fedbalance.py run [line:104] INFO --------------Round 53--------------
+2024-12-27 11:23:10,304 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5858
+2024-12-27 11:23:10,304 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.3098
+2024-12-27 11:23:10,304 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3713s
+2024-12-27 11:23:10,304 fedbalance.py run [line:118] INFO 总通信量2225
+2024-12-27 11:23:10,305 fedbalance.py run [line:119] INFO 额外通信量420
+2024-12-27 11:23:15,480 fedbalance.py run [line:104] INFO --------------Round 54--------------
+2024-12-27 11:23:17,791 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6771
+2024-12-27 11:23:17,791 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.2893
+2024-12-27 11:23:17,791 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3108s
+2024-12-27 11:23:17,791 fedbalance.py run [line:118] INFO 总通信量2263
+2024-12-27 11:23:17,791 fedbalance.py run [line:119] INFO 额外通信量424
+2024-12-27 11:23:23,860 fedbalance.py run [line:104] INFO --------------Round 55--------------
+2024-12-27 11:23:26,217 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5999
+2024-12-27 11:23:26,217 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.3285
+2024-12-27 11:23:26,217 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3567s
+2024-12-27 11:23:26,217 fedbalance.py run [line:118] INFO 总通信量2307
+2024-12-27 11:23:26,218 fedbalance.py run [line:119] INFO 额外通信量428
+2024-12-27 11:23:31,279 fedbalance.py run [line:104] INFO --------------Round 56--------------
+2024-12-27 11:23:33,662 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6931
+2024-12-27 11:23:33,662 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.2066
+2024-12-27 11:23:33,662 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3832s
+2024-12-27 11:23:33,662 fedbalance.py run [line:118] INFO 总通信量2345
+2024-12-27 11:23:33,662 fedbalance.py run [line:119] INFO 额外通信量432
+2024-12-27 11:23:38,230 fedbalance.py run [line:104] INFO --------------Round 57--------------
+2024-12-27 11:23:41,771 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5430
+2024-12-27 11:23:41,772 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.3525
+2024-12-27 11:23:41,772 fedbalance.py run [line:109] INFO Eval Time Cost:               3.5425s
+2024-12-27 11:23:41,772 fedbalance.py run [line:118] INFO 总通信量2379
+2024-12-27 11:23:41,772 fedbalance.py run [line:119] INFO 额外通信量432
+2024-12-27 11:23:49,288 fedbalance.py run [line:104] INFO --------------Round 58--------------
+2024-12-27 11:23:51,596 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5928
+2024-12-27 11:23:51,596 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.1772
+2024-12-27 11:23:51,596 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3078s
+2024-12-27 11:23:51,597 fedbalance.py run [line:118] INFO 总通信量2435
+2024-12-27 11:23:51,597 fedbalance.py run [line:119] INFO 额外通信量468
+2024-12-27 11:23:57,101 fedbalance.py run [line:104] INFO --------------Round 59--------------
+2024-12-27 11:23:59,403 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6771
+2024-12-27 11:23:59,403 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.2095
+2024-12-27 11:23:59,403 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3019s
+2024-12-27 11:23:59,403 fedbalance.py run [line:118] INFO 总通信量2476
+2024-12-27 11:23:59,403 fedbalance.py run [line:119] INFO 额外通信量472
+2024-12-27 11:24:05,196 fedbalance.py run [line:104] INFO --------------Round 60--------------
+2024-12-27 11:24:07,466 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6933
+2024-12-27 11:24:07,467 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.1637
+2024-12-27 11:24:07,467 fedbalance.py run [line:109] INFO Eval Time Cost:               2.2711s
+2024-12-27 11:24:07,467 fedbalance.py run [line:118] INFO 总通信量2522
+2024-12-27 11:24:07,467 fedbalance.py run [line:119] INFO 额外通信量484
+2024-12-27 11:24:11,788 fedbalance.py run [line:104] INFO --------------Round 61--------------
+2024-12-27 11:24:14,147 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6007
+2024-12-27 11:24:14,147 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.1604
+2024-12-27 11:24:14,147 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3596s
+2024-12-27 11:24:14,147 fedbalance.py run [line:118] INFO 总通信量2554
+2024-12-27 11:24:14,147 fedbalance.py run [line:119] INFO 额外通信量484
+2024-12-27 11:24:19,771 fedbalance.py run [line:104] INFO --------------Round 62--------------
+2024-12-27 11:24:22,094 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7641
+2024-12-27 11:24:22,094 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.0675
+2024-12-27 11:24:22,094 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3227s
+2024-12-27 11:24:22,094 fedbalance.py run [line:118] INFO 总通信量2596
+2024-12-27 11:24:22,095 fedbalance.py run [line:119] INFO 额外通信量492
+2024-12-27 11:24:26,375 fedbalance.py run [line:104] INFO --------------Round 63--------------
+2024-12-27 11:24:28,710 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6601
+2024-12-27 11:24:28,711 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.1478
+2024-12-27 11:24:28,711 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3351s
+2024-12-27 11:24:28,711 fedbalance.py run [line:118] INFO 总通信量2628
+2024-12-27 11:24:28,711 fedbalance.py run [line:119] INFO 额外通信量492
+2024-12-27 11:24:34,568 fedbalance.py run [line:104] INFO --------------Round 64--------------
+2024-12-27 11:24:36,971 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6760
+2024-12-27 11:24:36,971 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.0960
+2024-12-27 11:24:36,971 fedbalance.py run [line:109] INFO Eval Time Cost:               2.4028s
+2024-12-27 11:24:36,971 fedbalance.py run [line:118] INFO 总通信量2680
+2024-12-27 11:24:36,971 fedbalance.py run [line:119] INFO 额外通信量524
+2024-12-27 11:24:41,248 fedbalance.py run [line:104] INFO --------------Round 65--------------
+2024-12-27 11:24:46,522 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6318
+2024-12-27 11:24:46,522 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.1940
+2024-12-27 11:24:46,522 fedbalance.py run [line:109] INFO Eval Time Cost:               5.2739s
+2024-12-27 11:24:46,522 fedbalance.py run [line:118] INFO 总通信量2713
+2024-12-27 11:24:46,522 fedbalance.py run [line:119] INFO 额外通信量524
+2024-12-27 11:24:51,723 fedbalance.py run [line:104] INFO --------------Round 66--------------
+2024-12-27 11:24:57,297 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6576
+2024-12-27 11:24:57,298 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.2362
+2024-12-27 11:24:57,298 fedbalance.py run [line:109] INFO Eval Time Cost:               5.5745s
+2024-12-27 11:24:57,298 fedbalance.py run [line:118] INFO 总通信量2754
+2024-12-27 11:24:57,298 fedbalance.py run [line:119] INFO 额外通信量532
+2024-12-27 11:25:01,982 fedbalance.py run [line:104] INFO --------------Round 67--------------
+2024-12-27 11:25:04,653 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6064
+2024-12-27 11:25:04,653 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.2148
+2024-12-27 11:25:04,654 fedbalance.py run [line:109] INFO Eval Time Cost:               2.6718s
+2024-12-27 11:25:04,654 fedbalance.py run [line:118] INFO 总通信量2788
+2024-12-27 11:25:04,654 fedbalance.py run [line:119] INFO 额外通信量532
+2024-12-27 11:25:10,982 fedbalance.py run [line:104] INFO --------------Round 68--------------
+2024-12-27 11:25:13,635 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6598
+2024-12-27 11:25:13,635 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.1045
+2024-12-27 11:25:13,635 fedbalance.py run [line:109] INFO Eval Time Cost:               2.6536s
+2024-12-27 11:25:13,635 fedbalance.py run [line:118] INFO 总通信量2833
+2024-12-27 11:25:13,635 fedbalance.py run [line:119] INFO 额外通信量544
+2024-12-27 11:25:18,506 fedbalance.py run [line:104] INFO --------------Round 69--------------
+2024-12-27 11:25:20,867 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6474
+2024-12-27 11:25:20,867 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.0515
+2024-12-27 11:25:20,867 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3611s
+2024-12-27 11:25:20,867 fedbalance.py run [line:118] INFO 总通信量2866
+2024-12-27 11:25:20,868 fedbalance.py run [line:119] INFO 额外通信量544
+2024-12-27 11:25:25,070 fedbalance.py run [line:104] INFO --------------Round 70--------------
+2024-12-27 11:25:27,586 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7007
+2024-12-27 11:25:27,586 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.9995
+2024-12-27 11:25:27,587 fedbalance.py run [line:109] INFO Eval Time Cost:               2.5175s
+2024-12-27 11:25:27,587 fedbalance.py run [line:118] INFO 总通信量2898
+2024-12-27 11:25:27,587 fedbalance.py run [line:119] INFO 额外通信量544
+2024-12-27 11:25:32,647 fedbalance.py run [line:104] INFO --------------Round 71--------------
+2024-12-27 11:25:38,975 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7194
+2024-12-27 11:25:38,976 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.9861
+2024-12-27 11:25:38,976 fedbalance.py run [line:109] INFO Eval Time Cost:               6.3294s
+2024-12-27 11:25:38,976 fedbalance.py run [line:118] INFO 总通信量2936
+2024-12-27 11:25:38,976 fedbalance.py run [line:119] INFO 额外通信量548
+2024-12-27 11:25:44,416 fedbalance.py run [line:104] INFO --------------Round 72--------------
+2024-12-27 11:25:49,189 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7433
+2024-12-27 11:25:49,189 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.9154
+2024-12-27 11:25:49,189 fedbalance.py run [line:109] INFO Eval Time Cost:               4.7736s
+2024-12-27 11:25:49,189 fedbalance.py run [line:118] INFO 总通信量2975
+2024-12-27 11:25:49,189 fedbalance.py run [line:119] INFO 额外通信量552
+2024-12-27 11:25:55,210 fedbalance.py run [line:104] INFO --------------Round 73--------------
+2024-12-27 11:25:58,737 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6130
+2024-12-27 11:25:58,737 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.0727
+2024-12-27 11:25:58,738 fedbalance.py run [line:109] INFO Eval Time Cost:               3.5265s
+2024-12-27 11:25:58,738 fedbalance.py run [line:118] INFO 总通信量3018
+2024-12-27 11:25:58,738 fedbalance.py run [line:119] INFO 额外通信量560
+2024-12-27 11:26:05,161 fedbalance.py run [line:104] INFO --------------Round 74--------------
+2024-12-27 11:26:07,565 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7633
+2024-12-27 11:26:07,565 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.8816
+2024-12-27 11:26:07,566 fedbalance.py run [line:109] INFO Eval Time Cost:               2.4053s
+2024-12-27 11:26:07,566 fedbalance.py run [line:118] INFO 总通信量3071
+2024-12-27 11:26:07,566 fedbalance.py run [line:119] INFO 额外通信量592
+2024-12-27 11:26:14,097 fedbalance.py run [line:104] INFO --------------Round 75--------------
+2024-12-27 11:26:17,629 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7591
+2024-12-27 11:26:17,629 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.9252
+2024-12-27 11:26:17,629 fedbalance.py run [line:109] INFO Eval Time Cost:               3.5319s
+2024-12-27 11:26:17,629 fedbalance.py run [line:118] INFO 总通信量3117
+2024-12-27 11:26:17,629 fedbalance.py run [line:119] INFO 额外通信量604
+2024-12-27 11:26:23,396 fedbalance.py run [line:104] INFO --------------Round 76--------------
+2024-12-27 11:26:25,768 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7189
+2024-12-27 11:26:25,768 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.9126
+2024-12-27 11:26:25,768 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3713s
+2024-12-27 11:26:25,769 fedbalance.py run [line:118] INFO 总通信量3157
+2024-12-27 11:26:25,769 fedbalance.py run [line:119] INFO 额外通信量608
+2024-12-27 11:26:30,858 fedbalance.py run [line:104] INFO --------------Round 77--------------
+2024-12-27 11:26:33,268 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7448
+2024-12-27 11:26:33,268 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.8966
+2024-12-27 11:26:33,268 fedbalance.py run [line:109] INFO Eval Time Cost:               2.4085s
+2024-12-27 11:26:33,268 fedbalance.py run [line:118] INFO 总通信量3195
+2024-12-27 11:26:33,268 fedbalance.py run [line:119] INFO 额外通信量612
+2024-12-27 11:26:38,895 fedbalance.py run [line:104] INFO --------------Round 78--------------
+2024-12-27 11:26:41,694 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6777
+2024-12-27 11:26:41,694 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.0026
+2024-12-27 11:26:41,694 fedbalance.py run [line:109] INFO Eval Time Cost:               2.7994s
+2024-12-27 11:26:41,694 fedbalance.py run [line:118] INFO 总通信量3232
+2024-12-27 11:26:41,694 fedbalance.py run [line:119] INFO 额外通信量616
+2024-12-27 11:26:46,218 fedbalance.py run [line:104] INFO --------------Round 79--------------
+2024-12-27 11:26:52,450 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7180
+2024-12-27 11:26:52,450 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.9326
+2024-12-27 11:26:52,450 fedbalance.py run [line:109] INFO Eval Time Cost:               6.2322s
+2024-12-27 11:26:52,450 fedbalance.py run [line:118] INFO 总通信量3264
+2024-12-27 11:26:52,450 fedbalance.py run [line:119] INFO 额外通信量616
+2024-12-27 11:26:58,292 fedbalance.py run [line:104] INFO --------------Round 80--------------
+2024-12-27 11:27:00,680 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7370
+2024-12-27 11:27:00,680 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.8747
+2024-12-27 11:27:00,680 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3882s
+2024-12-27 11:27:00,681 fedbalance.py run [line:118] INFO 总通信量3305
+2024-12-27 11:27:00,681 fedbalance.py run [line:119] INFO 额外通信量624
+2024-12-27 11:27:06,939 fedbalance.py run [line:104] INFO --------------Round 81--------------
+2024-12-27 11:27:11,868 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7308
+2024-12-27 11:27:11,868 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.8565
+2024-12-27 11:27:11,868 fedbalance.py run [line:109] INFO Eval Time Cost:               4.9278s
+2024-12-27 11:27:11,869 fedbalance.py run [line:118] INFO 总通信量3357
+2024-12-27 11:27:11,869 fedbalance.py run [line:119] INFO 额外通信量656
+2024-12-27 11:27:17,016 fedbalance.py run [line:104] INFO --------------Round 82--------------
+2024-12-27 11:27:19,740 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7014
+2024-12-27 11:27:19,740 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.0300
+2024-12-27 11:27:19,740 fedbalance.py run [line:109] INFO Eval Time Cost:               2.7234s
+2024-12-27 11:27:19,740 fedbalance.py run [line:118] INFO 总通信量3390
+2024-12-27 11:27:19,740 fedbalance.py run [line:119] INFO 额外通信量656
+2024-12-27 11:27:26,135 fedbalance.py run [line:104] INFO --------------Round 83--------------
+2024-12-27 11:27:28,544 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7224
+2024-12-27 11:27:28,544 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.0478
+2024-12-27 11:27:28,544 fedbalance.py run [line:109] INFO Eval Time Cost:               2.4091s
+2024-12-27 11:27:28,544 fedbalance.py run [line:118] INFO 总通信量3427
+2024-12-27 11:27:28,544 fedbalance.py run [line:119] INFO 额外通信量660
+2024-12-27 11:27:33,334 fedbalance.py run [line:104] INFO --------------Round 84--------------
+2024-12-27 11:27:35,701 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6718
+2024-12-27 11:27:35,701 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.0598
+2024-12-27 11:27:35,701 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3660s
+2024-12-27 11:27:35,701 fedbalance.py run [line:118] INFO 总通信量3463
+2024-12-27 11:27:35,701 fedbalance.py run [line:119] INFO 额外通信量664
+2024-12-27 11:27:40,081 fedbalance.py run [line:104] INFO --------------Round 85--------------
+2024-12-27 11:27:46,167 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7237
+2024-12-27 11:27:46,167 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.9220
+2024-12-27 11:27:46,167 fedbalance.py run [line:109] INFO Eval Time Cost:               6.0865s
+2024-12-27 11:27:46,167 fedbalance.py run [line:118] INFO 总通信量3496
+2024-12-27 11:27:46,167 fedbalance.py run [line:119] INFO 额外通信量664
+2024-12-27 11:27:50,712 fedbalance.py run [line:104] INFO --------------Round 86--------------
+2024-12-27 11:27:53,182 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7781
+2024-12-27 11:27:53,182 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.8231
+2024-12-27 11:27:53,182 fedbalance.py run [line:109] INFO Eval Time Cost:               2.4705s
+2024-12-27 11:27:53,182 fedbalance.py run [line:118] INFO 总通信量3528
+2024-12-27 11:27:53,182 fedbalance.py run [line:119] INFO 额外通信量664
+2024-12-27 11:27:58,097 fedbalance.py run [line:104] INFO --------------Round 87--------------
+2024-12-27 11:28:00,469 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7614
+2024-12-27 11:28:00,469 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.8083
+2024-12-27 11:28:00,469 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3722s
+2024-12-27 11:28:00,470 fedbalance.py run [line:118] INFO 总通信量3565
+2024-12-27 11:28:00,470 fedbalance.py run [line:119] INFO 额外通信量668
+2024-12-27 11:28:04,739 fedbalance.py run [line:104] INFO --------------Round 88--------------
+2024-12-27 11:28:07,100 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7199
+2024-12-27 11:28:07,100 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.8190
+2024-12-27 11:28:07,100 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3608s
+2024-12-27 11:28:07,100 fedbalance.py run [line:118] INFO 总通信量3597
+2024-12-27 11:28:07,100 fedbalance.py run [line:119] INFO 额外通信量668
+2024-12-27 11:28:11,146 fedbalance.py run [line:104] INFO --------------Round 89--------------
+2024-12-27 11:28:15,963 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6970
+2024-12-27 11:28:15,963 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.8500
+2024-12-27 11:28:15,963 fedbalance.py run [line:109] INFO Eval Time Cost:               4.8175s
+2024-12-27 11:28:15,963 fedbalance.py run [line:118] INFO 总通信量3629
+2024-12-27 11:28:15,963 fedbalance.py run [line:119] INFO 额外通信量668
+2024-12-27 11:28:22,253 fedbalance.py run [line:104] INFO --------------Round 90--------------
+2024-12-27 11:28:27,424 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7139
+2024-12-27 11:28:27,424 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.7793
+2024-12-27 11:28:27,424 fedbalance.py run [line:109] INFO Eval Time Cost:               5.1714s
+2024-12-27 11:28:27,424 fedbalance.py run [line:118] INFO 总通信量3680
+2024-12-27 11:28:27,425 fedbalance.py run [line:119] INFO 额外通信量684
+2024-12-27 11:28:32,447 fedbalance.py run [line:104] INFO --------------Round 91--------------
+2024-12-27 11:28:37,915 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7609
+2024-12-27 11:28:37,915 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.7409
+2024-12-27 11:28:37,915 fedbalance.py run [line:109] INFO Eval Time Cost:               5.4684s
+2024-12-27 11:28:37,915 fedbalance.py run [line:118] INFO 总通信量3718
+2024-12-27 11:28:37,915 fedbalance.py run [line:119] INFO 额外通信量688
+2024-12-27 11:28:43,474 fedbalance.py run [line:104] INFO --------------Round 92--------------
+2024-12-27 11:28:47,624 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8092
+2024-12-27 11:28:47,625 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.6850
+2024-12-27 11:28:47,625 fedbalance.py run [line:109] INFO Eval Time Cost:               4.1507s
+2024-12-27 11:28:47,625 fedbalance.py run [line:118] INFO 总通信量3758
+2024-12-27 11:28:47,625 fedbalance.py run [line:119] INFO 额外通信量692
+2024-12-27 11:28:52,352 fedbalance.py run [line:104] INFO --------------Round 93--------------
+2024-12-27 11:28:54,707 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8125
+2024-12-27 11:28:54,707 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.6296
+2024-12-27 11:28:54,707 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3551s
+2024-12-27 11:28:54,707 fedbalance.py run [line:118] INFO 总通信量3794
+2024-12-27 11:28:54,707 fedbalance.py run [line:119] INFO 额外通信量696
+2024-12-27 11:29:00,820 fedbalance.py run [line:104] INFO --------------Round 94--------------
+2024-12-27 11:29:03,148 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7895
+2024-12-27 11:29:03,148 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.7092
+2024-12-27 11:29:03,149 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3285s
+2024-12-27 11:29:03,149 fedbalance.py run [line:118] INFO 总通信量3848
+2024-12-27 11:29:03,149 fedbalance.py run [line:119] INFO 额外通信量732
+2024-12-27 11:29:08,691 fedbalance.py run [line:104] INFO --------------Round 95--------------
+2024-12-27 11:29:11,181 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7775
+2024-12-27 11:29:11,181 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.7166
+2024-12-27 11:29:11,181 fedbalance.py run [line:109] INFO Eval Time Cost:               2.4894s
+2024-12-27 11:29:11,181 fedbalance.py run [line:118] INFO 总通信量3890
+2024-12-27 11:29:11,181 fedbalance.py run [line:119] INFO 额外通信量740
+2024-12-27 11:29:16,231 fedbalance.py run [line:104] INFO --------------Round 96--------------
+2024-12-27 11:29:18,876 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7719
+2024-12-27 11:29:18,876 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.7683
+2024-12-27 11:29:18,877 fedbalance.py run [line:109] INFO Eval Time Cost:               2.6461s
+2024-12-27 11:29:18,877 fedbalance.py run [line:118] INFO 总通信量3924
+2024-12-27 11:29:18,877 fedbalance.py run [line:119] INFO 额外通信量740
+2024-12-27 11:29:24,061 fedbalance.py run [line:104] INFO --------------Round 97--------------
+2024-12-27 11:29:26,529 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6959
+2024-12-27 11:29:26,529 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.8681
+2024-12-27 11:29:26,529 fedbalance.py run [line:109] INFO Eval Time Cost:               2.4680s
+2024-12-27 11:29:26,529 fedbalance.py run [line:118] INFO 总通信量3958
+2024-12-27 11:29:26,529 fedbalance.py run [line:119] INFO 额外通信量740
+2024-12-27 11:29:31,427 fedbalance.py run [line:104] INFO --------------Round 98--------------
+2024-12-27 11:29:36,983 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7596
+2024-12-27 11:29:36,983 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.7758
+2024-12-27 11:29:36,983 fedbalance.py run [line:109] INFO Eval Time Cost:               5.5563s
+2024-12-27 11:29:36,983 fedbalance.py run [line:118] INFO 总通信量3995
+2024-12-27 11:29:36,983 fedbalance.py run [line:119] INFO 额外通信量744
+2024-12-27 11:29:41,620 fedbalance.py run [line:104] INFO --------------Round 99--------------
+2024-12-27 11:29:43,927 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8520
+2024-12-27 11:29:43,927 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.6936
+2024-12-27 11:29:43,927 fedbalance.py run [line:109] INFO Eval Time Cost:               2.3070s
+2024-12-27 11:29:43,927 fedbalance.py run [line:118] INFO 总通信量4028
+2024-12-27 11:29:43,927 fedbalance.py run [line:119] INFO 额外通信量744
+2024-12-27 11:29:48,419 fedbalance.py run [line:104] INFO --------------Round 100--------------
+2024-12-27 11:29:50,898 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8492
+2024-12-27 11:29:50,898 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.6603
+2024-12-27 11:29:50,899 fedbalance.py run [line:109] INFO Eval Time Cost:               2.4806s
+2024-12-27 11:29:50,900 fedbalance.py run [line:118] INFO 总通信量4061
+2024-12-27 11:29:50,900 fedbalance.py run [line:119] INFO 额外通信量744
+2024-12-27 11:29:55,428 fedbalance.py run [line:104] INFO --------------Round 101--------------
+2024-12-27 11:29:57,877 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8040
+2024-12-27 11:29:57,877 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.6589
+2024-12-27 11:29:57,877 fedbalance.py run [line:109] INFO Eval Time Cost:               2.4490s
+2024-12-27 11:29:57,877 fedbalance.py run [line:118] INFO 总通信量4097
+2024-12-27 11:29:57,877 fedbalance.py run [line:119] INFO 额外通信量748

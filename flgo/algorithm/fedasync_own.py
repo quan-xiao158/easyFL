@@ -82,6 +82,7 @@ class Server(AsyncServer):
         return False
 
     def run(self):
+        np.random.seed(42)
         """
         Running the FL symtem where the global model is trained and evaluated iteratively.
         """
@@ -213,7 +214,7 @@ class Client(BasicClient):
     def send_model(self, servermodel):
         model = self.unpack(servermodel)
         self.model = model
-
+    @fmodule.with_multi_gpus
     def model_train(self, servermodel):
         src_model = copy.deepcopy(self.model)
         src_model.freeze_grad()
