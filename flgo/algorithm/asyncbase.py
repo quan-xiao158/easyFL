@@ -11,6 +11,8 @@ class AsyncServer(BasicServer):
         self.selected_client = None
         self.selected_clients=[]
         self.buff_len=15
+        self.total_traffic = 0
+        self.additional_traffic = 0
 
     def sample(self):
         all_clients = self.available_clients if 'available' in self.sample_option else [cid for cid in
@@ -41,6 +43,49 @@ class AsyncServer(BasicServer):
         """
         return len(received_packages['__cid']) == 0
 
+    def run(self):
+        np.random.seed(42)
+        """
+        Running the FL symtem where the global model is trained and evaluated iteratively.
+        """
+        self.gv.logger.time_start('Total Time Cost')
+        all_clients = self.available_clients if 'available' in self.sample_option else [cid for cid in
+                                                                                        range(self.num_clients)]
+        all_clients = list(set(all_clients).difference(self.buffered_clients))
+        self.gv.logger.info("--------------Initial Evaluation--------------")
+        self.gv.logger.time_start('Eval Time Cost')
+        self.gv.logger.log_once()  # 初始评估全局模型的准确度
+        self.gv.logger.time_end('Eval Time Cost')
+        self.model._round = 0  # 将模型的 _round 属性设置为当前的回合数
+        self.communicate(all_clients, self.model, 1)  # 下发所有模型到客户端上
+        self.gv.logger.info("--------------全局模型下发--------------")
+        while True:
+            if self.round_number > self.num_rounds: break
+            self.gv.clock.step()
+            # iterate
+            updated = self.iterate()  # 进行客户端选择迭代训练和模型聚合
+            # using logger to evaluate the model if the model is updated
+            if updated is True:
+                self.gv.logger.info("--------------Round {}--------------".format(self.round_number))
+                # check log interval
+                if self.gv.logger.check_if_log(self.current_round, self.eval_interval):
+                    self.gv.logger.time_start('Eval Time Cost')
+                    self.gv.logger.log_once()  # 验证模型损失和准确率
+                    self.gv.logger.time_end('Eval Time Cost')
+                    self._save_checkpoint()
+                # check if early stopping
+                if self.gv.logger.early_stop(): break
+                self.current_round += 1
+                # decay learning rate
+                self.global_lr_scheduler(self.current_round)
+                if self.round_number % 50 == 0:
+                    self.gv.logger.save_output_as_json()
+                self.gv.logger.info("总通信量{}额外通信量{}".format(self.total_traffic, self.additional_traffic))
+        self.gv.logger.info("=================End==================")
+        self.gv.logger.time_end('Total Time Cost')
+        # save results as .json file
+        self.gv.logger.save_output_as_json()
+        return
     def iterate(self):
         """
         作用：定义了服务器在每个时刻执行的迭代过程。
@@ -50,26 +95,25 @@ class AsyncServer(BasicServer):
             一个布尔值，指示当前迭代是否更新了全局模型。
             is_model_updated (bool): True if the global model is updated at the current iteration
         """
-        self.selected_clients = self.sample()  #从可用的客户端中选择一组客户端进行当前迭代的训练。
+        self.selected_clients = self.sample()
         self.concurrent_clients.update(
-            set(self.selected_clients))  #将选中的客户端添加到 self.concurrent_clients 集合中，表示这些客户端正在进行训练或通信。
+            set(self.selected_clients))
         if len(self.selected_clients) > 0: self.gv.logger.info(
             'Select clients {} at time {}.'.format(self.selected_clients, self.gv.clock.current_time))
-        #如果有客户端被选中，记录一条日志，显示被选中的客户端及当前时间
-        self.model._round = self.current_round  #将模型的 _round 属性设置为当前的回合数
+
+        self.model._round = self.current_round
 
         received_packages = self.communicate(self.selected_clients,
-                                             asynchronous=True)  #选定的客户端进行通信，发送当前的全局模型并接收客户端的更新。asynchronous=True 表明这是一次异步通信，不会阻塞等待所有客户端的响应。
-        #received_packages 是一个包含来自客户端的更新数据的字典，特别是客户端的标识符 __cid。
+                                             asynchronous=True)
         self.concurrent_clients.difference_update(
-            set(received_packages['__cid']))  #从 self.concurrent_clients 中移除已经响应的客户端。
+            set(received_packages['__cid']))
         self.buffered_clients.update(
-            set(received_packages['__cid']))  #将这些响应的客户端添加到 self.buffered_clients 集合中，表示它们的更新已被接收并正在处理。
+            set(received_packages['__cid']))
         if len(received_packages['__cid']) > 0: self.gv.logger.info(
             'Receive new models from clients {} at time {}'.format(received_packages['__cid'],
                                                                    self.gv.clock.current_time))
-        is_model_updated = self.package_handler(received_packages)  #调用 方法处理接收到的客户端更新包。这可能涉及聚合客户端的模型更新（如平均化权重）并更新全局模型。
-        if is_model_updated: self.buffered_clients = set()  #如果全局模型已更新，清空 self.buffered_clients 集合。这可能意味着所有已接收的更新已被整合，准备接受新的客户端更新。
+        is_model_updated = self.package_handler(received_packages)
+        if is_model_updated: self.buffered_clients = set()
         return is_model_updated
 
     def sample_async(self):

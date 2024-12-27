@@ -21,8 +21,6 @@ class Server(AsyncServer):
         self.sh_queue = deque()
         self.round_number = 0
         self.maxlambda = 0
-        self.total_traffic = 0
-        self.additional_traffic = 0
         self.lambdalist = []
         self.buffer_queue = deque(maxlen=self.option['helpLen'])
         '''
@@ -80,48 +78,7 @@ class Server(AsyncServer):
         #xiafamox
         return self.core_select_algorithm(self.selected_client, fs_tag, lh_tag, client_model)
 
-    def run(self):
-        np.random.seed(42)
-        """
-        Running the FL symtem where the global model is trained and evaluated iteratively.
-        """
-        self.gv.logger.time_start('Total Time Cost')
-        all_clients = self.available_clients if 'available' in self.sample_option else [cid for cid in                                                                               range(self.num_clients)]
-        all_clients = list(set(all_clients).difference(self.buffered_clients))
-        self.gv.logger.info("--------------Initial Evaluation--------------")
-        self.gv.logger.time_start('Eval Time Cost')
-        self.gv.logger.log_once()  # 初始评估全局模型的准确度
-        self.gv.logger.time_end('Eval Time Cost')
-        self.communicate(all_clients, self.model, 1)  #下发所有模型到客户端上
-        self.gv.logger.info("--------------全局模型下发--------------")
-        while True:
-            if self.round_number > self.num_rounds: break
-            self.gv.clock.step()
-            # iterate
-            updated = self.iterate()  # 进行客户端选择迭代训练和模型聚合
-            # using logger to evaluate the model if the model is updated
-            if updated is True:
-                self.gv.logger.info("--------------Round {}--------------".format(self.round_number))
-                # check log interval
-                if self.gv.logger.check_if_log(self.current_round, self.eval_interval):
-                    self.gv.logger.time_start('Eval Time Cost')
-                    self.gv.logger.log_once()  # 验证模型损失和准确率
-                    self.gv.logger.time_end('Eval Time Cost')
-                    self._save_checkpoint()
-                # check if early stopping
-                if self.gv.logger.early_stop(): break
-                self.current_round += 1
-                # decay learning rate
-                self.global_lr_scheduler(self.current_round)
-                if self.round_number % 50 == 0:
-                    self.gv.logger.save_output_as_json()
-                self.gv.logger.info("总通信量{}".format(self.total_traffic))
-                self.gv.logger.info("额外通信量{}".format(self.additional_traffic))
-        self.gv.logger.info("=================End==================")
-        self.gv.logger.time_end('Total Time Cost')
-        # save results as .json file
-        self.gv.logger.save_output_as_json()
-        return
+
 
     def median(self, lst):
         import copy

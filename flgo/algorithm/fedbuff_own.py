@@ -28,6 +28,9 @@ class Server(AsyncServer):
         '''
         self.alpha = 0.72
         self.agg_num = 15
+    def initialize(self):
+        self.init_algo_para({'buffer_ratio': 0.1, 'eta': 1.0})
+        self.buffer = []
 
     def is_package_empty(self, received_packages: dict):
         """
@@ -49,17 +52,19 @@ class Server(AsyncServer):
 
         self.selected_client = self.sample_async()
         # 如果有客户端被选中，记录一条日志，显示被选中的客户端及当前时间
-        self.model._round = self.current_round  # 将模型的 _round 属性设置为当前的回合数
+
         self.selected_clients.append(self.selected_client)
         self.concurrent_clients.add(self.selected_client)
         received_packages = self.communicate([self.selected_client], None, 2)
         for index in received_packages:
             self.buff_queue.append(index['model'])
         if len(self.buff_queue) == self.buff_len:
-            model_list = []
+            buff_list = []
             for i in range(self.buff_len):
-                model_list.append(self.buff_queue.pop())
-            self.model = self.fedasync_late_aggregate(model_list, self.selected_clients)
+                m=self.buff_queue.pop()
+                buff_list.append((m,m._round))
+            self.model = self.fedbuff_aggregate(buff_list)
+            self.model._round = self.current_round  # 将模型的 _round 属性设置为当前的回合数
             self.communicate(self.selected_clients, self.model, 1)
             self.selected_clients.clear()
             self.concurrent_clients.clear()
@@ -67,62 +72,9 @@ class Server(AsyncServer):
             return True
         return False
 
-    def fedasync_late_aggregate(self, models, client_ids):
-        """
-        聚合来自不同客户端的模型，考虑模型更新的延迟。
 
-        参数:
-        - models (list): 模型列表，每个元素代表一个客户端的模型。
-        - client_ids (list): 客户端ID列表，对应于models中的每个模型。
-        - late_list (list): 延迟列表，对应于client_ids，每个元素表示该客户端模型的延迟（current_round - tau）。
 
-        返回:
-        - bool: 如果聚合成功，返回True；如果输入为空或不合法，返回False。
-        """
-        dl = []
-        for id in self.selected_clients:
-            dl.append(self.round_number - self.server_send_round[id])
-            self.server_send_round[id] = self.round_number
 
-        alpha_ts = [self.alpha * self.s(late) for late in dl]
-        # 4. 更新每个接收到的模型，与当前模型进行加权融合
-
-        currently_updated_models = []
-        for alpha_t, model_k in zip(alpha_ts, models):
-            # 假设 self.model 和 model_k 支持标量乘法和加法操作
-            updated_model = (1 - alpha_t) * self.model + alpha_t * model_k
-            currently_updated_models.append(updated_model)
-
-        # 5. 聚合所有更新后的模型，更新当前模型
-
-        return self.async_aggregate(currently_updated_models, client_ids)
-
-    def s(self, delta_tau):
-        return (delta_tau + 1) ** (-0.5)
-
-    def async_aggregate(self, models, client_ids):
-        """
-        聚合多个客户端的模型，并将结果与 self.model 进行加权聚合。
-
-        参数：
-            models (list): 包含多个客户端模型参数的列表（PyTorch tensors）。
-            client_ids (list): 包含多个客户端标识符的列表。
-
-        返回：
-            dict: 聚合后的最终模型。
-        """
-        # 计算所有客户端的数据量总和
-
-        total_data_vol = sum([self.clients[client_id].datavol for client_id in client_ids])
-
-        # 计算每个客户端模型的权重
-        weights = [self.clients[client_id].datavol / total_data_vol for client_id in client_ids]
-
-        # 加权聚合所有模型
-        weighted_models = [weight * model for weight, model in zip(weights, models)]
-        aggregated_model = fmodule._model_sum(weighted_models)
-
-        return aggregated_model
 
     def communicate(self, client_id_list, send_model, mtype):
         self.total_traffic += len(client_id_list)
@@ -141,6 +93,14 @@ class Server(AsyncServer):
             "model": copy.deepcopy(send_model),
         }
 
+    def fedbuff_aggregate(self, buffer):
+        taus_bf = [b[1] for b in buffer]
+        updates_bf = [b[0] for b in buffer]
+        weights_bf = [(1 + self.current_round - ctau) ** (-0.5) for ctau in taus_bf]
+        model_delta = fmodule._model_average(updates_bf, weights_bf) / len(buffer)
+        model = self.model + self.eta * model_delta
+        return model
+
 
 class Client(BasicClient):
     def __init__(self, option={}):
@@ -156,8 +116,11 @@ class Client(BasicClient):
         self.model = model
 
     def rp(self, servermodel):
+        global_model = copy.deepcopy(self.model)
         self.model_train(self.model)
-        cpkg = self.pack(self.model)
+        update = self.model-global_model
+        update._round = self.model._round
+        cpkg = self.pack(update)
         return cpkg
 
     @fmodule.with_multi_gpus

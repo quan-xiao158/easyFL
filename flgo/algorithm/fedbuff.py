@@ -11,6 +11,7 @@ class Server(AsyncServer):
 
     def package_handler(self, received_packages:dict):
         if self.is_package_empty(received_packages): return False
+
         received_updates = received_packages['model']
         received_client_taus = [u._round for u in received_updates]
         for cdelta, ctau in zip(received_updates, received_client_taus):
@@ -26,6 +27,7 @@ class Server(AsyncServer):
             self.buffer = []
             return True
         return False
+
 
 class Client(BasicClient):
     def reply(self, svr_pkg):
