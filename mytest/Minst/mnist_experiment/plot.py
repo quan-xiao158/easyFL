@@ -24,7 +24,7 @@ for file_name in file_list:
 import matplotlib.pyplot as plt
 
 line_names = [
-    "fedbalance", "fedbuff"
+    "fedbalance", "fedbuff","kafl"
 ]
 
 # 创建一个新的图形对象和一个轴对象

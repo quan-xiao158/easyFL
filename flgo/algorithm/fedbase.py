@@ -54,7 +54,6 @@ class BasicParty:
         if mtype not in self.actions.keys():
             raise NotImplementedError("There is no action corresponding to message type {}.".format(mtype))
         return self.actions[mtype](package)
-
     def set_data(self, data, flag: str = 'train') -> None:
         r"""
         Set self's attibute 'xxx_data' to be data where xxx is the flag. For example,

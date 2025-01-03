@@ -1,3 +1,5 @@
+import math
+
 import torch
 
 from flgo.utils import fmodule
@@ -17,9 +19,11 @@ class Server(AsyncServer):
         self.concurrent_clients = set()  # 正在被选择的客户端
         self.buffered_clients = set()  # 缓冲的客户端
         self.server_send_round = [0] * 100  # 服务器下发模型round记录
+        self.commit_num = [1] * 100
         self.client_fs_list = [-1] * 100  # 服务器记录客户端时间差列表
         self.client_lh_list = [-1] * 100  # 服务器记录客户端上传模型陈旧度列表
         self.decay_list = [0] * 100
+        self.lambada = [0.0] * 100
         self.round_number = 0
         self.buff_queue = deque()
         '''
@@ -28,9 +32,7 @@ class Server(AsyncServer):
         '''
         self.alpha = 0.72
         self.agg_num = 15
-    def initialize(self):
-        self.init_algo_para({'buffer_ratio': 0.1, 'eta': 1.0})
-        self.buffer = []
+        self.r = 0.5
 
     def is_package_empty(self, received_packages: dict):
         """
@@ -51,20 +53,19 @@ class Server(AsyncServer):
         self.current_round += 1
 
         self.selected_client = self.sample_async()
-        # 如果有客户端被选中，记录一条日志，显示被选中的客户端及当前时间
-
+        self.commit_num[self.selected_client] += 1
+        self.model._round = self.current_round
         self.selected_clients.append(self.selected_client)
         self.concurrent_clients.add(self.selected_client)
         received_packages = self.communicate([self.selected_client], None, 2)
+        self.lambada[self.selected_client] = self.compute_lambda(received_packages[0]['model'])
         for index in received_packages:
             self.buff_queue.append(index['model'])
         if len(self.buff_queue) == self.buff_len:
-            buff_list = []
+            model_list = []
             for i in range(self.buff_len):
-                m=self.buff_queue.pop()
-                buff_list.append((m,m._round))
-            self.model = self.fedbuff_aggregate(buff_list)
-            self.model._round = self.current_round  # 将模型的 _round 属性设置为当前的回合数
+                model_list.append(self.buff_queue.pop())
+            self.model = self.kafl_aggregate(model_list, self.selected_clients)
             self.communicate(self.selected_clients, self.model, 1)
             self.selected_clients.clear()
             self.concurrent_clients.clear()
@@ -72,9 +73,21 @@ class Server(AsyncServer):
             return True
         return False
 
+    def kafl_aggregate(self, models, client_ids):
+        sorted_list = sorted([(index, value) for index, value in enumerate(self.commit_num)], key=lambda x: x[1])
+        sorted_indices = sorted(range(len(self.commit_num)), key=lambda k: self.commit_num[k])
+        result = [sorted_indices.index(i) for i in range(len(self.commit_num))]
+        q_list = [sorted_list[98 + 1 - result[id]][1] / sum(self.commit_num) for id in client_ids]
+        p_list=[]
+        count=0
+        for cid in client_ids:
+            p_list.append(abs(self.clients[cid].datavol) * math.exp(-self.r * abs(self.lambada[cid] / q_list[count])))
+            count=count+1
 
-
-
+        weight_list = [pi / sum(p_list) for pi in p_list]
+        weighted_models = [weight * model for weight, model in zip(weight_list, models)]
+        w_new = fmodule._model_sum(weighted_models)
+        return (1 - self.alpha) * self.model + self.alpha * w_new
 
     def communicate(self, client_id_list, send_model, mtype):
         self.total_traffic += len(client_id_list)
@@ -93,13 +106,29 @@ class Server(AsyncServer):
             "model": copy.deepcopy(send_model),
         }
 
-    def fedbuff_aggregate(self, buffer):
-        taus_bf = [b[1] for b in buffer]
-        updates_bf = [b[0] for b in buffer]
-        weights_bf = [(1 + self.current_round - ctau) ** (-0.5) for ctau in taus_bf]
-        model_delta = fmodule._model_average(updates_bf,weights_bf) / len(buffer)
-        model = self.model + self.eta * model_delta
-        return model
+    def compute_lambda(self, w_local):
+        w_global = self.model
+        l2_norm_squared = self.compute_l2_difference(w_global, w_local)
+
+        return l2_norm_squared
+
+    def compute_l2_difference(self, model1, model2):
+        # 获取模型的所有参数
+        params1 = [p.data for p in model1.parameters()]
+        params2 = [p.data for p in model2.parameters()]
+
+        # 用来存储总的 L2 范数差异
+        total_l2_diff = 0.0
+        fenzi = 0.0
+        # 对每一层的权重和偏置计算 L2 范数差异
+        for p1, p2 in zip(params1, params2):
+            # 计算 L2 范数差异并加到总差异中
+            l2_diff = torch.norm(p2, 2)
+            total_l2_diff += l2_diff.item() ** 2  # L2范数的平方和
+            fenzi += torch.sum(p1 * p2)
+        # 取平方根得到最终的 L2 范数差异
+
+        return fenzi / total_l2_diff - 1
 
 
 class Client(BasicClient):
@@ -116,11 +145,8 @@ class Client(BasicClient):
         self.model = model
 
     def rp(self, servermodel):
-        global_model = copy.deepcopy(self.model)
         self.model_train(self.model)
-        update = self.model-global_model
-        update._round = self.model._round
-        cpkg = self.pack(update)
+        cpkg = self.pack(self.model)
         return cpkg
 
     @fmodule.with_multi_gpus
@@ -144,4 +170,3 @@ class Client(BasicClient):
             if self.clip_grad > 0: torch.nn.utils.clip_grad_norm_(parameters=model.parameters(),
                                                                   max_norm=self.clip_grad)
             optimizer.step()
-

@@ -80,7 +80,7 @@ class AsyncServer(BasicServer):
                 self.global_lr_scheduler(self.current_round)
                 if self.round_number % 50 == 0:
                     self.gv.logger.save_output_as_json()
-                self.gv.logger.info("总通信量{}额外通信量{}".format(self.total_traffic, self.additional_traffic))
+                # self.gv.logger.info("总通信量{}额外通信量{}".format(self.total_traffic, self.additional_traffic))
         self.gv.logger.info("=================End==================")
         self.gv.logger.time_end('Total Time Cost')
         # save results as .json file

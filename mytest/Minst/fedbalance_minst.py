@@ -16,15 +16,15 @@ if __name__ == '__main__':
                                       'gpu': 0,
                                       'num_steps': 10,
                                       'alpha': 0.6,
-                                      'agg_num': 15,
-                                      'fs_index': 75,
-                                      'hl_index': 75,
+                                      'agg_num': 14,
+                                      'fs_index': 50,
+                                      'hl_index': 85,
                                       'log_file': True,
                                       'helpLen': 0})
     fedavg_runner.run()
     '''
         self.alpha = 0.6
         self.agg_num = 15
-        self.fs_index = 65
-        self.hl_index = 65
+        self.fs_index = 30
+        self.hl_index = 80
     '''

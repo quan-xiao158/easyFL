@@ -160,8 +160,7 @@ class Server(AsyncServer):
                 self.model = agg_model
                 self.communicate(id_list, agg_model, 1)
                 self.concurrent_clients.difference_update(id_list)
-                self.round_number += 1
-                return True
+                return False
             else:
                 self.sl_queue.append({"client_id": client_id, "model": model})
                 return False
@@ -190,30 +189,7 @@ class Server(AsyncServer):
                 return False
 
     def fedbalance_late_aggregate(self, models, client_ids):
-        """
-        聚合来自不同客户端的模型，考虑模型更新的延迟。
 
-        参数:
-        - models (list): 模型列表，每个元素代表一个客户端的模型。
-        - client_ids (list): 客户端ID列表，对应于models中的每个模型。
-        - late_list (list): 延迟列表，对应于client_ids，每个元素表示该客户端模型的延迟（current_round - tau）。
-
-        返回:
-        - bool: 如果聚合成功，返回True；如果输入为空或不合法，返回False。
-        """
-        # dl = []
-        # for id in self.selected_clients:
-        #     dl.append(self.round_number - self.server_send_round[id])
-        #     self.server_send_round[id] = self.round_number
-        #
-        # alpha_ts = [self.alpha * self.s(late) for late in dl]
-
-        # commmit_avg=sum(self.commit_num)/100
-        # commit_num_list=[]
-        # for id in client_ids:
-        #     commit_num_list.append(abs(self.commit_num[id]-commmit_avg))
-
-        # alpha_ts = [self.alpha * self.s(late) for late in commit_num_list]
         alpha_ts = [self.option['alpha']] * 16
         # 4. 更新每个接收到的模型，与当前模型进行加权融合
 
