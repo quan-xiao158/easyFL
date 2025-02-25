@@ -1,7 +1,10 @@
 import os
 import json
 import matplotlib.pyplot as plt
-
+from matplotlib.font_manager import FontProperties
+font_set = FontProperties(fname=r"c:\windows\fonts\simsun.ttc", size=10)
+folder_path = 'bias-and-straless'  # 文件夹路径
+plt.rcParams['font.sans-serif']=['SimHei']
 folder_path = 'Record'  # 文件夹路径
 
 # 获取文件夹中所有文件的列表
@@ -24,7 +27,7 @@ for file_name in file_list:
 import matplotlib.pyplot as plt
 
 line_names = [
-    "fedbalance", "fedbuff","kafl"
+     "fedasync算法","我们的算法"
 ]
 
 # 创建一个新的图形对象和一个轴对象
@@ -38,8 +41,8 @@ for i, series in enumerate(record_list):
 ax.legend()
 
 # 添加标题和轴标签
-ax.set_xlabel('Communication Round')
-ax.set_ylabel('Test_Accuracy')
+ax.set_xlabel('训练轮次',fontproperties=font_set)
+ax.set_ylabel('测试集准确率',fontproperties=font_set)
 # ax.set_ylim(0, 1)
 ax.set_yticks([0,0.1, 0.2,0.3, 0.4,0.5, 0.6, 0.7,0.8,0.9, 1])
 # 显示图形

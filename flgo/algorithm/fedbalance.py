@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 import torch
 from flgo.utils import fmodule
@@ -72,6 +74,7 @@ class Server(AsyncServer):
         selected_clients = [self.selected_client]
         received_packages = self.communicate(selected_clients, None, 2)
         client_model = received_packages['model']
+        client_model.train_list.append(self.selected_client)
         client_lambda = self.compute_lambda(client_model)
         lh_tag = self.compute_hl(self.selected_client, client_lambda)
         self.current_round = self.current_round + 1
@@ -189,19 +192,29 @@ class Server(AsyncServer):
                 return False
 
     def fedbalance_late_aggregate(self, models, client_ids):
+        sorted_indices = sorted(range(len(self.commit_num)), key=lambda k: self.commit_num[k])
+        result = [sorted_indices.index(i) for i in range(len(self.commit_num))]  # 客户端i的排名
+        model_score=[]
+        for model in models:
+            train_id_list=list(model.train_list)
+            oust=0
+            for id in train_id_list:
+                oust+=1/result[id]
+                model_score.append(oust)
 
-        alpha_ts = [self.option['alpha']] * 16
-        # 4. 更新每个接收到的模型，与当前模型进行加权融合
+        p_list=[]
+        count=0
+        for cid in client_ids:
+            p_list.append(abs(self.clients[cid].datavol) * math.exp(model_score[count]))
+            count=count+1
+        weight_list = [pi / sum(p_list) for pi in p_list]
+        weighted_models = [weight * model for weight, model in zip(weight_list, models)]
+        w_new = fmodule._model_sum(weighted_models)
+        rmodel=(1 - self.alpha) * self.model + self.alpha * w_new
+        rmodel.train_list = deque(maxlen=4)
+        return rmodel
 
-        currently_updated_models = []
-        for alpha_t, model_k in zip(alpha_ts, models):
-            # 假设 self.model 和 model_k 支持标量乘法和加法操作
-            updated_model = (1 - alpha_t) * self.model + alpha_t * model_k
-            currently_updated_models.append(updated_model)
 
-        # 5. 聚合所有更新后的模型，更新当前模型
-
-        return self.fedbalance_aggregate(currently_updated_models, client_ids)
 
     def s(self, delta_tau):
         return (delta_tau + 1) ** (-0.5)

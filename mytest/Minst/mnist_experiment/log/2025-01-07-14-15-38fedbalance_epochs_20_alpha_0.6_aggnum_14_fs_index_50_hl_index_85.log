@@ -1,0 +1,18 @@
+2025-01-07 14:15:38,060 fflow.py init [line:691] INFO PROCESS ID:	14148
+2025-01-07 14:15:38,060 fflow.py init [line:692] INFO Initializing devices: cuda:0 will be used for this running.
+2025-01-07 14:15:38,060 fflow.py init [line:695] INFO BENCHMARK:	flgo.benchmark.mnist_classification
+2025-01-07 14:15:38,060 fflow.py init [line:696] INFO TASK:			./mnist_experiment
+2025-01-07 14:15:38,061 fflow.py init [line:697] INFO MODEL:		flgo.benchmark.mnist_classification.model.cnn
+2025-01-07 14:15:38,061 fflow.py init [line:698] INFO ALGORITHM:	fedbalance
+2025-01-07 14:15:38,088 fflow.py init [line:737] INFO SCENE:		horizontal FL with 1 <class 'flgo.algorithm.fedbalance.Server'>, 100 <class 'flgo.algorithm.fedbalance.Client'>
+2025-01-07 14:15:38,241 fflow.py init [line:754] INFO SIMULATOR:	<class 'flgo.simulator.default_simulator.Simulator'>
+2025-01-07 14:15:38,243 fflow.py init [line:767] INFO Ready to start.
+2025-01-07 14:15:38,243 asyncbase.py run [line:55] INFO --------------Initial Evaluation--------------
+2025-01-07 14:15:41,325 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.0845
+2025-01-07 14:15:41,325 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.3038
+2025-01-07 14:15:41,325 asyncbase.py run [line:58] INFO Eval Time Cost:               3.0820s
+2025-01-07 14:15:41,778 asyncbase.py run [line:61] INFO --------------全局模型下发--------------
+2025-01-07 14:16:15,939 asyncbase.py run [line:69] INFO --------------Round 1--------------
+2025-01-07 14:16:21,664 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.1436
+2025-01-07 14:16:21,664 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2867
+2025-01-07 14:16:21,664 asyncbase.py run [line:74] INFO Eval Time Cost:               5.7252s

@@ -1,6 +1,9 @@
+from collections import deque
+
 from torch import nn
 import torch.nn.functional as F
 from flgo.utils.fmodule import FModule
+
 
 class Model(FModule):
     def __init__(self):
@@ -23,9 +26,12 @@ class Model(FModule):
         x = self.head(x)
         return x
 
+
 def init_local_module(object):
     pass
+
 
 def init_global_module(object):
     if 'Server' in object.__class__.__name__:
         object.model = Model().to(object.device)
+        object.model.train_list = deque(maxlen=4)

@@ -2,9 +2,10 @@
 import os
 import json
 import matplotlib.pyplot as plt
-
+from matplotlib.font_manager import FontProperties
+font_set = FontProperties(fname=r"c:\windows\fonts\simsun.ttc", size=10)
 folder_path = 'biasRecord'  # 文件夹路径
-
+plt.rcParams['font.sans-serif']=['SimHei']
 # 获取文件夹中所有文件的列表
 file_list = [f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))]
 record_list = []
@@ -27,11 +28,11 @@ import matplotlib.pyplot as plt
 
 # # 假设data是你的包含8个列表的列表
 # line_names = [
-#     '0_staleness', '0.3_staleness', '0.4_staleness', '0.5_staleness',
-#     '0.6_staleness', '0.7_staleness', '0.8_staleness', '0.9_staleness'
+#     '无陈旧度', '0.3陈旧度', '0.4陈旧度', '0.5陈旧度',
+#     '0.6陈旧度', '0.7陈旧度', '0.8陈旧度', '0.9陈旧度'
 # ]
 line_names = [
-    '0bias','10bias','15bias','17bias','20bias'
+    '0训练偏差','10训练偏差','15训练偏差','17训练偏差','20训练偏差'
 ]
 
 # line_names = [
@@ -49,8 +50,8 @@ for i, series in enumerate(record_list):
 ax.legend()
 
 # 添加标题和轴标签
-ax.set_xlabel('Communication Round')
-ax.set_ylabel('Test_Accuracy')
+ax.set_xlabel('训练轮次',fontproperties=font_set)
+ax.set_ylabel('测试集准确率',fontproperties=font_set)
 
 # 显示图形
 plt.show()
