@@ -13,7 +13,7 @@ if __name__ == '__main__':
     fedavg_runner = flgo.init(task=task, algorithm=fedbalance, Logger=FedBalanceLogger,
                               option={'num_rounds': 500,
                                       'num_epochs': 20,
-                                      'gpu': 0,
+                                      # 'gpu': 1,
                                       'num_steps': 10,
                                       'alpha': 0.6,
                                       'agg_num': 14,

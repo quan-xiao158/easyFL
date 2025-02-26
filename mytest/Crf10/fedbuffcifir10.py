@@ -1,6 +1,6 @@
 import flgo.benchmark.cifar10_classification.model.cnn as cnn
 import flgo
-import flgo.algorithm.fedasync_own as  fedasync
+import flgo.algorithm.fedbuff_own as  fedbuff
 import  flgo.algorithm.fedavg as fedavg
 import flgo.benchmark.mnist_classification as mnist
 import flgo.benchmark.cifar10_classification as cifar10
@@ -13,5 +13,5 @@ flgo.gen_task_by_(cifar10, fbp.DirichletPartitioner(num_clients=100, alpha=0.011
 
 if __name__ == '__main__':
 
-    fedavg_runner = flgo.init(task=task,Logger=FedBalanceLogger, algorithm=fedasync, option={'num_rounds': 2500, 'num_epochs': 20, 'cpu': 0,'proportion':0.2},model=cnn)
+    fedavg_runner = flgo.init(task=task,Logger=FedBalanceLogger, algorithm=fedbuff, option={'num_rounds': 2500, 'num_epochs': 20, 'cpu': 0,'proportion':0.2},model=cnn)
     fedavg_runner.run()
