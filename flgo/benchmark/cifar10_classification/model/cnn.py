@@ -1,3 +1,5 @@
+from collections import deque
+
 from torch import nn
 from flgo.utils.fmodule import FModule
 

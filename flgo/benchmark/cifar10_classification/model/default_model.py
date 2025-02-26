@@ -1,3 +1,5 @@
+from collections import deque
+
 from ..config import get_model
 from flgo.utils.fmodule import FModule
 
@@ -15,3 +17,4 @@ def init_local_module(object):
 def init_global_module(object):
     if 'Server' in object.__class__.__name__:
         object.model = Model().to(object.device)
+        object.model.train_list = deque(maxlen=4)

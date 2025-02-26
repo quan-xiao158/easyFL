@@ -24,7 +24,6 @@ class Server(AsyncServer):
         self.round_number = 0
         self.maxlambda = 0
         self.lambdalist = []
-        self.buffer_queue = deque(maxlen=self.option['helpLen'])
         '''
         fedbalance  超参数：
         
@@ -142,9 +141,6 @@ class Server(AsyncServer):
             if len(self.fh_queue) == agg_num:
                 self.fh_queue.append({"client_id": client_id, "model": model})
                 id_list, model_list = self.queue_pop([self.fh_queue])
-                for i in range(len(self.buffer_queue)):
-                    id_list.append(self.buffer_queue[i]['client_id'])
-                    model_list.append(self.buffer_queue[i]['model'])
                 agg_model = self.fedbalance_late_aggregate(model_list, id_list)
                 self.communicate(id_list, agg_model, 1)
                 self.additional_traffic+=len(id_list)*2
@@ -154,7 +150,6 @@ class Server(AsyncServer):
                 self.fh_queue.append({"client_id": client_id, "model": model})
                 return False
         elif lh_tag == "L" and fs_tag == "S":
-            self.buffer_queue.append({"client_id": client_id, "model": model})
             #1、将模型入队，如果模型数量长度
             if len(self.sl_queue) + len(self.fl_queue) == agg_num:
                 self.sl_queue.append({"client_id": client_id, "model": model})
@@ -168,7 +163,6 @@ class Server(AsyncServer):
                 self.sl_queue.append({"client_id": client_id, "model": model})
                 return False
         else:  #LF
-            self.buffer_queue.append({"client_id": client_id, "model": model})
             if len(self.sh_queue) != 0:
                 th = self.sh_queue.pop()
                 client2_id = th["client_id"]
