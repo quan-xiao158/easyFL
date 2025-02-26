@@ -15,8 +15,8 @@ for file_name in file_list:
         with open(file_path, 'r', encoding='utf-8') as json_file:
             data = json.load(json_file)
             # 检查固定字段是否存在并获取其值
-            if 'val_accuracy' in data:
-                fixed_field_value = data['val_accuracy']
+            if 'test_accuracy' in data:
+                fixed_field_value = data['test_accuracy']
                 record_list.append(fixed_field_value)
 
 
@@ -31,7 +31,7 @@ import matplotlib.pyplot as plt
 #     '0.6_staleness', '0.7_staleness', '0.8_staleness', '0.9_staleness'
 # ]
 line_names = [
-    "fedasync"
+    "fedasync","fedbuff"
 ]
 
 # line_names = [

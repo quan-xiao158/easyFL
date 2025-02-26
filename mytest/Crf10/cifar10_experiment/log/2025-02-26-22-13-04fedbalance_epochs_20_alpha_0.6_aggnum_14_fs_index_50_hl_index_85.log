@@ -1,0 +1,14 @@
+2025-02-26 22:13:04,904 fflow.py init [line:691] INFO PROCESS ID:	14696
+2025-02-26 22:13:04,904 fflow.py init [line:692] INFO Initializing devices: cpu will be used for this running.
+2025-02-26 22:13:04,904 fflow.py init [line:695] INFO BENCHMARK:	flgo.benchmark.cifar10_classification
+2025-02-26 22:13:04,904 fflow.py init [line:696] INFO TASK:			./cifar10_experiment
+2025-02-26 22:13:04,904 fflow.py init [line:697] INFO MODEL:		flgo.benchmark.cifar10_classification.model.cnn_data_aug
+2025-02-26 22:13:04,904 fflow.py init [line:698] INFO ALGORITHM:	fedbalance
+2025-02-26 22:13:04,917 fflow.py init [line:737] INFO SCENE:		horizontal FL with 1 <class 'flgo.algorithm.fedbalance.Server'>, 100 <class 'flgo.algorithm.fedbalance.Client'>
+2025-02-26 22:13:04,927 fflow.py init [line:754] INFO SIMULATOR:	<class 'flgo.simulator.default_simulator.Simulator'>
+2025-02-26 22:13:04,928 fflow.py init [line:767] INFO Ready to start.
+2025-02-26 22:13:04,928 asyncbase.py run [line:55] INFO --------------Initial Evaluation--------------
+2025-02-26 22:13:10,902 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.0889
+2025-02-26 22:13:10,903 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.3032
+2025-02-26 22:13:10,903 asyncbase.py run [line:58] INFO Eval Time Cost:               5.9752s
+2025-02-26 22:13:11,203 asyncbase.py run [line:61] INFO --------------全局模型下发--------------
