@@ -185,9 +185,9 @@ class Server(AsyncServer):
                 self.fl_queue.append({"client_id": client_id, "model": model})
                 return False
 
-    def fedbalance_late_aggregate(self, models, client_ids):
-        sorted_indices = sorted(range(len(self.commit_num)), key=lambda k: self.commit_num[k])
-        result = [sorted_indices.index(i) for i in range(len(self.commit_num))]  # 客户端i的排名
+    # def fedbalance_late_aggregate(self, models, client_ids):
+    #     sorted_indices = sorted(range(len(self.commit_num)), key=lambda k: self.commit_num[k])
+    #     result = [sorted_indices.index(i) for i in range(len(self.commit_num))]  # 客户端i的排名
         model_score=[]
         # for model in models:
         #     train_id_list=list(model.train_list)

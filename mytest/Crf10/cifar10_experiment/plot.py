@@ -31,7 +31,7 @@ import matplotlib.pyplot as plt
 #     '0.6_staleness', '0.7_staleness', '0.8_staleness', '0.9_staleness'
 # ]
 line_names = [
-    "fedasync","fedbuff"
+    "fedasync","fedbalance","fedbuff","Kafl"
 ]
 
 # line_names = [
