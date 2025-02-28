@@ -1,0 +1,490 @@
+2025-02-27 14:00:01,510 fflow.py init [line:691] INFO PROCESS ID:	19348
+2025-02-27 14:00:01,510 fflow.py init [line:692] INFO Initializing devices: cuda:0 will be used for this running.
+2025-02-27 14:00:01,510 fflow.py init [line:695] INFO BENCHMARK:	flgo.benchmark.mnist_classification
+2025-02-27 14:00:01,511 fflow.py init [line:696] INFO TASK:			./mnist_experiment
+2025-02-27 14:00:01,511 fflow.py init [line:697] INFO MODEL:		flgo.benchmark.mnist_classification.model.cnn
+2025-02-27 14:00:01,511 fflow.py init [line:698] INFO ALGORITHM:	fedbalance
+2025-02-27 14:00:01,530 fflow.py init [line:737] INFO SCENE:		horizontal FL with 1 <class 'flgo.algorithm.fedbalance.Server'>, 100 <class 'flgo.algorithm.fedbalance.Client'>
+2025-02-27 14:00:02,916 fflow.py init [line:754] INFO SIMULATOR:	<class 'flgo.simulator.default_simulator.Simulator'>
+2025-02-27 14:00:02,917 fflow.py init [line:767] INFO Ready to start.
+2025-02-27 14:00:02,917 asyncbase.py run [line:55] INFO --------------Initial Evaluation--------------
+2025-02-27 14:00:07,908 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.0845
+2025-02-27 14:00:07,908 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.3038
+2025-02-27 14:00:07,908 asyncbase.py run [line:58] INFO Eval Time Cost:               4.9910s
+2025-02-27 14:00:08,086 asyncbase.py run [line:61] INFO --------------ȫ��ģ���·�--------------
+2025-02-27 14:00:14,526 asyncbase.py run [line:69] INFO --------------Round 1--------------
+2025-02-27 14:00:16,752 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.1436
+2025-02-27 14:00:16,752 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2867
+2025-02-27 14:00:16,752 asyncbase.py run [line:74] INFO Eval Time Cost:               2.2260s
+2025-02-27 14:00:20,044 asyncbase.py run [line:69] INFO --------------Round 2--------------
+2025-02-27 14:00:22,149 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.1032
+2025-02-27 14:00:22,149 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2651
+2025-02-27 14:00:22,149 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1054s
+2025-02-27 14:00:25,458 asyncbase.py run [line:69] INFO --------------Round 3--------------
+2025-02-27 14:00:27,572 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.1952
+2025-02-27 14:00:27,572 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.3217
+2025-02-27 14:00:27,573 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1153s
+2025-02-27 14:00:30,875 asyncbase.py run [line:69] INFO --------------Round 4--------------
+2025-02-27 14:00:33,012 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.1527
+2025-02-27 14:00:33,012 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2218
+2025-02-27 14:00:33,012 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1373s
+2025-02-27 14:00:43,176 asyncbase.py run [line:69] INFO --------------Round 5--------------
+2025-02-27 14:00:45,311 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.2658
+2025-02-27 14:00:45,312 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2150
+2025-02-27 14:00:45,312 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1363s
+2025-02-27 14:00:51,364 asyncbase.py run [line:69] INFO --------------Round 6--------------
+2025-02-27 14:00:53,521 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3105
+2025-02-27 14:00:53,521 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1941
+2025-02-27 14:00:53,521 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1572s
+2025-02-27 14:00:56,804 asyncbase.py run [line:69] INFO --------------Round 7--------------
+2025-02-27 14:00:58,955 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.2499
+2025-02-27 14:00:58,955 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1823
+2025-02-27 14:00:58,955 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1512s
+2025-02-27 14:01:02,300 asyncbase.py run [line:69] INFO --------------Round 8--------------
+2025-02-27 14:01:04,420 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4801
+2025-02-27 14:01:04,420 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1675
+2025-02-27 14:01:04,421 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1203s
+2025-02-27 14:01:14,082 asyncbase.py run [line:69] INFO --------------Round 9--------------
+2025-02-27 14:01:16,147 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3314
+2025-02-27 14:01:16,147 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1805
+2025-02-27 14:01:16,147 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0645s
+2025-02-27 14:01:19,414 asyncbase.py run [line:69] INFO --------------Round 10--------------
+2025-02-27 14:01:21,507 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3853
+2025-02-27 14:01:21,508 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1675
+2025-02-27 14:01:21,508 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0944s
+2025-02-27 14:01:24,776 asyncbase.py run [line:69] INFO --------------Round 11--------------
+2025-02-27 14:01:26,922 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3272
+2025-02-27 14:01:26,922 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1472
+2025-02-27 14:01:26,922 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1453s
+2025-02-27 14:01:40,022 asyncbase.py run [line:69] INFO --------------Round 12--------------
+2025-02-27 14:01:42,175 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.2082
+2025-02-27 14:01:42,175 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0567
+2025-02-27 14:01:42,175 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1532s
+2025-02-27 14:01:46,297 asyncbase.py run [line:69] INFO --------------Round 13--------------
+2025-02-27 14:01:48,386 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4187
+2025-02-27 14:01:48,386 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.9956
+2025-02-27 14:01:48,386 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0884s
+2025-02-27 14:01:51,643 asyncbase.py run [line:69] INFO --------------Round 14--------------
+2025-02-27 14:01:53,752 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4324
+2025-02-27 14:01:53,752 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0366
+2025-02-27 14:01:53,752 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1094s
+2025-02-27 14:02:04,086 asyncbase.py run [line:69] INFO --------------Round 15--------------
+2025-02-27 14:02:06,173 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5493
+2025-02-27 14:02:06,173 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.8730
+2025-02-27 14:02:06,173 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0864s
+2025-02-27 14:02:09,624 asyncbase.py run [line:69] INFO --------------Round 16--------------
+2025-02-27 14:02:11,768 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.1612
+2025-02-27 14:02:11,769 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.9997
+2025-02-27 14:02:11,769 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1452s
+2025-02-27 14:02:15,239 asyncbase.py run [line:69] INFO --------------Round 17--------------
+2025-02-27 14:02:17,365 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3873
+2025-02-27 14:02:17,365 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.9363
+2025-02-27 14:02:17,365 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1263s
+2025-02-27 14:02:20,603 asyncbase.py run [line:69] INFO --------------Round 18--------------
+2025-02-27 14:02:22,742 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.1503
+2025-02-27 14:02:22,743 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.9898
+2025-02-27 14:02:22,743 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1383s
+2025-02-27 14:02:29,296 asyncbase.py run [line:69] INFO --------------Round 19--------------
+2025-02-27 14:02:31,393 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3824
+2025-02-27 14:02:31,393 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.9219
+2025-02-27 14:02:31,393 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0974s
+2025-02-27 14:02:49,056 asyncbase.py run [line:69] INFO --------------Round 20--------------
+2025-02-27 14:02:51,129 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3524
+2025-02-27 14:02:51,129 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.7552
+2025-02-27 14:02:51,129 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0734s
+2025-02-27 14:02:57,697 asyncbase.py run [line:69] INFO --------------Round 21--------------
+2025-02-27 14:02:59,802 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3452
+2025-02-27 14:02:59,802 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.7861
+2025-02-27 14:02:59,802 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1044s
+2025-02-27 14:03:03,514 asyncbase.py run [line:69] INFO --------------Round 22--------------
+2025-02-27 14:03:05,627 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.2576
+2025-02-27 14:03:05,627 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.7628
+2025-02-27 14:03:05,627 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1133s
+2025-02-27 14:03:09,601 asyncbase.py run [line:69] INFO --------------Round 23--------------
+2025-02-27 14:03:11,718 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4395
+2025-02-27 14:03:11,718 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.7554
+2025-02-27 14:03:11,718 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1163s
+2025-02-27 14:03:15,837 asyncbase.py run [line:69] INFO --------------Round 24--------------
+2025-02-27 14:03:17,954 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5054
+2025-02-27 14:03:17,954 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.6000
+2025-02-27 14:03:17,955 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1183s
+2025-02-27 14:03:28,263 asyncbase.py run [line:69] INFO --------------Round 25--------------
+2025-02-27 14:03:30,337 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4666
+2025-02-27 14:03:30,337 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.6078
+2025-02-27 14:03:30,337 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0744s
+2025-02-27 14:03:40,537 asyncbase.py run [line:69] INFO --------------Round 26--------------
+2025-02-27 14:03:42,611 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4680
+2025-02-27 14:03:42,611 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.6411
+2025-02-27 14:03:42,612 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0745s
+2025-02-27 14:03:50,005 asyncbase.py run [line:69] INFO --------------Round 27--------------
+2025-02-27 14:03:52,094 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5742
+2025-02-27 14:03:52,094 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.5581
+2025-02-27 14:03:52,094 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0874s
+2025-02-27 14:04:02,542 asyncbase.py run [line:69] INFO --------------Round 28--------------
+2025-02-27 14:04:04,626 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5669
+2025-02-27 14:04:04,626 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.4659
+2025-02-27 14:04:04,626 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0844s
+2025-02-27 14:04:15,560 asyncbase.py run [line:69] INFO --------------Round 29--------------
+2025-02-27 14:04:17,652 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6058
+2025-02-27 14:04:17,653 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.3878
+2025-02-27 14:04:17,653 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0924s
+2025-02-27 14:04:20,899 asyncbase.py run [line:69] INFO --------------Round 30--------------
+2025-02-27 14:04:23,141 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5716
+2025-02-27 14:04:23,141 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.5199
+2025-02-27 14:04:23,141 asyncbase.py run [line:74] INFO Eval Time Cost:               2.2420s
+2025-02-27 14:04:45,202 asyncbase.py run [line:69] INFO --------------Round 31--------------
+2025-02-27 14:04:47,349 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5907
+2025-02-27 14:04:47,349 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.4673
+2025-02-27 14:04:47,349 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1472s
+2025-02-27 14:04:51,167 asyncbase.py run [line:69] INFO --------------Round 32--------------
+2025-02-27 14:04:53,328 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5745
+2025-02-27 14:04:53,328 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.4235
+2025-02-27 14:04:53,328 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1602s
+2025-02-27 14:05:07,040 asyncbase.py run [line:69] INFO --------------Round 33--------------
+2025-02-27 14:05:09,190 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6778
+2025-02-27 14:05:09,190 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.1696
+2025-02-27 14:05:09,190 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1503s
+2025-02-27 14:05:13,328 asyncbase.py run [line:69] INFO --------------Round 34--------------
+2025-02-27 14:05:16,065 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5390
+2025-02-27 14:05:16,065 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.2522
+2025-02-27 14:05:16,065 asyncbase.py run [line:74] INFO Eval Time Cost:               2.7357s
+2025-02-27 14:05:20,880 asyncbase.py run [line:69] INFO --------------Round 35--------------
+2025-02-27 14:05:23,201 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6610
+2025-02-27 14:05:23,201 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.2081
+2025-02-27 14:05:23,201 asyncbase.py run [line:74] INFO Eval Time Cost:               2.3208s
+2025-02-27 14:05:26,903 asyncbase.py run [line:69] INFO --------------Round 36--------------
+2025-02-27 14:05:29,015 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5964
+2025-02-27 14:05:29,015 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.2499
+2025-02-27 14:05:29,015 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1124s
+2025-02-27 14:05:41,759 asyncbase.py run [line:69] INFO --------------Round 37--------------
+2025-02-27 14:05:43,899 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4380
+2025-02-27 14:05:43,900 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.5999
+2025-02-27 14:05:43,900 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1393s
+2025-02-27 14:05:51,338 asyncbase.py run [line:69] INFO --------------Round 38--------------
+2025-02-27 14:05:53,475 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5672
+2025-02-27 14:05:53,475 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.8676
+2025-02-27 14:05:53,475 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1373s
+2025-02-27 14:06:01,763 asyncbase.py run [line:69] INFO --------------Round 39--------------
+2025-02-27 14:06:03,916 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6648
+2025-02-27 14:06:03,916 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.3537
+2025-02-27 14:06:03,916 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1532s
+2025-02-27 14:06:13,778 asyncbase.py run [line:69] INFO --------------Round 40--------------
+2025-02-27 14:06:16,101 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.5912
+2025-02-27 14:06:16,101 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.2354
+2025-02-27 14:06:16,102 asyncbase.py run [line:74] INFO Eval Time Cost:               2.3238s
+2025-02-27 14:06:24,177 asyncbase.py run [line:69] INFO --------------Round 41--------------
+2025-02-27 14:06:26,518 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6710
+2025-02-27 14:06:26,518 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.1108
+2025-02-27 14:06:26,518 asyncbase.py run [line:74] INFO Eval Time Cost:               2.3407s
+2025-02-27 14:06:31,088 asyncbase.py run [line:69] INFO --------------Round 42--------------
+2025-02-27 14:06:33,447 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7050
+2025-02-27 14:06:33,448 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.0437
+2025-02-27 14:06:33,448 asyncbase.py run [line:74] INFO Eval Time Cost:               2.3607s
+2025-02-27 14:06:53,559 asyncbase.py run [line:69] INFO --------------Round 43--------------
+2025-02-27 14:06:55,874 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7620
+2025-02-27 14:06:55,874 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.9116
+2025-02-27 14:06:55,874 asyncbase.py run [line:74] INFO Eval Time Cost:               2.3138s
+2025-02-27 14:06:59,546 asyncbase.py run [line:69] INFO --------------Round 44--------------
+2025-02-27 14:07:01,870 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6534
+2025-02-27 14:07:01,870 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.0082
+2025-02-27 14:07:01,870 asyncbase.py run [line:74] INFO Eval Time Cost:               2.3238s
+2025-02-27 14:07:05,314 asyncbase.py run [line:69] INFO --------------Round 45--------------
+2025-02-27 14:07:07,449 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7249
+2025-02-27 14:07:07,449 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.9785
+2025-02-27 14:07:07,449 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1353s
+2025-02-27 14:07:11,260 asyncbase.py run [line:69] INFO --------------Round 46--------------
+2025-02-27 14:07:13,335 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7596
+2025-02-27 14:07:13,335 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.9335
+2025-02-27 14:07:13,335 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0745s
+2025-02-27 14:07:16,628 asyncbase.py run [line:69] INFO --------------Round 47--------------
+2025-02-27 14:07:18,829 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.6829
+2025-02-27 14:07:18,829 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.9704
+2025-02-27 14:07:18,829 asyncbase.py run [line:74] INFO Eval Time Cost:               2.2011s
+2025-02-27 14:07:25,429 asyncbase.py run [line:69] INFO --------------Round 48--------------
+2025-02-27 14:07:27,531 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7429
+2025-02-27 14:07:27,531 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.8464
+2025-02-27 14:07:27,531 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1014s
+2025-02-27 14:07:30,816 asyncbase.py run [line:69] INFO --------------Round 49--------------
+2025-02-27 14:07:32,965 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7284
+2025-02-27 14:07:32,965 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.8893
+2025-02-27 14:07:32,965 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1492s
+2025-02-27 14:07:36,684 asyncbase.py run [line:69] INFO --------------Round 50--------------
+2025-02-27 14:07:38,765 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7388
+2025-02-27 14:07:38,765 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.9077
+2025-02-27 14:07:38,765 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0814s
+2025-02-27 14:07:43,223 asyncbase.py run [line:69] INFO --------------Round 51--------------
+2025-02-27 14:07:45,311 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7499
+2025-02-27 14:07:45,312 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.9638
+2025-02-27 14:07:45,312 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0884s
+2025-02-27 14:07:55,635 asyncbase.py run [line:69] INFO --------------Round 52--------------
+2025-02-27 14:07:57,780 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7349
+2025-02-27 14:07:57,780 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.1511
+2025-02-27 14:07:57,780 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1452s
+2025-02-27 14:08:01,442 asyncbase.py run [line:69] INFO --------------Round 53--------------
+2025-02-27 14:08:03,563 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7529
+2025-02-27 14:08:03,563 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.2341
+2025-02-27 14:08:03,563 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1213s
+2025-02-27 14:08:06,946 asyncbase.py run [line:69] INFO --------------Round 54--------------
+2025-02-27 14:08:09,121 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7610
+2025-02-27 14:08:09,121 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.1115
+2025-02-27 14:08:09,121 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1742s
+2025-02-27 14:08:13,156 asyncbase.py run [line:69] INFO --------------Round 55--------------
+2025-02-27 14:08:15,308 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7555
+2025-02-27 14:08:15,308 fedbalance_logger.py log_once [line:18] INFO test_loss                     1.0029
+2025-02-27 14:08:15,308 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1512s
+2025-02-27 14:08:18,664 asyncbase.py run [line:69] INFO --------------Round 56--------------
+2025-02-27 14:08:20,837 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7603
+2025-02-27 14:08:20,837 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.8705
+2025-02-27 14:08:20,837 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1732s
+2025-02-27 14:08:25,010 asyncbase.py run [line:69] INFO --------------Round 57--------------
+2025-02-27 14:08:27,144 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7511
+2025-02-27 14:08:27,144 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.7953
+2025-02-27 14:08:27,144 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1333s
+2025-02-27 14:08:31,460 asyncbase.py run [line:69] INFO --------------Round 58--------------
+2025-02-27 14:08:33,532 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7224
+2025-02-27 14:08:33,532 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.8690
+2025-02-27 14:08:33,532 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0704s
+2025-02-27 14:09:07,375 asyncbase.py run [line:69] INFO --------------Round 59--------------
+2025-02-27 14:09:09,448 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7135
+2025-02-27 14:09:09,448 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.8269
+2025-02-27 14:09:09,448 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0724s
+2025-02-27 14:09:12,704 asyncbase.py run [line:69] INFO --------------Round 60--------------
+2025-02-27 14:09:14,795 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7665
+2025-02-27 14:09:14,795 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.7062
+2025-02-27 14:09:14,795 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0914s
+2025-02-27 14:09:18,046 asyncbase.py run [line:69] INFO --------------Round 61--------------
+2025-02-27 14:09:20,182 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7894
+2025-02-27 14:09:20,183 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.6658
+2025-02-27 14:09:20,183 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1373s
+2025-02-27 14:09:26,844 asyncbase.py run [line:69] INFO --------------Round 62--------------
+2025-02-27 14:09:28,966 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7246
+2025-02-27 14:09:28,967 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.8508
+2025-02-27 14:09:28,967 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1224s
+2025-02-27 14:09:35,872 asyncbase.py run [line:69] INFO --------------Round 63--------------
+2025-02-27 14:09:37,958 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7801
+2025-02-27 14:09:37,958 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.7410
+2025-02-27 14:09:37,958 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0864s
+2025-02-27 14:09:45,007 asyncbase.py run [line:69] INFO --------------Round 64--------------
+2025-02-27 14:09:47,081 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8535
+2025-02-27 14:09:47,081 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.5873
+2025-02-27 14:09:47,081 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0744s
+2025-02-27 14:10:01,118 asyncbase.py run [line:69] INFO --------------Round 65--------------
+2025-02-27 14:10:03,224 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8566
+2025-02-27 14:10:03,225 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.7075
+2025-02-27 14:10:03,225 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1064s
+2025-02-27 14:10:09,885 asyncbase.py run [line:69] INFO --------------Round 66--------------
+2025-02-27 14:10:11,981 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8003
+2025-02-27 14:10:11,981 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.6827
+2025-02-27 14:10:11,982 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0974s
+2025-02-27 14:10:15,357 asyncbase.py run [line:69] INFO --------------Round 67--------------
+2025-02-27 14:10:17,526 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8773
+2025-02-27 14:10:17,526 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.5955
+2025-02-27 14:10:17,526 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1682s
+2025-02-27 14:10:20,943 asyncbase.py run [line:69] INFO --------------Round 68--------------
+2025-02-27 14:10:23,103 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7802
+2025-02-27 14:10:23,103 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.6694
+2025-02-27 14:10:23,103 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1592s
+2025-02-27 14:10:34,574 asyncbase.py run [line:69] INFO --------------Round 69--------------
+2025-02-27 14:10:36,766 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7763
+2025-02-27 14:10:36,766 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.6431
+2025-02-27 14:10:36,766 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1911s
+2025-02-27 14:10:41,000 asyncbase.py run [line:69] INFO --------------Round 70--------------
+2025-02-27 14:10:43,089 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7336
+2025-02-27 14:10:43,089 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.6849
+2025-02-27 14:10:43,089 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0874s
+2025-02-27 14:10:54,505 asyncbase.py run [line:69] INFO --------------Round 71--------------
+2025-02-27 14:10:56,577 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8566
+2025-02-27 14:10:56,577 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.5200
+2025-02-27 14:10:56,577 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0714s
+2025-02-27 14:11:06,957 asyncbase.py run [line:69] INFO --------------Round 72--------------
+2025-02-27 14:11:09,086 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8761
+2025-02-27 14:11:09,087 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.5021
+2025-02-27 14:11:09,087 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1293s
+2025-02-27 14:11:12,389 asyncbase.py run [line:69] INFO --------------Round 73--------------
+2025-02-27 14:11:14,509 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7707
+2025-02-27 14:11:14,509 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.6378
+2025-02-27 14:11:14,509 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1203s
+2025-02-27 14:11:18,388 asyncbase.py run [line:69] INFO --------------Round 74--------------
+2025-02-27 14:11:20,486 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8049
+2025-02-27 14:11:20,487 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.5698
+2025-02-27 14:11:20,487 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0984s
+2025-02-27 14:11:32,277 asyncbase.py run [line:69] INFO --------------Round 75--------------
+2025-02-27 14:11:34,436 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8599
+2025-02-27 14:11:34,436 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.5123
+2025-02-27 14:11:34,436 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1592s
+2025-02-27 14:11:44,875 asyncbase.py run [line:69] INFO --------------Round 76--------------
+2025-02-27 14:11:47,011 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8604
+2025-02-27 14:11:47,011 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.5112
+2025-02-27 14:11:47,011 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1353s
+2025-02-27 14:11:50,845 asyncbase.py run [line:69] INFO --------------Round 77--------------
+2025-02-27 14:11:52,952 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8752
+2025-02-27 14:11:52,952 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.5204
+2025-02-27 14:11:52,952 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1064s
+2025-02-27 14:11:56,791 asyncbase.py run [line:69] INFO --------------Round 78--------------
+2025-02-27 14:11:58,882 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8699
+2025-02-27 14:11:58,882 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.4883
+2025-02-27 14:11:58,883 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0914s
+2025-02-27 14:12:15,473 asyncbase.py run [line:69] INFO --------------Round 79--------------
+2025-02-27 14:12:17,591 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8043
+2025-02-27 14:12:17,591 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.5666
+2025-02-27 14:12:17,591 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1183s
+2025-02-27 14:12:27,611 asyncbase.py run [line:69] INFO --------------Round 80--------------
+2025-02-27 14:12:29,721 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7935
+2025-02-27 14:12:29,721 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.6085
+2025-02-27 14:12:29,721 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1104s
+2025-02-27 14:12:40,032 asyncbase.py run [line:69] INFO --------------Round 81--------------
+2025-02-27 14:12:42,201 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8547
+2025-02-27 14:12:42,201 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.4526
+2025-02-27 14:12:42,201 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1692s
+2025-02-27 14:12:49,683 asyncbase.py run [line:69] INFO --------------Round 82--------------
+2025-02-27 14:12:51,754 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.7765
+2025-02-27 14:12:51,754 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.5819
+2025-02-27 14:12:51,754 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0704s
+2025-02-27 14:12:55,070 asyncbase.py run [line:69] INFO --------------Round 83--------------
+2025-02-27 14:12:57,161 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8028
+2025-02-27 14:12:57,161 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.5352
+2025-02-27 14:12:57,162 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0904s
+2025-02-27 14:13:00,423 asyncbase.py run [line:69] INFO --------------Round 84--------------
+2025-02-27 14:13:02,568 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8705
+2025-02-27 14:13:02,568 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.4507
+2025-02-27 14:13:02,568 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1452s
+2025-02-27 14:13:05,849 asyncbase.py run [line:69] INFO --------------Round 85--------------
+2025-02-27 14:13:07,985 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8884
+2025-02-27 14:13:07,985 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.4161
+2025-02-27 14:13:07,985 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1353s
+2025-02-27 14:13:17,938 asyncbase.py run [line:69] INFO --------------Round 86--------------
+2025-02-27 14:13:20,030 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8776
+2025-02-27 14:13:20,031 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.4372
+2025-02-27 14:13:20,031 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0924s
+2025-02-27 14:13:23,335 asyncbase.py run [line:69] INFO --------------Round 87--------------
+2025-02-27 14:13:25,512 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8312
+2025-02-27 14:13:25,512 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.5064
+2025-02-27 14:13:25,512 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1772s
+2025-02-27 14:13:28,939 asyncbase.py run [line:69] INFO --------------Round 88--------------
+2025-02-27 14:13:31,075 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8949
+2025-02-27 14:13:31,075 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.4050
+2025-02-27 14:13:31,075 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1353s
+2025-02-27 14:13:35,252 asyncbase.py run [line:69] INFO --------------Round 89--------------
+2025-02-27 14:13:37,405 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8715
+2025-02-27 14:13:37,405 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.4752
+2025-02-27 14:13:37,405 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1532s
+2025-02-27 14:13:48,623 asyncbase.py run [line:69] INFO --------------Round 90--------------
+2025-02-27 14:13:50,715 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.9026
+2025-02-27 14:13:50,716 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.4873
+2025-02-27 14:13:50,716 asyncbase.py run [line:74] INFO Eval Time Cost:               2.0924s
+2025-02-27 14:13:57,744 asyncbase.py run [line:69] INFO --------------Round 91--------------
+2025-02-27 14:13:59,903 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8802
+2025-02-27 14:13:59,903 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.4432
+2025-02-27 14:13:59,903 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1584s
+2025-02-27 14:14:14,013 asyncbase.py run [line:69] INFO --------------Round 92--------------
+2025-02-27 14:14:16,234 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8928
+2025-02-27 14:14:16,234 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.4106
+2025-02-27 14:14:16,234 asyncbase.py run [line:74] INFO Eval Time Cost:               2.2201s
+2025-02-27 14:14:20,152 asyncbase.py run [line:69] INFO --------------Round 93--------------
+2025-02-27 14:14:22,287 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8673
+2025-02-27 14:14:22,287 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.4341
+2025-02-27 14:14:22,287 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1343s
+2025-02-27 14:14:33,339 asyncbase.py run [line:69] INFO --------------Round 94--------------
+2025-02-27 14:14:35,453 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8677
+2025-02-27 14:14:35,453 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.4265
+2025-02-27 14:14:35,453 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1133s
+2025-02-27 14:14:43,044 asyncbase.py run [line:69] INFO --------------Round 95--------------
+2025-02-27 14:14:45,185 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8307
+2025-02-27 14:14:45,185 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.4666
+2025-02-27 14:14:45,186 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1423s
+2025-02-27 14:14:52,014 asyncbase.py run [line:69] INFO --------------Round 96--------------
+2025-02-27 14:14:54,121 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8769
+2025-02-27 14:14:54,121 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.4004
+2025-02-27 14:14:54,121 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1073s
+2025-02-27 14:15:08,520 asyncbase.py run [line:69] INFO --------------Round 97--------------
+2025-02-27 14:15:10,767 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.9099
+2025-02-27 14:15:10,768 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.3533
+2025-02-27 14:15:10,768 asyncbase.py run [line:74] INFO Eval Time Cost:               2.2480s
+2025-02-27 14:15:18,016 asyncbase.py run [line:69] INFO --------------Round 98--------------
+2025-02-27 14:15:20,163 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8847
+2025-02-27 14:15:20,163 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.3850
+2025-02-27 14:15:20,163 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1462s
+2025-02-27 14:15:23,495 asyncbase.py run [line:69] INFO --------------Round 99--------------
+2025-02-27 14:15:25,656 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8566
+2025-02-27 14:15:25,656 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.4341
+2025-02-27 14:15:25,656 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1602s
+2025-02-27 14:15:32,567 asyncbase.py run [line:69] INFO --------------Round 100--------------
+2025-02-27 14:15:34,730 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.9006
+2025-02-27 14:15:34,731 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.3593
+2025-02-27 14:15:34,731 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1642s
+2025-02-27 14:15:38,065 asyncbase.py run [line:69] INFO --------------Round 101--------------
+2025-02-27 14:15:40,194 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8096
+2025-02-27 14:15:40,195 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.5071
+2025-02-27 14:15:40,195 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1293s
+2025-02-27 14:15:43,525 asyncbase.py run [line:69] INFO --------------Round 102--------------
+2025-02-27 14:15:45,680 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8822
+2025-02-27 14:15:45,680 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.3912
+2025-02-27 14:15:45,681 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1562s
+2025-02-27 14:16:06,397 asyncbase.py run [line:69] INFO --------------Round 103--------------
+2025-02-27 14:16:08,637 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8657
+2025-02-27 14:16:08,637 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.4105
+2025-02-27 14:16:08,637 asyncbase.py run [line:74] INFO Eval Time Cost:               2.2400s
+2025-02-27 14:16:11,954 asyncbase.py run [line:69] INFO --------------Round 104--------------
+2025-02-27 14:16:14,060 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.9070
+2025-02-27 14:16:14,061 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.3419
+2025-02-27 14:16:14,061 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1074s
+2025-02-27 14:16:24,388 asyncbase.py run [line:69] INFO --------------Round 105--------------
+2025-02-27 14:16:26,602 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8958
+2025-02-27 14:16:26,602 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.3572
+2025-02-27 14:16:26,603 asyncbase.py run [line:74] INFO Eval Time Cost:               2.2151s
+2025-02-27 14:16:29,968 asyncbase.py run [line:69] INFO --------------Round 106--------------
+2025-02-27 14:16:32,082 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8797
+2025-02-27 14:16:32,082 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.3763
+2025-02-27 14:16:32,083 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1153s
+2025-02-27 14:16:35,384 asyncbase.py run [line:69] INFO --------------Round 107--------------
+2025-02-27 14:16:37,607 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8894
+2025-02-27 14:16:37,608 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.3377
+2025-02-27 14:16:37,608 asyncbase.py run [line:74] INFO Eval Time Cost:               2.2230s
+2025-02-27 14:16:44,419 asyncbase.py run [line:69] INFO --------------Round 108--------------
+2025-02-27 14:16:46,608 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8292
+2025-02-27 14:16:46,608 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.4643
+2025-02-27 14:16:46,608 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1891s
+2025-02-27 14:16:49,922 asyncbase.py run [line:69] INFO --------------Round 109--------------
+2025-02-27 14:16:52,200 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8564
+2025-02-27 14:16:52,200 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.4156
+2025-02-27 14:16:52,200 asyncbase.py run [line:74] INFO Eval Time Cost:               2.2769s
+2025-02-27 14:17:13,566 asyncbase.py run [line:69] INFO --------------Round 110--------------
+2025-02-27 14:17:15,957 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8816
+2025-02-27 14:17:15,957 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.3660
+2025-02-27 14:17:15,957 asyncbase.py run [line:74] INFO Eval Time Cost:               2.3916s
+2025-02-27 14:17:24,950 asyncbase.py run [line:69] INFO --------------Round 111--------------
+2025-02-27 14:17:27,498 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8855
+2025-02-27 14:17:27,498 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.4799
+2025-02-27 14:17:27,498 asyncbase.py run [line:74] INFO Eval Time Cost:               2.5482s
+2025-02-27 14:17:30,797 asyncbase.py run [line:69] INFO --------------Round 112--------------
+2025-02-27 14:17:32,970 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8969
+2025-02-27 14:17:32,970 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.3887
+2025-02-27 14:17:32,970 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1722s
+2025-02-27 14:17:36,731 asyncbase.py run [line:69] INFO --------------Round 113--------------
+2025-02-27 14:17:38,883 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8631
+2025-02-27 14:17:38,884 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.4284
+2025-02-27 14:17:38,884 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1533s
+2025-02-27 14:17:42,899 asyncbase.py run [line:69] INFO --------------Round 114--------------
+2025-02-27 14:17:45,127 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.9021
+2025-02-27 14:17:45,127 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.3499
+2025-02-27 14:17:45,127 asyncbase.py run [line:74] INFO Eval Time Cost:               2.2270s
+2025-02-27 14:17:49,548 asyncbase.py run [line:69] INFO --------------Round 115--------------
+2025-02-27 14:17:51,723 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8970
+2025-02-27 14:17:51,723 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.3470
+2025-02-27 14:17:51,724 asyncbase.py run [line:74] INFO Eval Time Cost:               2.1752s
+2025-02-27 14:18:02,389 asyncbase.py run [line:69] INFO --------------Round 116--------------
+2025-02-27 14:18:05,244 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.9108
+2025-02-27 14:18:05,244 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.3272
+2025-02-27 14:18:05,244 asyncbase.py run [line:74] INFO Eval Time Cost:               2.8554s
+2025-02-27 14:18:09,332 asyncbase.py run [line:69] INFO --------------Round 117--------------
+2025-02-27 14:18:11,557 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.9192
+2025-02-27 14:18:11,558 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.3170
+2025-02-27 14:18:11,558 asyncbase.py run [line:74] INFO Eval Time Cost:               2.2250s
+2025-02-27 14:18:15,873 asyncbase.py run [line:69] INFO --------------Round 118--------------
+2025-02-27 14:18:18,111 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.9153
+2025-02-27 14:18:18,111 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.3207
+2025-02-27 14:18:18,111 asyncbase.py run [line:74] INFO Eval Time Cost:               2.2380s
+2025-02-27 14:18:40,200 asyncbase.py run [line:69] INFO --------------Round 119--------------
+2025-02-27 14:18:42,766 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.8943
+2025-02-27 14:18:42,766 fedbalance_logger.py log_once [line:18] INFO test_loss                     0.3735
+2025-02-27 14:18:42,766 asyncbase.py run [line:74] INFO Eval Time Cost:               2.5661s

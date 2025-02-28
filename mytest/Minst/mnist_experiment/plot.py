@@ -1,49 +1,77 @@
 import os
 import json
 import matplotlib.pyplot as plt
-from matplotlib.font_manager import FontProperties
-font_set = FontProperties(fname=r"c:\windows\fonts\simsun.ttc", size=10)
-folder_path = 'bias-and-straless'  # 文件夹路径
-plt.rcParams['font.sans-serif']=['SimHei']
-folder_path = 'Record'  # 文件夹路径
+import numpy as np
 
-# 获取文件夹中所有文件的列表
-file_list = [f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))]
-record_list = []
-# 循环遍历所有文件
-for file_name in file_list:
-    file_path = os.path.join(folder_path, file_name)
-    if file_name.endswith('.json'):  # 确保文件是JSON文件
-        with open(file_path, 'r', encoding='utf-8') as json_file:
-            data = json.load(json_file)
-            # 检查固定字段是否存在并获取其值
-            # if 'val_accuracy' in data:
-            if 'test_loss' in data:
-                # fixed_field_value = data['test_loss'][:500]
-                fixed_field_value = data['test_accuracy'][:500]
-                record_list.append(fixed_field_value)
+def load_json_data(folder_path):
+    """从指定文件夹加载JSON文件并提取test_accuracy字段"""
+    record_list = []
+    for file_name in os.listdir(folder_path):
+        file_path = os.path.join(folder_path, file_name)
+        if file_name.endswith('.json'):
+            try:
+                with open(file_path, 'r', encoding='utf-8') as json_file:
+                    data = json.load(json_file)
+                    if 'test_accuracy' in data:
+                        record_list.append(data['test_accuracy'])
+            except (json.JSONDecodeError, KeyError) as e:
+                print(f"Error reading {file_name}: {e}")
+    return record_list
 
-# 假设data是你的包含8个列表的列表
-import matplotlib.pyplot as plt
+def average_every_100(data):
+    """每100个数据点求平均值，并将平均值作为该组的起始点的值"""
+    averaged_data = []
+    x_ticks = []  # 用于存储横坐标的真实值
+    for series in data:
+        # 将数据分成每100个一组
+        groups = [series[i:i + 10] for i in range(0, len(series), 10)]
+        # 对每组求平均值
+        averaged_series = [np.mean(group) for group in groups]
+        averaged_data.append(averaged_series)
+        # 生成对应的横坐标（每组的起始点的索引）
+        x_ticks = [i * 10 for i in range(len(groups))]  # 每组的起始round数
+    return averaged_data, x_ticks
 
-line_names = [
-     "fedasync算法","我们的算法"
-]
+def plot_data(record_list, line_names, x_ticks):
+    """绘制折线图"""
+    if len(record_list) != len(line_names):
+        raise ValueError("The length of record_list and line_names must be the same.")
 
-# 创建一个新的图形对象和一个轴对象
-fig, ax = plt.subplots(figsize=(8, 6))
+    fig, ax = plt.subplots(figsize=(8, 6))
+    colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k']  # 定义颜色列表
+    linestyles = ['-', '--', '-.', ':']  # 定义线型列表
 
-# 在同一个轴对象上绘制每个子列表的折线图
-for i, series in enumerate(record_list):
-    ax.plot(series, label=line_names[i],linestyle='solid')
+    for i, series in enumerate(record_list):
+        ax.plot(x_ticks, series, label=line_names[i], color=colors[i % len(colors)], linestyle=linestyles[i % len(linestyles)])
 
-# 添加图例
-ax.legend()
+    ax.legend()
+    ax.set_xlabel('Communication Round')
+    ax.set_ylabel('Test_Accuracy')
+    ax.grid(True)  # 添加网格线
 
-# 添加标题和轴标签
-ax.set_xlabel('训练轮次',fontproperties=font_set)
-ax.set_ylabel('测试集准确率',fontproperties=font_set)
-# ax.set_ylim(0, 1)
-ax.set_yticks([0,0.1, 0.2,0.3, 0.4,0.5, 0.6, 0.7,0.8,0.9, 1])
-# 显示图形
-plt.show()
+    # 动态计算纵坐标范围
+    all_values = [value for series in record_list for value in series]  # 展平所有数据
+    y_min = min(all_values)  # 最小值
+    y_max = max(all_values)  # 最大值
+
+    # 设置纵坐标范围，根据数据动态调整
+    ax.set_ylim(bottom=max(0, y_min - 0.05), top=y_max + 0.05)  # 上下留出5%的空白
+
+    # 设置纵坐标刻度，每隔0.1显示一个刻度
+    y_ticks = np.arange(np.floor(y_min * 10) / 10, np.ceil(y_max * 10) / 10 + 0.1, 0.1)
+    ax.set_yticks(y_ticks)
+
+    # 设置横坐标范围，去掉多余的空白位置
+    ax.set_xlim(left=0, right=x_ticks[-1])  # 横坐标从0开始，到最后一个数据点结束
+    plt.show()
+
+if __name__ == "__main__":
+    folder_path = 'Record'  # 文件夹路径
+    line_names = ["fedasync", "fedbalance", "fedbuff", "Kafl"]
+
+    # 加载数据
+    record_list = load_json_data(folder_path)
+    # 每100个点求平均值，并获取对应的横坐标
+    averaged_record_list, x_ticks = average_every_100(record_list)
+    # 绘制图表
+    plot_data(averaged_record_list, line_names, x_ticks)
