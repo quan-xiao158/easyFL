@@ -1,0 +1,271 @@
+2024-12-27 22:18:08,034 fflow.py init [line:691] INFO PROCESS ID:	12532
+2024-12-27 22:18:08,035 fflow.py init [line:692] INFO Initializing devices: cuda:0 will be used for this running.
+2024-12-27 22:18:08,035 fflow.py init [line:695] INFO BENCHMARK:	flgo.benchmark.mnist_classification
+2024-12-27 22:18:08,035 fflow.py init [line:696] INFO TASK:			./mnist_experiment
+2024-12-27 22:18:08,035 fflow.py init [line:697] INFO MODEL:		flgo.benchmark.mnist_classification.model.cnn
+2024-12-27 22:18:08,035 fflow.py init [line:698] INFO ALGORITHM:	fedbalance
+2024-12-27 22:18:08,052 fflow.py init [line:737] INFO SCENE:		horizontal FL with 1 <class 'flgo.algorithm.fedbalance.Server'>, 100 <class 'flgo.algorithm.fedbalance.Client'>
+2024-12-27 22:18:08,195 fflow.py init [line:754] INFO SIMULATOR:	<class 'flgo.simulator.default_simulator.Simulator'>
+2024-12-27 22:18:08,196 fflow.py init [line:767] INFO Ready to start.
+2024-12-27 22:18:08,196 asyncbase.py run [line:55] INFO --------------Initial Evaluation--------------
+2024-12-27 22:18:10,787 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.0845
+2024-12-27 22:18:10,787 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.3038
+2024-12-27 22:18:10,787 asyncbase.py run [line:58] INFO Eval Time Cost:               2.5900s
+2024-12-27 22:18:10,924 asyncbase.py run [line:61] INFO --------------全局模型下发--------------
+2024-12-27 22:18:13,749 asyncbase.py run [line:69] INFO --------------Round 1--------------
+2024-12-27 22:18:17,244 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.0878
+2024-12-27 22:18:17,244 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.3010
+2024-12-27 22:18:17,244 asyncbase.py run [line:74] INFO Eval Time Cost:               3.4947s
+2024-12-27 22:18:17,244 asyncbase.py run [line:83] INFO 总通信量130额外通信量0
+2024-12-27 22:18:20,049 asyncbase.py run [line:69] INFO --------------Round 2--------------
+2024-12-27 22:18:24,744 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.1190
+2024-12-27 22:18:24,745 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2958
+2024-12-27 22:18:24,745 asyncbase.py run [line:74] INFO Eval Time Cost:               4.6954s
+2024-12-27 22:18:24,745 asyncbase.py run [line:83] INFO 总通信量160额外通信量0
+2024-12-27 22:18:27,512 asyncbase.py run [line:69] INFO --------------Round 3--------------
+2024-12-27 22:18:32,216 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.1237
+2024-12-27 22:18:32,216 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2912
+2024-12-27 22:18:32,217 asyncbase.py run [line:74] INFO Eval Time Cost:               4.7024s
+2024-12-27 22:18:32,217 asyncbase.py run [line:83] INFO 总通信量190额外通信量0
+2024-12-27 22:18:35,003 asyncbase.py run [line:69] INFO --------------Round 4--------------
+2024-12-27 22:18:39,855 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.1360
+2024-12-27 22:18:39,855 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2851
+2024-12-27 22:18:39,855 asyncbase.py run [line:74] INFO Eval Time Cost:               4.8520s
+2024-12-27 22:18:39,855 asyncbase.py run [line:83] INFO 总通信量220额外通信量0
+2024-12-27 22:18:42,650 asyncbase.py run [line:69] INFO --------------Round 5--------------
+2024-12-27 22:18:47,130 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.1509
+2024-12-27 22:18:47,130 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2812
+2024-12-27 22:18:47,130 asyncbase.py run [line:74] INFO Eval Time Cost:               4.4800s
+2024-12-27 22:18:47,130 asyncbase.py run [line:83] INFO 总通信量250额外通信量0
+2024-12-27 22:18:49,911 asyncbase.py run [line:69] INFO --------------Round 6--------------
+2024-12-27 22:18:54,797 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.1876
+2024-12-27 22:18:54,797 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2767
+2024-12-27 22:18:54,797 asyncbase.py run [line:74] INFO Eval Time Cost:               4.8859s
+2024-12-27 22:18:54,798 asyncbase.py run [line:83] INFO 总通信量280额外通信量0
+2024-12-27 22:18:57,600 asyncbase.py run [line:69] INFO --------------Round 7--------------
+2024-12-27 22:19:02,403 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.1781
+2024-12-27 22:19:02,403 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2732
+2024-12-27 22:19:02,403 asyncbase.py run [line:74] INFO Eval Time Cost:               4.8022s
+2024-12-27 22:19:02,404 asyncbase.py run [line:83] INFO 总通信量310额外通信量0
+2024-12-27 22:19:05,235 asyncbase.py run [line:69] INFO --------------Round 8--------------
+2024-12-27 22:19:10,072 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.2413
+2024-12-27 22:19:10,072 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2673
+2024-12-27 22:19:10,072 asyncbase.py run [line:74] INFO Eval Time Cost:               4.8371s
+2024-12-27 22:19:10,072 asyncbase.py run [line:83] INFO 总通信量340额外通信量0
+2024-12-27 22:19:12,901 asyncbase.py run [line:69] INFO --------------Round 9--------------
+2024-12-27 22:19:17,459 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.2607
+2024-12-27 22:19:17,459 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2637
+2024-12-27 22:19:17,459 asyncbase.py run [line:74] INFO Eval Time Cost:               4.5568s
+2024-12-27 22:19:17,459 asyncbase.py run [line:83] INFO 总通信量370额外通信量0
+2024-12-27 22:19:20,311 asyncbase.py run [line:69] INFO --------------Round 10--------------
+2024-12-27 22:19:24,898 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3309
+2024-12-27 22:19:24,898 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2575
+2024-12-27 22:19:24,898 asyncbase.py run [line:74] INFO Eval Time Cost:               4.5867s
+2024-12-27 22:19:24,898 asyncbase.py run [line:83] INFO 总通信量400额外通信量0
+2024-12-27 22:19:27,718 asyncbase.py run [line:69] INFO --------------Round 11--------------
+2024-12-27 22:19:32,069 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3841
+2024-12-27 22:19:32,069 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2563
+2024-12-27 22:19:32,069 asyncbase.py run [line:74] INFO Eval Time Cost:               4.3513s
+2024-12-27 22:19:32,069 asyncbase.py run [line:83] INFO 总通信量430额外通信量0
+2024-12-27 22:19:34,884 asyncbase.py run [line:69] INFO --------------Round 12--------------
+2024-12-27 22:19:39,676 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4184
+2024-12-27 22:19:39,676 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2517
+2024-12-27 22:19:39,676 asyncbase.py run [line:74] INFO Eval Time Cost:               4.7912s
+2024-12-27 22:19:39,676 asyncbase.py run [line:83] INFO 总通信量460额外通信量0
+2024-12-27 22:19:42,502 asyncbase.py run [line:69] INFO --------------Round 13--------------
+2024-12-27 22:19:47,013 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4116
+2024-12-27 22:19:47,013 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2531
+2024-12-27 22:19:47,013 asyncbase.py run [line:74] INFO Eval Time Cost:               4.5109s
+2024-12-27 22:19:47,013 asyncbase.py run [line:83] INFO 总通信量490额外通信量0
+2024-12-27 22:19:49,843 asyncbase.py run [line:69] INFO --------------Round 14--------------
+2024-12-27 22:19:54,576 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3912
+2024-12-27 22:19:54,576 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2504
+2024-12-27 22:19:54,576 asyncbase.py run [line:74] INFO Eval Time Cost:               4.7326s
+2024-12-27 22:19:54,576 asyncbase.py run [line:83] INFO 总通信量520额外通信量0
+2024-12-27 22:19:57,572 asyncbase.py run [line:69] INFO --------------Round 15--------------
+2024-12-27 22:20:02,293 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3928
+2024-12-27 22:20:02,293 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2501
+2024-12-27 22:20:02,293 asyncbase.py run [line:74] INFO Eval Time Cost:               4.7204s
+2024-12-27 22:20:02,293 asyncbase.py run [line:83] INFO 总通信量550额外通信量0
+2024-12-27 22:20:05,154 asyncbase.py run [line:69] INFO --------------Round 16--------------
+2024-12-27 22:20:09,849 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4343
+2024-12-27 22:20:09,849 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2430
+2024-12-27 22:20:09,849 asyncbase.py run [line:74] INFO Eval Time Cost:               4.6954s
+2024-12-27 22:20:09,850 asyncbase.py run [line:83] INFO 总通信量580额外通信量0
+2024-12-27 22:20:12,700 asyncbase.py run [line:69] INFO --------------Round 17--------------
+2024-12-27 22:20:17,409 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4372
+2024-12-27 22:20:17,409 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2357
+2024-12-27 22:20:17,409 asyncbase.py run [line:74] INFO Eval Time Cost:               4.7094s
+2024-12-27 22:20:17,409 asyncbase.py run [line:83] INFO 总通信量610额外通信量0
+2024-12-27 22:20:20,300 asyncbase.py run [line:69] INFO --------------Round 18--------------
+2024-12-27 22:20:24,965 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4768
+2024-12-27 22:20:24,965 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2308
+2024-12-27 22:20:24,965 asyncbase.py run [line:74] INFO Eval Time Cost:               4.6655s
+2024-12-27 22:20:24,965 asyncbase.py run [line:83] INFO 总通信量640额外通信量0
+2024-12-27 22:20:27,793 asyncbase.py run [line:69] INFO --------------Round 19--------------
+2024-12-27 22:20:32,693 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4376
+2024-12-27 22:20:32,693 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2227
+2024-12-27 22:20:32,693 asyncbase.py run [line:74] INFO Eval Time Cost:               4.8999s
+2024-12-27 22:20:32,693 asyncbase.py run [line:83] INFO 总通信量670额外通信量0
+2024-12-27 22:20:35,513 asyncbase.py run [line:69] INFO --------------Round 20--------------
+2024-12-27 22:20:40,419 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4208
+2024-12-27 22:20:40,419 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2240
+2024-12-27 22:20:40,419 asyncbase.py run [line:74] INFO Eval Time Cost:               4.9059s
+2024-12-27 22:20:40,420 asyncbase.py run [line:83] INFO 总通信量700额外通信量0
+2024-12-27 22:20:43,231 asyncbase.py run [line:69] INFO --------------Round 21--------------
+2024-12-27 22:20:47,692 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4536
+2024-12-27 22:20:47,692 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2187
+2024-12-27 22:20:47,692 asyncbase.py run [line:74] INFO Eval Time Cost:               4.4601s
+2024-12-27 22:20:47,692 asyncbase.py run [line:83] INFO 总通信量730额外通信量0
+2024-12-27 22:20:50,519 asyncbase.py run [line:69] INFO --------------Round 22--------------
+2024-12-27 22:20:55,032 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4788
+2024-12-27 22:20:55,032 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2115
+2024-12-27 22:20:55,032 asyncbase.py run [line:74] INFO Eval Time Cost:               4.5129s
+2024-12-27 22:20:55,032 asyncbase.py run [line:83] INFO 总通信量760额外通信量0
+2024-12-27 22:20:57,872 asyncbase.py run [line:69] INFO --------------Round 23--------------
+2024-12-27 22:21:02,751 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4567
+2024-12-27 22:21:02,751 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.2028
+2024-12-27 22:21:02,751 asyncbase.py run [line:74] INFO Eval Time Cost:               4.8789s
+2024-12-27 22:21:02,751 asyncbase.py run [line:83] INFO 总通信量790额外通信量0
+2024-12-27 22:21:05,621 asyncbase.py run [line:69] INFO --------------Round 24--------------
+2024-12-27 22:21:10,143 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4476
+2024-12-27 22:21:10,143 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1970
+2024-12-27 22:21:10,144 asyncbase.py run [line:74] INFO Eval Time Cost:               4.5229s
+2024-12-27 22:21:10,144 asyncbase.py run [line:83] INFO 总通信量820额外通信量0
+2024-12-27 22:21:12,986 asyncbase.py run [line:69] INFO --------------Round 25--------------
+2024-12-27 22:21:17,698 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4647
+2024-12-27 22:21:17,698 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1918
+2024-12-27 22:21:17,698 asyncbase.py run [line:74] INFO Eval Time Cost:               4.7124s
+2024-12-27 22:21:17,698 asyncbase.py run [line:83] INFO 总通信量850额外通信量0
+2024-12-27 22:21:20,564 asyncbase.py run [line:69] INFO --------------Round 26--------------
+2024-12-27 22:21:25,262 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3843
+2024-12-27 22:21:25,263 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1845
+2024-12-27 22:21:25,263 asyncbase.py run [line:74] INFO Eval Time Cost:               4.6994s
+2024-12-27 22:21:25,263 asyncbase.py run [line:83] INFO 总通信量880额外通信量0
+2024-12-27 22:21:28,146 asyncbase.py run [line:69] INFO --------------Round 27--------------
+2024-12-27 22:21:32,980 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3506
+2024-12-27 22:21:32,980 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1844
+2024-12-27 22:21:32,980 asyncbase.py run [line:74] INFO Eval Time Cost:               4.8341s
+2024-12-27 22:21:32,980 asyncbase.py run [line:83] INFO 总通信量910额外通信量0
+2024-12-27 22:21:35,803 asyncbase.py run [line:69] INFO --------------Round 28--------------
+2024-12-27 22:21:40,426 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3122
+2024-12-27 22:21:40,426 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1773
+2024-12-27 22:21:40,426 asyncbase.py run [line:74] INFO Eval Time Cost:               4.6236s
+2024-12-27 22:21:40,426 asyncbase.py run [line:83] INFO 总通信量940额外通信量0
+2024-12-27 22:21:43,253 asyncbase.py run [line:69] INFO --------------Round 29--------------
+2024-12-27 22:21:47,761 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3377
+2024-12-27 22:21:47,761 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1700
+2024-12-27 22:21:47,761 asyncbase.py run [line:74] INFO Eval Time Cost:               4.5079s
+2024-12-27 22:21:47,761 asyncbase.py run [line:83] INFO 总通信量970额外通信量0
+2024-12-27 22:21:50,583 asyncbase.py run [line:69] INFO --------------Round 30--------------
+2024-12-27 22:21:55,153 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.3864
+2024-12-27 22:21:55,153 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1593
+2024-12-27 22:21:55,153 asyncbase.py run [line:74] INFO Eval Time Cost:               4.5697s
+2024-12-27 22:21:55,153 asyncbase.py run [line:83] INFO 总通信量1000额外通信量0
+2024-12-27 22:21:58,020 asyncbase.py run [line:69] INFO --------------Round 31--------------
+2024-12-27 22:22:02,542 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4107
+2024-12-27 22:22:02,542 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1512
+2024-12-27 22:22:02,543 asyncbase.py run [line:74] INFO Eval Time Cost:               4.5229s
+2024-12-27 22:22:02,543 asyncbase.py run [line:83] INFO 总通信量1030额外通信量0
+2024-12-27 22:22:05,344 asyncbase.py run [line:69] INFO --------------Round 32--------------
+2024-12-27 22:22:09,982 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4325
+2024-12-27 22:22:09,982 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1468
+2024-12-27 22:22:09,982 asyncbase.py run [line:74] INFO Eval Time Cost:               4.6386s
+2024-12-27 22:22:09,983 asyncbase.py run [line:83] INFO 总通信量1060额外通信量0
+2024-12-27 22:22:12,788 asyncbase.py run [line:69] INFO --------------Round 33--------------
+2024-12-27 22:22:17,485 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4344
+2024-12-27 22:22:17,485 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1370
+2024-12-27 22:22:17,485 asyncbase.py run [line:74] INFO Eval Time Cost:               4.6964s
+2024-12-27 22:22:17,485 asyncbase.py run [line:83] INFO 总通信量1090额外通信量0
+2024-12-27 22:22:20,317 asyncbase.py run [line:69] INFO --------------Round 34--------------
+2024-12-27 22:22:25,035 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4760
+2024-12-27 22:22:25,036 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1287
+2024-12-27 22:22:25,036 asyncbase.py run [line:74] INFO Eval Time Cost:               4.7193s
+2024-12-27 22:22:25,036 asyncbase.py run [line:83] INFO 总通信量1120额外通信量0
+2024-12-27 22:22:27,972 asyncbase.py run [line:69] INFO --------------Round 35--------------
+2024-12-27 22:22:32,653 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4660
+2024-12-27 22:22:32,653 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1184
+2024-12-27 22:22:32,653 asyncbase.py run [line:74] INFO Eval Time Cost:               4.6814s
+2024-12-27 22:22:32,653 asyncbase.py run [line:83] INFO 总通信量1150额外通信量0
+2024-12-27 22:22:35,527 asyncbase.py run [line:69] INFO --------------Round 36--------------
+2024-12-27 22:22:40,034 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4582
+2024-12-27 22:22:40,035 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1174
+2024-12-27 22:22:40,035 asyncbase.py run [line:74] INFO Eval Time Cost:               4.5069s
+2024-12-27 22:22:40,035 asyncbase.py run [line:83] INFO 总通信量1180额外通信量0
+2024-12-27 22:22:42,840 asyncbase.py run [line:69] INFO --------------Round 37--------------
+2024-12-27 22:22:47,706 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4369
+2024-12-27 22:22:47,707 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1159
+2024-12-27 22:22:47,707 asyncbase.py run [line:74] INFO Eval Time Cost:               4.8670s
+2024-12-27 22:22:47,707 asyncbase.py run [line:83] INFO 总通信量1210额外通信量0
+2024-12-27 22:22:50,501 asyncbase.py run [line:69] INFO --------------Round 38--------------
+2024-12-27 22:22:55,146 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4195
+2024-12-27 22:22:55,146 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.1081
+2024-12-27 22:22:55,146 asyncbase.py run [line:74] INFO Eval Time Cost:               4.6456s
+2024-12-27 22:22:55,147 asyncbase.py run [line:83] INFO 总通信量1240额外通信量0
+2024-12-27 22:22:57,939 asyncbase.py run [line:69] INFO --------------Round 39--------------
+2024-12-27 22:23:02,810 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4151
+2024-12-27 22:23:02,810 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0998
+2024-12-27 22:23:02,810 asyncbase.py run [line:74] INFO Eval Time Cost:               4.8710s
+2024-12-27 22:23:02,810 asyncbase.py run [line:83] INFO 总通信量1270额外通信量0
+2024-12-27 22:23:05,639 asyncbase.py run [line:69] INFO --------------Round 40--------------
+2024-12-27 22:23:10,441 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4406
+2024-12-27 22:23:10,441 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0949
+2024-12-27 22:23:10,441 asyncbase.py run [line:74] INFO Eval Time Cost:               4.8022s
+2024-12-27 22:23:10,441 asyncbase.py run [line:83] INFO 总通信量1300额外通信量0
+2024-12-27 22:23:13,247 asyncbase.py run [line:69] INFO --------------Round 41--------------
+2024-12-27 22:23:18,086 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4178
+2024-12-27 22:23:18,086 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0920
+2024-12-27 22:23:18,086 asyncbase.py run [line:74] INFO Eval Time Cost:               4.8391s
+2024-12-27 22:23:18,086 asyncbase.py run [line:83] INFO 总通信量1330额外通信量0
+2024-12-27 22:23:20,921 asyncbase.py run [line:69] INFO --------------Round 42--------------
+2024-12-27 22:23:25,810 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4319
+2024-12-27 22:23:25,810 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0834
+2024-12-27 22:23:25,810 asyncbase.py run [line:74] INFO Eval Time Cost:               4.8889s
+2024-12-27 22:23:25,810 asyncbase.py run [line:83] INFO 总通信量1360额外通信量0
+2024-12-27 22:23:28,618 asyncbase.py run [line:69] INFO --------------Round 43--------------
+2024-12-27 22:23:33,250 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4286
+2024-12-27 22:23:33,251 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0772
+2024-12-27 22:23:33,251 asyncbase.py run [line:74] INFO Eval Time Cost:               4.6336s
+2024-12-27 22:23:33,251 asyncbase.py run [line:83] INFO 总通信量1390额外通信量0
+2024-12-27 22:23:36,030 asyncbase.py run [line:69] INFO --------------Round 44--------------
+2024-12-27 22:23:40,920 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4483
+2024-12-27 22:23:40,920 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0656
+2024-12-27 22:23:40,920 asyncbase.py run [line:74] INFO Eval Time Cost:               4.8900s
+2024-12-27 22:23:40,920 asyncbase.py run [line:83] INFO 总通信量1420额外通信量0
+2024-12-27 22:23:43,702 asyncbase.py run [line:69] INFO --------------Round 45--------------
+2024-12-27 22:23:48,192 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4223
+2024-12-27 22:23:48,192 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0581
+2024-12-27 22:23:48,192 asyncbase.py run [line:74] INFO Eval Time Cost:               4.4890s
+2024-12-27 22:23:48,192 asyncbase.py run [line:83] INFO 总通信量1450额外通信量0
+2024-12-27 22:23:50,983 asyncbase.py run [line:69] INFO --------------Round 46--------------
+2024-12-27 22:23:55,862 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4257
+2024-12-27 22:23:55,863 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0477
+2024-12-27 22:23:55,863 asyncbase.py run [line:74] INFO Eval Time Cost:               4.8800s
+2024-12-27 22:23:55,863 asyncbase.py run [line:83] INFO 总通信量1480额外通信量0
+2024-12-27 22:23:58,664 asyncbase.py run [line:69] INFO --------------Round 47--------------
+2024-12-27 22:24:03,475 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4674
+2024-12-27 22:24:03,475 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0401
+2024-12-27 22:24:03,475 asyncbase.py run [line:74] INFO Eval Time Cost:               4.8111s
+2024-12-27 22:24:03,475 asyncbase.py run [line:83] INFO 总通信量1510额外通信量0
+2024-12-27 22:24:06,268 asyncbase.py run [line:69] INFO --------------Round 48--------------
+2024-12-27 22:24:11,143 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4695
+2024-12-27 22:24:11,143 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0356
+2024-12-27 22:24:11,143 asyncbase.py run [line:74] INFO Eval Time Cost:               4.8739s
+2024-12-27 22:24:11,143 asyncbase.py run [line:83] INFO 总通信量1540额外通信量0
+2024-12-27 22:24:13,978 asyncbase.py run [line:69] INFO --------------Round 49--------------
+2024-12-27 22:24:18,869 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4685
+2024-12-27 22:24:18,869 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0335
+2024-12-27 22:24:18,869 asyncbase.py run [line:74] INFO Eval Time Cost:               4.8909s
+2024-12-27 22:24:18,869 asyncbase.py run [line:83] INFO 总通信量1570额外通信量0
+2024-12-27 22:24:21,701 asyncbase.py run [line:69] INFO --------------Round 50--------------
+2024-12-27 22:24:26,303 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4684
+2024-12-27 22:24:26,303 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0334
+2024-12-27 22:24:26,303 asyncbase.py run [line:74] INFO Eval Time Cost:               4.6017s
+2024-12-27 22:24:26,304 asyncbase.py run [line:83] INFO 总通信量1600额外通信量0
+2024-12-27 22:24:29,132 asyncbase.py run [line:69] INFO --------------Round 51--------------
+2024-12-27 22:24:33,484 fedbalance_logger.py log_once [line:18] INFO test_accuracy                 0.4664
+2024-12-27 22:24:33,485 fedbalance_logger.py log_once [line:18] INFO test_loss                     2.0242
+2024-12-27 22:24:33,485 asyncbase.py run [line:74] INFO Eval Time Cost:               4.3534s
+2024-12-27 22:24:33,485 asyncbase.py run [line:83] INFO 总通信量1630额外通信量0
+2024-12-27 22:24:33,485 asyncbase.py run [line:84] INFO =================End==================
+2024-12-27 22:24:33,485 asyncbase.py run [line:85] INFO Total Time Cost:              385.2886s
