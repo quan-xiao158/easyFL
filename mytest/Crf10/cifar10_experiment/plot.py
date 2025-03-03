@@ -13,7 +13,7 @@ def load_json_data(folder_path):
                 with open(file_path, 'r', encoding='utf-8') as json_file:
                     data = json.load(json_file)
                     if 'test_accuracy' in data:
-                        record_list.append(data['test_accuracy'])
+                        record_list.append(data['test_accuracy'][:7000])
             except (json.JSONDecodeError, KeyError) as e:
                 print(f"Error reading {file_name}: {e}")
     return record_list
@@ -67,7 +67,7 @@ def plot_data(record_list, line_names, x_ticks):
 
 if __name__ == "__main__":
     folder_path = 'Record'  # 文件夹路径
-    line_names = ["fedasync", "fedbalance", "fedbuff", "Kafl"]
+    line_names = ["fedasync","fedbuff"]
 
     # 加载数据
     record_list = load_json_data(folder_path)
