@@ -67,7 +67,7 @@ def plot_data(record_list, line_names, x_ticks):
 
 if __name__ == "__main__":
     folder_path = 'Record'  # 文件夹路径
-    line_names = ["fedasync","fedbuff"]
+    line_names = ["fedasync","fedbuff","kafl"]
 
     # 加载数据
     record_list = load_json_data(folder_path)

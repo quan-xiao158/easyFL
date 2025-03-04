@@ -11,7 +11,7 @@ flgo.gen_task_by_(cifar10, fbp.DirichletPartitioner(num_clients=100, alpha=0.011
 
 if __name__ == '__main__':
     fedavg_runner = flgo.init(task=task, algorithm=fedbalance, Logger=FedBalanceLogger,
-                              option={'num_rounds': 2500,
+                              option={'num_rounds': 7000,
                                       'num_epochs': 20,
                                       # 'gpu': 1,
                                       'num_steps': 10,
