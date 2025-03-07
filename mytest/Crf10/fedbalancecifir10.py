@@ -17,7 +17,7 @@ if __name__ == '__main__':
                                       'num_steps': 10,
                                       'alpha': 0.6,
                                       'agg_num': 14,
-                                      'fs_index': 50,
+                                      'fs_index': 70,
                                       'hl_index': 85,
                                       'log_file': True,
                                       'helpLen': 0})

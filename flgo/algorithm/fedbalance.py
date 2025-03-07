@@ -158,8 +158,7 @@ class Server(AsyncServer):
                 self.model = agg_model
                 self.communicate(id_list, agg_model, 1)
                 self.concurrent_clients.difference_update(id_list)
-                self.round_number += 1
-                return True
+                return False
             else:
                 self.sl_queue.append({"client_id": client_id, "model": model})
                 return False
