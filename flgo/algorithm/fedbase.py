@@ -12,6 +12,9 @@ import flgo.benchmark.base
 from flgo.utils import fmodule
 import flgo.simulator.base as ss
 import random
+import json
+import torch
+from torch.nn.functional import cosine_similarity
 
 
 # import threading
@@ -521,6 +524,7 @@ class BasicServer(BasicParty):
             >>> m_new = self.aggregate(models)
         ```
         """
+        self.computeDifference(self.model,models)
         if len(models) == 0: return self.model
         nan_exists = [m.has_nan() for m in models]
         if any(nan_exists):
@@ -755,7 +759,6 @@ class BasicServer(BasicParty):
                 self.gv.logger.info(f"Failed to load checkpoint due to {e}")
         return False
 
-
 class BasicClient(BasicParty):
     TaskCalculator = flgo.benchmark.base.BasicTaskCalculator
 
@@ -807,9 +810,9 @@ class BasicClient(BasicParty):
         """
         ###改动使用陈旧模型
         # # 生成随机数，如果随机数小于0.4，则输出True，否则输出False
-        # result = random.random() < 0.4
-        # if result:
-        #     return
+        result = random.random() < 0.4
+        if result:
+            return
 
         ###改动
         model.train()

@@ -8,7 +8,10 @@ import numpy as np
 from collections import deque
 import copy
 import flgo.simulator.base as ss
-
+import random
+import json
+import torch
+from torch.nn.functional import cosine_similarity
 
 class Server(AsyncServer):
     def __init__(self, option={}):

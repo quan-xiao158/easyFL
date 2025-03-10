@@ -1,4 +1,8 @@
+import json
+import math
+
 import torch
+from torch import cosine_similarity
 
 from flgo.utils import fmodule
 from flgo.algorithm.asyncbase import AsyncServer
@@ -79,6 +83,7 @@ class Server(AsyncServer):
         返回:
         - bool: 如果聚合成功，返回True；如果输入为空或不合法，返回False。
         """
+        self.computeDifference(self.model,models,client_ids)
         dl = []
         for id in self.selected_clients:
             dl.append(self.round_number - self.server_send_round[id])
@@ -97,6 +102,30 @@ class Server(AsyncServer):
 
         return self.async_aggregate(currently_updated_models, client_ids)
 
+    def computeDifference(self, gmodel, models, clientids):
+        # 从模型实例中提取参数并展平
+        global_vec = torch.cat([t.flatten() for t in gmodel.state_dict().values()])
+
+        similarities = []
+        for model, id in zip(models, clientids):
+            local_vec = torch.cat([t.flatten() for t in model.state_dict().values()])
+            cos_sim = cosine_similarity(global_vec.unsqueeze(0), local_vec.unsqueeze(0), dim=1)
+            similarities.append((1 - cos_sim.item()) * (1 + 0.5 * math.log(1 + (self.current_round-self.server_send_round[id]))))
+
+        avg_sim = sum(similarities) / len(similarities)
+
+        # 追加到JSON文件
+        filename = "results.json"
+        try:
+            with open(filename, "r") as f:
+                data = json.load(f)
+        except FileNotFoundError:
+            data = []
+
+        data.append(avg_sim)
+
+        with open(filename, "w") as f:
+            json.dump(data, f)
     def s(self, delta_tau):
         return (delta_tau + 1) ** (-0.5)
 

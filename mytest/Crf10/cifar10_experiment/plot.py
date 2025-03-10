@@ -13,7 +13,7 @@ def load_json_data(folder_path):
                 with open(file_path, 'r', encoding='utf-8') as json_file:
                     data = json.load(json_file)
                     if 'test_accuracy' in data:
-                        record_list.append(data['test_accuracy'][:4500])
+                        record_list.append(data['test_accuracy'][:4000])
             except (json.JSONDecodeError, KeyError) as e:
                 print(f"Error reading {file_name}: {e}")
     return record_list
