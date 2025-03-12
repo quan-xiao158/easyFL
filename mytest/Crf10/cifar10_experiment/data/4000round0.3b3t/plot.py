@@ -40,6 +40,7 @@ def plot_data(record_list, line_names, x_ticks):
     fig, ax = plt.subplots(figsize=(8, 6))
     colors = ['b', 'g', 'r',  'm', 'y', 'k']  # 定义颜色列表
     linestyles = ['--']  # 定义线型列表
+
     for i, series in enumerate(record_list):
         ax.plot(x_ticks, series, label=line_names[i], color=colors[i % len(colors)], linestyle=linestyles[i % len(linestyles)])
 
@@ -65,8 +66,8 @@ def plot_data(record_list, line_names, x_ticks):
     plt.show()
 
 if __name__ == "__main__":
-    folder_path = 'Record'  # 文件夹路径
-    line_names = ["fedasync","fedasyncnew"]
+    folder_path = './'  # 文件夹路径
+    line_names = ["KAFL", "FedBuff", "FedAsync", "FedBalance(ours)"]
 
     # 加载数据
     record_list = load_json_data(folder_path)

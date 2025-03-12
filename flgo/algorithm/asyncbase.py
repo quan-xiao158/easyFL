@@ -1,3 +1,9 @@
+import json
+import math
+
+import torch
+from torch import cosine_similarity
+
 from flgo.algorithm.fedbase import BasicServer
 from flgo.algorithm.fedbase import BasicClient as Client
 import numpy as np
@@ -150,15 +156,15 @@ class AsyncServer(BasicServer):
         # 定义组及其对应的概率
         groups = [
             {'range': range(0, 10), 'prob': 1},
-            {'range': range(10, 20), 'prob': 0.9},
-            {'range': range(20, 30), 'prob': 0.8},
-            {'range': range(30, 40), 'prob': 0.7},
-            {'range': range(40, 50), 'prob': 0.6},
-            {'range': range(50, 60), 'prob': 0.5},
-            {'range': range(60, 70), 'prob': 0.4},
-            {'range': range(70, 80), 'prob': 0.3},
-            {'range': range(80, 90), 'prob': 0.2},
-            {'range': range(90, 100), 'prob': 0.1},
+            {'range': range(10, 20), 'prob': 1},
+            {'range': range(20, 30), 'prob': 1},
+            {'range': range(30, 40), 'prob': 0.01},
+            {'range': range(40, 50), 'prob': 0.01},
+            {'range': range(50, 60), 'prob': 0.01},
+            {'range': range(60, 70), 'prob': 0.01},
+            {'range': range(70, 80), 'prob': 0.01},
+            {'range': range(80, 90), 'prob': 0.01},
+            {'range': range(90, 100), 'prob': 0.01},
         ]
 
         # 初始化权重列表
@@ -185,3 +191,35 @@ class AsyncServer(BasicServer):
         while selected is None or selected[0] in self.concurrent_clients:
             selected = np.random.choice(all_clients, size=1, replace=False, p=weights)
         return selected[0]
+
+    def computeDifference(self):
+        all_clients = [cid for cid in range(self.num_clients)]
+        gmodel = self.model
+        received_packages = self.communicate(all_clients, self.model, 3)
+        models = []
+        for index in received_packages:
+            models.append(index['model'])
+        # 从模型实例中提取参数并展平
+        global_vec = torch.cat([t.flatten() for t in gmodel.state_dict().values()])
+
+        similarities = []
+        for model, id in zip(models, all_clients):
+            local_vec = torch.cat([t.flatten() for t in model.state_dict().values()])
+            cos_sim = cosine_similarity(global_vec.unsqueeze(0), local_vec.unsqueeze(0), dim=1)
+            similarities.append(
+                (1 - cos_sim.item()) * (1 + 0.5 * math.log(1 + (self.current_round - self.server_send_round[id]))))
+
+        avg_sim = sum(similarities) / len(similarities)
+
+        # 追加到JSON文件
+        filename = "{}0.3b5t.json".format(self.option['algorithm'])
+        try:
+            with open(filename, "r") as f:
+                data = json.load(f)
+        except FileNotFoundError:
+            data = []
+
+        data.append(avg_sim)
+
+        with open(filename, "w") as f:
+            json.dump(data, f)

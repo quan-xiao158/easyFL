@@ -63,6 +63,8 @@ class Server(AsyncServer):
             model_list = []
             for i in range(self.buff_len):
                 model_list.append(self.buff_queue.pop())
+
+            self.computeDifference()
             self.model = self.fedasync_late_aggregate(model_list, self.selected_clients)
             self.communicate(self.selected_clients, self.model, 1)
             self.selected_clients.clear()
@@ -83,7 +85,7 @@ class Server(AsyncServer):
         返回:
         - bool: 如果聚合成功，返回True；如果输入为空或不合法，返回False。
         """
-        self.computeDifference(self.model,models,client_ids)
+
         dl = []
         for id in self.selected_clients:
             dl.append(self.round_number - self.server_send_round[id])
@@ -102,30 +104,6 @@ class Server(AsyncServer):
 
         return self.async_aggregate(currently_updated_models, client_ids)
 
-    def computeDifference(self, gmodel, models, clientids):
-        # 从模型实例中提取参数并展平
-        global_vec = torch.cat([t.flatten() for t in gmodel.state_dict().values()])
-
-        similarities = []
-        for model, id in zip(models, clientids):
-            local_vec = torch.cat([t.flatten() for t in model.state_dict().values()])
-            cos_sim = cosine_similarity(global_vec.unsqueeze(0), local_vec.unsqueeze(0), dim=1)
-            similarities.append((1 - cos_sim.item()) * (1 + 0.5 * math.log(1 + (self.current_round-self.server_send_round[id]))))
-
-        avg_sim = sum(similarities) / len(similarities)
-
-        # 追加到JSON文件
-        filename = "results.json"
-        try:
-            with open(filename, "r") as f:
-                data = json.load(f)
-        except FileNotFoundError:
-            data = []
-
-        data.append(avg_sim)
-
-        with open(filename, "w") as f:
-            json.dump(data, f)
     def s(self, delta_tau):
         return (delta_tau + 1) ** (-0.5)
 
@@ -160,9 +138,9 @@ class Server(AsyncServer):
             server_pkg = self.fedbalance_pack_model(send_model)  # 全局模型
             server_pkg['__mtype__'] = mtype
             client_model = self.communicate_with(client_id, package=server_pkg)  # 与客户端进行通信，下发全局模型到本机训练，获取客户端上的模型
-            if mtype == 2:
+            if mtype == 2 or 3:
                 model_list.append(client_model)
-        if mtype == 2:
+        if mtype == 2 or 3:
             return model_list
 
     def fedbalance_pack_model(self, send_model):
@@ -177,7 +155,7 @@ class Client(BasicClient):
         self.mu = None
 
     def initialize(self, *args, **kwargs):
-        self.actions = {0: self.reply, 1: self.send_model, 2: self.rp}
+        self.actions = {0: self.reply, 1: self.send_model, 2: self.rp, 3: self.receive_model}
         self.mu = 0.1
 
     def send_model(self, servermodel):
@@ -188,6 +166,9 @@ class Client(BasicClient):
         self.model_train(self.model)
         cpkg = self.pack(self.model)
         return cpkg
+
+    def receive_model(self, servermodel):
+        return self.pack(self.model)
 
     @fmodule.with_multi_gpus
     def model_train(self, model):
@@ -210,4 +191,3 @@ class Client(BasicClient):
             if self.clip_grad > 0: torch.nn.utils.clip_grad_norm_(parameters=model.parameters(),
                                                                   max_norm=self.clip_grad)
             optimizer.step()
-

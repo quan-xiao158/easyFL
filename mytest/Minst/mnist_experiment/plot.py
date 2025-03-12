@@ -38,8 +38,8 @@ def plot_data(record_list, line_names, x_ticks):
         raise ValueError("The length of record_list and line_names must be the same.")
 
     fig, ax = plt.subplots(figsize=(8, 6))
-    colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k']  # 定义颜色列表
-    linestyles = ['-', '--', '-.', ':']  # 定义线型列表
+    colors = ['b', 'g', 'r',  'm', 'y', 'k']  # 定义颜色列表
+    linestyles = ['--']  # 定义线型列表
 
     for i, series in enumerate(record_list):
         ax.plot(x_ticks, series, label=line_names[i], color=colors[i % len(colors)], linestyle=linestyles[i % len(linestyles)])
@@ -67,7 +67,7 @@ def plot_data(record_list, line_names, x_ticks):
 
 if __name__ == "__main__":
     folder_path = 'Record'  # 文件夹路径
-    line_names = ["fedasync", "fedbalance", "fedbuff", "Kafl"]
+    line_names = ["KAFL", "FedBuff", "FedAsync", "FedBalance(ours)"]
 
     # 加载数据
     record_list = load_json_data(folder_path)
