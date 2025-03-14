@@ -12,8 +12,8 @@ def load_json_data(folder_path):
             try:
                 with open(file_path, 'r', encoding='utf-8') as json_file:
                     data = json.load(json_file)
-                    if 'test_accuracy' in data:
-                        record_list.append(data['test_accuracy'][:4000])
+                    if 'lambda' in data:
+                        record_list.append(data['lambda'])
             except (json.JSONDecodeError, KeyError) as e:
                 print(f"Error reading {file_name}: {e}")
     return record_list
@@ -40,7 +40,6 @@ def plot_data(record_list, line_names, x_ticks):
     fig, ax = plt.subplots(figsize=(8, 6))
     colors = ['b', 'g', 'r',  'm', 'y', 'k']  # 定义颜色列表
     linestyles = ['--']  # 定义线型列表
-
     for i, series in enumerate(record_list):
         ax.plot(x_ticks, series, label=line_names[i], color=colors[i % len(colors)], linestyle=linestyles[i % len(linestyles)])
 
@@ -55,10 +54,12 @@ def plot_data(record_list, line_names, x_ticks):
     y_max = max(all_values)  # 最大值
 
     # 设置纵坐标范围，根据数据动态调整
-    ax.set_ylim(bottom=max(0, y_min - 0.05), top=y_max + 0.05)  # 上下留出5%的空白
+    # ax.set_ylim(bottom=max(0, y_min - 0.05), top=y_max + 0.05)  # 上下留出5%的空白
 
     # 设置纵坐标刻度，每隔0.1显示一个刻度
-    y_ticks = np.arange(np.floor(y_min * 10) / 10, np.ceil(y_max * 10) / 10 + 0.1, 0.1)
+    # y_ticks = np.arange(np.floor(y_min * 10) / 10, np.ceil(y_max * 10) / 10 + 0.1, 0.1)plot.py
+    y_ticks=[0.001,0.002,0.003,0.004,0.005]
+
     ax.set_yticks(y_ticks)
 
     # 设置横坐标范围，去掉多余的空白位置
@@ -66,8 +67,8 @@ def plot_data(record_list, line_names, x_ticks):
     plt.show()
 
 if __name__ == "__main__":
-    folder_path = './'  # 文件夹路径
-    line_names = ["KAFL", "FedBuff", "FedAsync", "FedBalance(ours)"]
+    folder_path = './a=0.5/5t'  # 文件夹路径
+    line_names = ["a=0.5,T=5t"]
 
     # 加载数据
     record_list = load_json_data(folder_path)
@@ -75,3 +76,4 @@ if __name__ == "__main__":
     averaged_record_list, x_ticks = average_every_100(record_list)
     # 绘制图表
     plot_data(averaged_record_list, line_names, x_ticks)
+    print(sum(record_list[0])/len(record_list[0]))

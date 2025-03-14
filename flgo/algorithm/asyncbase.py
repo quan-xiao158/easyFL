@@ -158,13 +158,13 @@ class AsyncServer(BasicServer):
             {'range': range(0, 10), 'prob': 1},
             {'range': range(10, 20), 'prob': 1},
             {'range': range(20, 30), 'prob': 1},
-            {'range': range(30, 40), 'prob': 0.01},
-            {'range': range(40, 50), 'prob': 0.01},
-            {'range': range(50, 60), 'prob': 0.01},
-            {'range': range(60, 70), 'prob': 0.01},
-            {'range': range(70, 80), 'prob': 0.01},
-            {'range': range(80, 90), 'prob': 0.01},
-            {'range': range(90, 100), 'prob': 0.01},
+            {'range': range(30, 40), 'prob': 1},
+            {'range': range(40, 50), 'prob': 1},
+            {'range': range(50, 60), 'prob': 0.05},
+            {'range': range(60, 70), 'prob': 0.05},
+            {'range': range(70, 80), 'prob': 0.05},
+            {'range': range(80, 90), 'prob': 0.05},
+            {'range': range(90, 100), 'prob': 0.05},
         ]
 
         # 初始化权重列表
