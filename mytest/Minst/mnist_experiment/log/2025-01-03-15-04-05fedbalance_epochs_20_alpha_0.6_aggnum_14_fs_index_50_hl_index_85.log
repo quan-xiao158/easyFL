@@ -1,7 +1,0 @@
-2025-01-03 15:04:07,360 fflow.py init [line:691] INFO PROCESS ID:	28344
-2025-01-03 15:04:07,745 fflow.py init [line:692] INFO Initializing devices: cuda:0 will be used for this running.
-2025-01-03 15:04:08,166 fflow.py init [line:695] INFO BENCHMARK:	flgo.benchmark.mnist_classification
-2025-01-03 15:04:08,555 fflow.py init [line:696] INFO TASK:			./mnist_experiment
-2025-01-03 15:04:08,929 fflow.py init [line:697] INFO MODEL:		flgo.benchmark.mnist_classification.model.cnn
-2025-01-03 15:04:09,395 fflow.py init [line:698] INFO ALGORITHM:	fedbalance
-2025-01-03 15:07:26,315 fflow.py init [line:737] INFO SCENE:		horizontal FL with 1 <class 'flgo.algorithm.fedbalance.Server'>, 100 <class 'flgo.algorithm.fedbalance.Client'>

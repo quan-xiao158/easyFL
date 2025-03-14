@@ -7,18 +7,9 @@ import numpy as np
 
 # 示例数据
 
-data =[        0.9484,
-        0.9434,
-        0.9516,
-        0.952,
-        0.9484,
-        0.9495,
-        0.951,
-        0.9479,
-        0.9446,
-        0.9499
-    ]
-
+with open('fedasync0.7b20t.json', 'r', encoding='utf-8') as file:
+    data = json.load(file)
+data=data['test_accuracy'][490:500]
 # 计算均值
 mean_value = np.mean(data)
 

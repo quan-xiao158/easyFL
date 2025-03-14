@@ -4,13 +4,13 @@ import flgo.benchmark.partition as fbp
 import flgo.algorithm.fedbalance as fedbalance
 
 import flgo.experiment.logger.test_logger as testlogger
-from flgo.experiment.logger.fedbalance_logger import FedBalanceLogger
+from flgo.experiment.logger.fedbalance_logger import FedBalanceLogger as logger
 
 task = './mnist_experiment'  # task name
 flgo.gen_task_by_(mnist, fbp.DirichletPartitioner(num_clients=100, alpha=0.01), task)
 
 if __name__ == '__main__':
-    fedavg_runner = flgo.init(task=task, algorithm=fedbalance, Logger=FedBalanceLogger,
+    fedavg_runner = flgo.init(task=task, algorithm=fedbalance, Logger=logger,
                               option={'num_rounds': 500,
                                       'num_epochs': 20,
                                       'gpu': 0,

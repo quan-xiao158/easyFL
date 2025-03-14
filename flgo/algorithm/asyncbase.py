@@ -133,61 +133,32 @@ class AsyncServer(BasicServer):
         selected_clients = self.sample_one_client(all_clients)
         return selected_clients
 
+    import numpy as np
+
     def sample_one_client(self, all_clients):
-        """
-        按照每25个为一组，并根据指定的组概率从all_clients中选择两个不同的客户端。
-
-        组定义：
-        - 组1: ID 0-24，概率 0.4
-        - 组2: ID 25-49，概率 0.3
-        - 组3: ID 50-74，概率 0.2
-        - 组4: ID 75-99，概率 0.1
-
-        参数：
-        all_clients (list): 包含所有100个客户端的列表。
-
-        返回：
-        list: 选中的两个不同客户端的列表。
-        """
-
         if len(all_clients) != 100:
             raise ValueError("all_clients 的长度必须为100。")
+        b=1-self.option['b']
+        t=self.option['t']
+        # 计算前b比例客户端数量
+        k = int(b * len(all_clients))
+        denominator = k * t + (len(all_clients) - k)
 
-        # 定义组及其对应的概率
-        groups = [
-            {'range': range(0, 10), 'prob': 1},
-            {'range': range(10, 20), 'prob': 1},
-            {'range': range(20, 30), 'prob': 1},
-            {'range': range(30, 40), 'prob': 1},
-            {'range': range(40, 50), 'prob': 1},
-            {'range': range(50, 60), 'prob': 0.05},
-            {'range': range(60, 70), 'prob': 0.05},
-            {'range': range(70, 80), 'prob': 0.05},
-            {'range': range(80, 90), 'prob': 0.05},
-            {'range': range(90, 100), 'prob': 0.05},
-        ]
+        if denominator <= 0:
+            raise ValueError("参数组合b和t导致无效的权重分配（分母≤0）。")
 
-        # 初始化权重列表
+        # 初始化并设置权重
         weights = np.zeros(len(all_clients))
+        if k > 0:
+            weights[:k] = t / denominator
+        if (len(all_clients) - k) > 0:
+            weights[k:] = 1 / denominator
 
-        # 分配权重
-        for group in groups:
-            group_range = group['range']
-            group_prob = group['prob']
-            group_size = len(group_range)
-            if group_prob > 0:
-                # 每个客户端的权重 = 组概率 / 组大小
-                weights[list(group_range)] = group_prob / group_size
-            # 如果组概率为0，则对应客户端权重保持为0
+        # 处理浮点精度误差
+        weights /= weights.sum()
 
-        # 确保权重之和为1
-        total_weight = weights.sum()
-        if not np.isclose(total_weight, 1.0):
-            # 归一化权重
-            weights = weights / total_weight
-
+        # 选择不重复且不在并发列表中的客户端
         selected = None
-        # 使用 numpy 的 choice 函数进行不重复抽样
         while selected is None or selected[0] in self.concurrent_clients:
             selected = np.random.choice(all_clients, size=1, replace=False, p=weights)
         return selected[0]
@@ -212,14 +183,13 @@ class AsyncServer(BasicServer):
         avg_sim = sum(similarities) / len(similarities)
 
         # 追加到JSON文件
-        filename = "{}0.3b5t.json".format(self.option['algorithm'])
+        filename = "{}{}b{}t.json".format(self.option['algorithm'],self.option['b'],self.option['t'])
         try:
             with open(filename, "r") as f:
                 data = json.load(f)
         except FileNotFoundError:
-            data = []
+            data = {"lambda":[]}
 
-        data.append(avg_sim)
-
+        data["lambda"].append(avg_sim)
         with open(filename, "w") as f:
             json.dump(data, f)
