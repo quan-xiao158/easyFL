@@ -62,6 +62,7 @@ class Server(AsyncServer):
         for index in received_packages:
             self.buff_queue.append(index['model'])
         if len(self.buff_queue) == self.buff_len:
+            self.computeDifference()
             buff_list = []
             for i in range(self.buff_len):
                 m=self.buff_queue.pop()
@@ -86,9 +87,9 @@ class Server(AsyncServer):
             server_pkg = self.fedbalance_pack_model(send_model)  # 全局模型
             server_pkg['__mtype__'] = mtype
             client_model = self.communicate_with(client_id, package=server_pkg)  # 与客户端进行通信，下发全局模型到本机训练，获取客户端上的模型
-            if mtype == 2:
+            if mtype == 2 or 3:
                 model_list.append(client_model)
-        if mtype == 2:
+        if mtype == 2or 3:
             return model_list
 
     def fedbalance_pack_model(self, send_model):
@@ -111,7 +112,7 @@ class Client(BasicClient):
         self.mu = None
 
     def initialize(self, *args, **kwargs):
-        self.actions = {0: self.reply, 1: self.send_model, 2: self.rp}
+        self.actions = {0: self.reply, 1: self.send_model, 2: self.rp,3: self.receive_model}
         self.mu = 0.1
 
     def send_model(self, servermodel):
@@ -125,6 +126,8 @@ class Client(BasicClient):
         update._round = self.model._round
         cpkg = self.pack(update)
         return cpkg
+    def receive_model(self, servermodel):
+        return self.pack(self.model)
 
     @fmodule.with_multi_gpus
     def model_train(self, model):

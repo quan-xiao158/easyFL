@@ -1,7 +1,10 @@
+import json
 import math
 
 import numpy as np
 import torch
+from torch import cosine_similarity
+
 from flgo.utils import fmodule
 from flgo.algorithm.asyncbase import AsyncServer
 from flgo.algorithm.fedbase import BasicServer, BasicClient
@@ -173,6 +176,7 @@ class Server(AsyncServer):
                 return False
             # 1、将模型入队，如果模型数量长度
             elif len(self.sl_queue) + len(self.fl_queue) == agg_num:
+                self.computeDifference()
                 self.fl_queue.append({"client_id": client_id, "model": model})
                 id_list, model_list = self.queue_pop([self.sl_queue, self.fl_queue])
                 agg_model = self.fedbalance_late_aggregate(model_list, id_list)
@@ -207,6 +211,37 @@ class Server(AsyncServer):
         # rmodel=(1 - self.alpha) * self.model + self.alpha * w_new
         # rmodel.train_list = deque(maxlen=4)
         # return rmodel
+        def computeDifference(self):
+            all_clients = [cid for cid in range(self.num_clients)]
+            gmodel = self.model
+            models = []
+            for id in all_clients:
+                received_packages = self.communicate(id, self.model, 3)
+                models.append(received_packages['model'])
+            # 从模型实例中提取参数并展平
+            global_vec = torch.cat([t.flatten() for t in gmodel.state_dict().values()])
+
+            similarities = []
+            for model, id in zip(models, all_clients):
+                local_vec = torch.cat([t.flatten() for t in model.state_dict().values()])
+                cos_sim = cosine_similarity(global_vec.unsqueeze(0), local_vec.unsqueeze(0), dim=1)
+                similarities.append(
+                    (1 - cos_sim.item()) * (1 + 0.5 * math.log(1 + (self.current_round - self.server_send_round[id]))))
+
+            avg_sim = sum(similarities) / len(similarities)
+
+            # 追加到JSON文件
+            filename = "{}0.3b5t.json".format(self.option['algorithm'])
+            try:
+                with open(filename, "r") as f:
+                    data = json.load(f)
+            except FileNotFoundError:
+                data = []
+
+            data.append(avg_sim)
+
+            with open(filename, "w") as f:
+                json.dump(data, f)
     def fedbalance_late_aggregate(self, models, client_ids):
 
         alpha_ts = [self.option['alpha']] * 16
@@ -320,7 +355,7 @@ class Client(BasicClient):
         self.mu = None
 
     def initialize(self, *args, **kwargs):
-        self.actions = {0: self.reply, 1: self.send_model, 2: self.rp}
+        self.actions = {0: self.reply, 1: self.send_model, 2: self.rp,3:self.receive_model}
         self.mu = 0.1
 
     def send_model(self, servermodel):
@@ -331,6 +366,8 @@ class Client(BasicClient):
         self.model_train(self.model)
         cpkg = self.pack(self.model)
         return cpkg
+    def receive_model(self, servermodel):
+        return self.pack(self.model)
 
     @fmodule.with_multi_gpus
     def model_train(self, model):
