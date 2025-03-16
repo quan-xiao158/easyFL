@@ -50,13 +50,14 @@ class AsyncServer(BasicServer):
         return len(received_packages['__cid']) == 0
 
     def run(self):
-        np.random.seed(42)
         """
         Running the FL symtem where the global model is trained and evaluated iteratively.
         """
+
         self.gv.logger.time_start('Total Time Cost')
         all_clients = self.available_clients if 'available' in self.sample_option else [cid for cid in
                                                                                         range(self.num_clients)]
+        self.weights=self.generate_weight(all_clients)
         all_clients = list(set(all_clients).difference(self.buffered_clients))
         self.gv.logger.info("--------------Initial Evaluation--------------")
         self.gv.logger.time_start('Eval Time Cost')
@@ -135,32 +136,12 @@ class AsyncServer(BasicServer):
 
     import numpy as np
 
+    import numpy as np
+
     def sample_one_client(self, all_clients):
-        if len(all_clients) != 100:
-            raise ValueError("all_clients 的长度必须为100。")
-        b=1-self.option['b']
-        t=self.option['t']
-        # 计算前b比例客户端数量
-        k = int(b * len(all_clients))
-        denominator = k * t + (len(all_clients) - k)
 
-        if denominator <= 0:
-            raise ValueError("参数组合b和t导致无效的权重分配（分母≤0）。")
 
-        # 初始化并设置权重
-        weights = np.zeros(len(all_clients))
-        if k > 0:
-            weights[:k] = t / denominator
-        if (len(all_clients) - k) > 0:
-            weights[k:] = 1 / denominator
-
-        # 处理浮点精度误差
-        weights /= weights.sum()
-
-        # 选择不重复且不在并发列表中的客户端
-        selected = None
-        while selected is None or selected[0] in self.concurrent_clients:
-            selected = np.random.choice(all_clients, size=1, replace=False, p=weights)
+        selected = np.random.choice(all_clients, size=1, replace=False, p=self.weights)
         return selected[0]
 
     def computeDifference(self):
@@ -193,3 +174,39 @@ class AsyncServer(BasicServer):
         data["lambda"].append(avg_sim)
         with open(filename, "w") as f:
             json.dump(data, f)
+
+    def generate_weight(self,all_clients):
+        b = 1 - self.option['b']
+        t = self.option['t']
+        if len(all_clients) != 100:
+            raise ValueError("all_clients 的长度必须为100。")
+        if not 0 <= b <= 1:
+            raise ValueError("参数 b 必须在 [0, 1] 范围内。")
+        if t < 0:
+            raise ValueError("参数 t 不能为负数。")
+
+        # 生成随机分组索引
+
+        k = int(b * len(all_clients))
+
+        # 计算分母确保数值稳定性
+        denominator = k * t + (len(all_clients) - k)
+        if denominator <= 0:
+            raise ValueError("无效的权重分配组合，请检查参数 t 和 b 的值。")
+        if self.option['client_weight']=='random':
+            client_indices = np.random.permutation(len(all_clients))
+            # 初始化权重并分配
+            weights = np.zeros(len(all_clients))
+            if k > 0:
+                weights[client_indices[:k]] = t / denominator  # 随机选择的前b比例部分
+            if (len(all_clients) - k) > 0:
+                weights[client_indices[k:]] = 1 / denominator  # 剩余的随机部分
+        else:
+            weights = np.zeros(len(all_clients))
+            if k > 0:
+                weights[:k] = t / denominator
+            if (len(all_clients) - k) > 0:
+                weights[k:] = 1 / denominator
+        # 强制归一化处理（应对浮点运算误差）
+        weights /= weights.sum()
+        return  weights

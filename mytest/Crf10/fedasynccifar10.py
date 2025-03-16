@@ -1,6 +1,6 @@
 import flgo.benchmark.cifar10_classification.model.cnn as cnn
 import flgo
-import flgo.algorithm.fedasync_own as  fedasync
+import flgo.algorithm.fedavg_own as  fedasync
 import  flgo.algorithm.fedavg as fedavg
 import flgo.benchmark.mnist_classification as mnist
 import flgo.benchmark.cifar10_classification as cifar10

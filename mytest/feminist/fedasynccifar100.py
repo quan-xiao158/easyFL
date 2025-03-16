@@ -1,5 +1,5 @@
 import flgo
-import flgo.algorithm.fedasync_own as  fedasync
+import flgo.algorithm.fedavg_own as  fedasync
 import flgo.benchmark.mnist_classification as mnist
 import flgo.benchmark.fashion_classification as fashion
 import flgo.benchmark.partition as fbp
