@@ -7,7 +7,7 @@ import numpy as np
 
 # 示例数据
 
-with open('fedbuff_own_0.7b_60t.json', 'r', encoding='utf-8') as file:
+with open('fedbuff_own_0.7b_120t.json', 'r', encoding='utf-8') as file:
     data = json.load(file)
 data=data['test_accuracy'][490:500]
 # 计算均值

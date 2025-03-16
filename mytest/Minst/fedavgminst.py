@@ -1,5 +1,5 @@
 import flgo
-import flgo.algorithm.fedavg_own as  fedavg
+import flgo.algorithm.fedasync as  fedasync
 import flgo.benchmark.mnist_classification as mnist
 import flgo.benchmark.partition as fbp
 from flgo.experiment.logger.fedbalance_logger import FedBalanceLogger as logger
@@ -10,5 +10,5 @@ flgo.gen_task_by_(mnist, fbp.DirichletPartitioner(num_clients=100, alpha=0.01), 
 
 if __name__ == '__main__':
 
-    fedavg_runner = flgo.init(task=task, algorithm=fedavg,Logger=logger, option={'num_rounds': 1000, 'num_epochs': 20, 'gpu': 0,'b':0.7,'t':1,'client_weight':'randoms6'})
+    fedavg_runner = flgo.init(task=task, algorithm=fedasync,Logger=logger, option={'num_rounds': 500, 'num_epochs': 20, 'gpu': 0,'b':0.7,'t':1,'client_weight':'randoms6'})
     fedavg_runner.run()
