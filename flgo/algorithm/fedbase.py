@@ -809,11 +809,7 @@ class BasicClient(BasicParty):
             model (FModule): the global model
         """
         ###改动使用陈旧模型
-        # # 生成随机数，如果随机数小于0.4，则输出True，否则输出False
-        result = random.random() < 0.4
-        if result:
-            return
-
+        # # 生成随机数，如果随机数小于0.4，则输出True，否则输出Fals
         ###改动
         model.train()
         optimizer = self.calculator.get_optimizer(model, lr=self.learning_rate, weight_decay=self.weight_decay,

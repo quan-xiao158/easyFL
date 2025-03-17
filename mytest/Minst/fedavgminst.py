@@ -12,3 +12,4 @@ if __name__ == '__main__':
 
     fedavg_runner = flgo.init(task=task, algorithm=fedasync,Logger=logger, option={'num_rounds': 500, 'num_epochs': 20, 'gpu': 0,'b':0.7,'t':1,'client_weight':'randoms6'})
     fedavg_runner.run()
+    #todo 将round改为1000 效果不明显就0和无穷大

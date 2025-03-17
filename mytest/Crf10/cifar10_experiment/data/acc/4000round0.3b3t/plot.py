@@ -66,7 +66,7 @@ def plot_data(record_list, line_names, x_ticks):
     plt.show()
 
 if __name__ == "__main__":
-    folder_path = '/'  # 文件夹路径
+    folder_path = './'  # 文件夹路径
     line_names = ["KAFL", "FedBuff", "FedAsync", "FedBalance(ours)"]
 
     # 加载数据
