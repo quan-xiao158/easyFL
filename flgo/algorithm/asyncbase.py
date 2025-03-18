@@ -72,27 +72,47 @@ class AsyncServer(BasicServer):
             # iterate
             updated = self.iterate()  # 进行客户端选择迭代训练和模型聚合
             # using logger to evaluate the model if the model is updated
-            if updated is True:
-                self.gv.logger.info("--------------Round {}--------------".format(self.round_number))
-                # check log interval
-                if self.gv.logger.check_if_log(self.current_round, self.eval_interval):
-                    self.gv.logger.time_start('Eval Time Cost')
-                    self.gv.logger.log_once()  # 验证模型损失和准确率
-                    self.gv.logger.time_end('Eval Time Cost')
-                    self._save_checkpoint()
-                # check if early stopping
-                if self.gv.logger.early_stop(): break
-                self.current_round += 1
-                # decay learning rate
-                self.global_lr_scheduler(self.current_round)
-                if self.round_number % 50 == 0:
-                    self.gv.logger.save_output_as_json()
-                # self.gv.logger.info("总通信量{}额外通信量{}".format(self.total_traffic, self.additional_traffic))
+            if updated is True and self.option['plot'] is True:
+                self.Record_with_test()
+            elif updated is True and self.option['plot'] is False:
+                self.Record_without_test()
+            else:continue
         self.gv.logger.info("=================End==================")
         self.gv.logger.time_end('Total Time Cost')
         # save results as .json file
         self.gv.logger.save_output_as_json()
         return
+    def Record_with_test(self):
+        self.gv.logger.info("------Round {}:{}{}b{}t--------------".format(self.round_number,self.option["algorithm"],self.option["b"],self.option["t"]))
+        # check log interval
+        if self.gv.logger.check_if_log(self.current_round, self.eval_interval):
+            self.gv.logger.time_start('Eval Time Cost')
+            self.gv.logger.log_once()  # 验证模型损失和准确率
+            self.gv.logger.time_end('Eval Time Cost')
+            self._save_checkpoint()
+        # check if early stopping
+        self.current_round += 1
+        # decay learning rate
+        self.global_lr_scheduler(self.current_round)
+        if self.round_number % 50 == 0:
+            self.gv.logger.save_output_as_json()
+    def Record_without_test(self):
+        self.gv.logger.info(
+            "------Round {}:{}{}b{}t--------------".format(self.round_number, self.option["algorithm"], self.option["b"],
+                                                         self.option["t"]))
+        # check log interval
+        if self.gv.logger.check_if_log(self.current_round, self.eval_interval):
+            if self.num_rounds-self.current_round<=30:
+                self.gv.logger.time_start('Eval Time Cost')
+                self.gv.logger.log_once()  # 验证模型损失和准确率
+                self.gv.logger.time_end('Eval Time Cost')
+                self._save_checkpoint()
+        # check if early stopping
+        self.current_round += 1
+        # decay learning rate
+        self.global_lr_scheduler(self.current_round)
+        if self.round_number % 50 == 0:
+            self.gv.logger.save_output_as_json()
     def iterate(self):
         """
         作用：定义了服务器在每个时刻执行的迭代过程。
