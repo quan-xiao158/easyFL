@@ -102,7 +102,7 @@ class AsyncServer(BasicServer):
                                                          self.option["t"]))
         # check log interval
         if self.gv.logger.check_if_log(self.current_round, self.eval_interval):
-            if self.num_rounds-self.current_round<=30:
+            if self.num_rounds-self.round_number<=50:
                 self.gv.logger.time_start('Eval Time Cost')
                 self.gv.logger.log_once()  # 验证模型损失和准确率
                 self.gv.logger.time_end('Eval Time Cost')
@@ -184,7 +184,7 @@ class AsyncServer(BasicServer):
         avg_sim = sum(similarities) / len(similarities)
 
         # 追加到JSON文件
-        filename = "{}{}b{}t.json".format(self.option['algorithm'],self.option['b'],self.option['t'])
+        filename = "./log/{}_{}{}b{}t.json".format(self.option["model"],self.option['algorithm'],self.option['b'],self.option['t'])
         try:
             with open(filename, "r") as f:
                 data = json.load(f)

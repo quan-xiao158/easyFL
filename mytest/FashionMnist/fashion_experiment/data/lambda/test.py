@@ -7,7 +7,7 @@ import numpy as np
 
 # 示例数据
 
-with open('fedasync0.7b100t.json', 'r', encoding='utf-8') as file:
+with open('ca2fl0.3b100t.json', 'r', encoding='utf-8') as file:
     data = json.load(file)
 data=data['lambda']
 # 计算均值

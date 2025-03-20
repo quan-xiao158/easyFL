@@ -1,22 +1,18 @@
-import torch
-
-from flgo.utils import fmodule
-from flgo.algorithm.asyncbase import AsyncServer
-from flgo.algorithm.fedbase import BasicServer, BasicClient
-from flgo.algorithm.fedprox import Client
-import numpy as np
+"""This is a non-official implementation of 'Tackling the Data Heterogeneity in Asynchronous Federated Learning with Cached Update Calibration' (https://openreview.net/forum?id=4aywmeb97I). """
 from collections import deque
-import copy
-import flgo.simulator.base as ss
-import random
-import json
+
 import torch
-from torch.nn.functional import cosine_similarity
-
+from flgo.algorithm.asyncbase import AsyncServer
+from flgo.algorithm.fedbase import BasicClient
+import flgo.utils.fmodule as fmodule
+import copy
 class Server(AsyncServer):
-    def __init__(self, option={}):
-        super(Server, self).__init__(option)
-
+    def initialize(self):
+        self.init_algo_para({'buffer_ratio': 0.1, 'eta': 1.0})
+        self.buffer = []
+        self.hs = [torch.tensor(0.) for _ in self.clients]
+        self.ht = torch.tensor(0.).to(self.device)
+        self.delta = self.model.zeros_like()
         self.concurrent_clients = set()  # 正在被选择的客户端
         self.buffered_clients = set()  # 缓冲的客户端
         self.server_send_round = [0] * 100  # 服务器下发模型round记录
@@ -31,19 +27,6 @@ class Server(AsyncServer):
         '''
         self.alpha = 0.72
         self.agg_num = 15
-    def initialize(self):
-        self.init_algo_para({'buffer_ratio': 0.1, 'eta': 1.0})
-        self.buffer = []
-
-    def is_package_empty(self, received_packages: dict):
-        """
-        Check whether the package dict is empty
-
-        Returns:
-            is_empty (bool): True if the package dict is empty
-        """
-        return len(received_packages['__cid']) == 0
-
     def iterate(self):
 
         self.current_round += 1
@@ -61,8 +44,8 @@ class Server(AsyncServer):
             buff_list = []
             for i in range(self.buff_len):
                 m=self.buff_queue.pop()
-                buff_list.append((m,m._round))
-            self.model = self.fedbuff_aggregate(buff_list)
+                buff_list.append(m)
+            self.model = self.ca2fl_aggregate(buff_list,self.selected_clients)
             self.model._round = self.current_round  # 将模型的 _round 属性设置为当前的回合数
             self.communicate(self.selected_clients, self.model, 1)
             self.selected_clients.clear()
@@ -70,11 +53,42 @@ class Server(AsyncServer):
             self.round_number += 1
             return True
         return False
+    def package_handler(self, received_packages:dict):
+        if self.is_package_empty(received_packages): return False
+        received_updates = received_packages['model']
+        received_client_ids = received_packages['__cid']
+        for cdelta, cid in zip(received_updates, received_client_ids):
+            self.delta += (cdelta - self.hs[cid].to(self.device)) if not isinstance(self.hs[cid],torch.Tensor) else cdelta
+            self.hs[cid] = cdelta.to('cpu')
+            self.buffer.append(cid)
+        if len(self.buffer)>= int(self.buffer_ratio * self.num_clients):
+            # aggregate and clear updates in buffer
+            vt = self.delta / len(self.buffer) + self.ht.to(self.device) if not isinstance(self.ht, torch.Tensor) else self.delta / len(self.buffer)
+            self.model = self.model + self.eta * vt
+            self.ht = fmodule._model_sum([h for h in self.hs if not isinstance(h, torch.Tensor)]).to(self.device) / self.num_clients
+            self.delta = self.model.zeros_like()
+            self.buffer = []
+            return True
+        return False
 
+    def ca2fl_aggregate(self, received_updates,received_client_ids):
+        for cdelta, cid in zip(received_updates, received_client_ids):
+            self.delta += (cdelta - self.hs[cid].to(self.device)) if not isinstance(self.hs[cid],
+                                                                                    torch.Tensor) else cdelta
+            self.hs[cid] = cdelta.to('cpu')
+            self.buffer.append(cid)
 
+        # aggregate and clear updates in buffer
+        vt = self.delta / len(self.buffer) + self.ht.to(self.device) if not isinstance(self.ht,
+                                                                                       torch.Tensor) else self.delta / len(
+            self.buffer)
+        self.model = self.model + self.eta * vt
+        self.ht = fmodule._model_sum([h for h in self.hs if not isinstance(h, torch.Tensor)]).to(
+            self.device) / self.num_clients
+        self.delta = self.model.zeros_like()
+        self.buffer = []
 
-
-
+        return self.model
     def communicate(self, client_id_list, send_model, mtype):
         self.total_traffic += len(client_id_list)
         model_list = []
@@ -91,15 +105,6 @@ class Server(AsyncServer):
         return {
             "model": copy.deepcopy(send_model),
         }
-
-    def fedbuff_aggregate(self, buffer):
-        taus_bf = [b[1] for b in buffer]
-        updates_bf = [b[0] for b in buffer]
-        weights_bf = [(1 + self.current_round - ctau) ** (-0.5) for ctau in taus_bf]
-        model_delta = fmodule._model_average(updates_bf,weights_bf) / len(buffer)
-        model = self.model + self.eta * model_delta
-        return model
-
 
 class Client(BasicClient):
     def __init__(self, option={}):
@@ -145,4 +150,3 @@ class Client(BasicClient):
             if self.clip_grad > 0: torch.nn.utils.clip_grad_norm_(parameters=model.parameters(),
                                                                   max_norm=self.clip_grad)
             optimizer.step()
-
