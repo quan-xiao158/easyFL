@@ -12,7 +12,6 @@ flgo.gen_task_by_(mnist, fbp.DirichletPartitioner(num_clients=100, alpha=0.01), 
 
 if __name__ == '__main__':
 
-    fedavgrunner = flgo.init(task=task, algorithm=fedasync,Logger=logger, option={'num_rounds': 500, 'num_epochs': 20, 'gpu': 0,'b':0.3,'t':5,'plot':True,'client_weight':"uniform"})
-    fedavgrunner.run()
-
+    task13 = flgo.init(task=task, algorithm=fedbalance, Logger=logger,option={ 'b': 0.3, 't': 5,'fs_index': 55,'hl_index': 75,'num_rounds': 1000, 'num_epochs': 20,'alpha': 0.6,'agg_num': 14,'gpu': 0, "plot": True,"client_weight": "uniform"})
+    task13.run()
     #todo 将round改为1000 效果不明显就0和无穷大

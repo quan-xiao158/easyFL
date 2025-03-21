@@ -288,13 +288,15 @@ class Server(AsyncServer):
 
     def communicate(self, client_id_list, send_model, mtype):
         self.total_traffic += len(client_id_list)
+        difference_list=[]
         for client_id in client_id_list:
             server_pkg = self.fedbalance_pack_model(send_model)  #全局模型
             server_pkg['__mtype__'] = mtype
             client_model = self.communicate_with(client_id, package=server_pkg)  # 与客户端进行通信，下发全局模型到本机训练，获取客户端上的模型
             if mtype == 2 or mtype == 0:
                 return client_model
-
+            elif mtype==3: difference_list.append(client_model)
+        if mtype==3:return difference_list
     def fedbalance_pack_model(self, send_model):
         return {
             "model": copy.deepcopy(send_model),

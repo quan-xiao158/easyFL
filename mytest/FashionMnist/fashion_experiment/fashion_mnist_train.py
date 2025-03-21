@@ -12,11 +12,11 @@ if __name__ == '__main__':
     #已完成
     # task1 = flgo.init(task=task, algorithm=fedasync,Logger=logger, option={'num_rounds': 1000, 'num_epochs': 20, 'gpu': 0,'b':0.3,'t':100,"plot":True,"client_weight":"uniform"})
     # task1.run()
-    #未完成
     # task2 = flgo.init(task=task, algorithm=fedbuff, Logger=logger,option={'num_rounds': 1000, 'num_epochs': 20, 'gpu': 0, 'b': 0.3, 't': 5, "plot": True,"client_weight": "uniform"})
     # task2.run()
     # task3 = flgo.init(task=task, algorithm=fedbuff, Logger=logger,option={'num_rounds': 1000, 'num_epochs': 20, 'gpu': 0, 'b': 0.3, 't': 100, "plot": True,"client_weight": "uniform"})
     # task3.run()
+    #华硕跑未完成
     task4 = flgo.init(task=task, algorithm=fedbuff,Logger=logger, option={'num_rounds': 1000, 'num_epochs': 20, 'gpu': 0,'b':0.7,'t':5,"plot":True,"client_weight":"uniform"})
     task4.run()
     task5 = flgo.init(task=task, algorithm=fedbuff, Logger=logger,option={'num_rounds': 1000, 'num_epochs': 20, 'gpu': 0, 'b': 0.7, 't': 100, "plot": True,"client_weight": "uniform"})
@@ -29,11 +29,12 @@ if __name__ == '__main__':
     task8.run()
     task9 = flgo.init(task=task, algorithm=KAFL, Logger=logger,option={'num_rounds': 1000, 'num_epochs': 20, 'gpu': 0, 'b': 0.7, 't': 100, "plot": True,"client_weight": "uniform"})
     task9.run()
-    task10 = flgo.init(task=task, algorithm=fedbalance, Logger=logger,option={'num_rounds': 1000, 'num_epochs': 20, 'gpu': 0, 'b': 0.3, 't': 5, "plot": True,"client_weight": "uniform"})
+    #fedbalance
+    task10 = flgo.init(task=task, algorithm=fedbalance, Logger=logger,option={ 'b': 0.3, 't': 5,'fs_index': 50,'hl_index': 85,'num_rounds': 1000, 'num_epochs': 20,'alpha': 0.6,'agg_num': 14,'gpu': 0, "plot": True,"client_weight": "uniform"})
     task10.run()
-    task11 = flgo.init(task=task, algorithm=fedbalance, Logger=logger,option={'num_rounds': 1000, 'num_epochs': 20, 'gpu': 0, 'b': 0.3, 't': 100, "plot": True,"client_weight": "uniform"})
+    task11 = flgo.init(task=task, algorithm=fedbalance, Logger=logger,option={ 'b': 0.3, 't': 100,'fs_index': 50,'hl_index': 85,'num_rounds': 1000, 'num_epochs': 20,'alpha': 0.6,'agg_num': 14,'gpu': 0, "plot": True,"client_weight": "uniform"})
     task11.run()
-    task12 = flgo.init(task=task, algorithm=fedbalance,Logger=logger, option={'num_rounds': 1000, 'num_epochs': 20, 'gpu': 0,'b':0.7,'t':5,"plot":True,"client_weight":"uniform"})
+    task12 = flgo.init(task=task, algorithm=fedbalance, Logger=logger,option={ 'b': 0.7, 't': 5,'fs_index': 50,'hl_index': 85,'num_rounds': 1000, 'num_epochs': 20,'alpha': 0.6,'agg_num': 14,'gpu': 0, "plot": True,"client_weight": "uniform"})
     task12.run()
-    task13 = flgo.init(task=task, algorithm=fedbalance, Logger=logger,option={'num_rounds': 1000, 'num_epochs': 20, 'gpu': 0, 'b': 0.7, 't': 100, "plot": True,"client_weight": "uniform"})
+    task13 = flgo.init(task=task, algorithm=fedbalance, Logger=logger,option={ 'b': 0.7, 't': 100,'fs_index': 50,'hl_index': 85,'num_rounds': 1000, 'num_epochs': 20,'alpha': 0.6,'agg_num': 14,'gpu': 0, "plot": True,"client_weight": "uniform"})
     task13.run()
