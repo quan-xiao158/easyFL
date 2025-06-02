@@ -1,5 +1,6 @@
 import json
 import math
+import random
 
 import numpy as np
 import torch
@@ -161,7 +162,6 @@ class Server(AsyncServer):
                 self.model = agg_model
                 self.communicate(id_list, agg_model, 1)
                 self.concurrent_clients.difference_update(id_list)
-                return False
             else:
                 self.sl_queue.append({"client_id": client_id, "model": model})
                 return False
@@ -189,28 +189,28 @@ class Server(AsyncServer):
                 self.fl_queue.append({"client_id": client_id, "model": model})
                 return False
 
-    # def fedbalance_late_aggregate(self, models, client_ids):
-    #     sorted_indices = sorted(range(len(self.commit_num)), key=lambda k: self.commit_num[k])
-    #     result = [sorted_indices.index(i) for i in range(len(self.commit_num))]  # 客户端i的排名
-        model_score=[]
-        # for model in models:
-        #     train_id_list=list(model.train_list)
-        #     oust=0
-        #     for id in train_id_list:
-        #         oust+=1/result[id]
-        #         model_score.append(oust)
+        def fedbalance_guiji_aggregate(self, models, client_ids):
+            sorted_indices = sorted(range(len(self.commit_num)), key=lambda k: self.commit_num[k])
+            result = [sorted_indices.index(i) for i in range(len(self.commit_num))]  # 客户端i的排名
+            model_score=[]
+            for model in models:
+                train_id_list=list(model.train_list)
+                oust=0
+                for id in train_id_list:
+                    oust+=1/result[id]
+                    model_score.append(oust)
 
-        # p_list=[]
-        # count=0
-        # for cid in client_ids:
-        #     p_list.append(abs(self.clients[cid].datavol) * math.exp(model_score[count]))
-        #     count=count+1
-        # weight_list = [pi / sum(p_list) for pi in p_list]
-        # weighted_models = [weight * model for weight, model in zip(weight_list, models)]
-        # w_new = fmodule._model_sum(weighted_models)
-        # rmodel=(1 - self.alpha) * self.model + self.alpha * w_new
-        # rmodel.train_list = deque(maxlen=4)
-        # return rmodel
+            p_list=[]
+            count=0
+            for cid in client_ids:
+                p_list.append(abs(self.clients[cid].datavol) * math.exp(model_score[count]))
+                count=count+1
+            weight_list = [pi / sum(p_list) for pi in p_list]
+            weighted_models = [weight * model for weight, model in zip(weight_list, models)]
+            w_new = fmodule._model_sum(weighted_models)
+            rmodel=(1 - self.alpha) * self.model + self.alpha * w_new
+            rmodel.train_list = deque(maxlen=4)
+            return rmodel
         def computeDifference(self):
             all_clients = [cid for cid in range(self.num_clients)]
             gmodel = self.model
@@ -274,7 +274,6 @@ class Server(AsyncServer):
             dict: 聚合后的最终模型。
         """
         # 计算所有客户端的数据量总和
-
         total_data_vol = sum([self.clients[client_id].datavol for client_id in client_ids])
 
         # 计算每个客户端模型的权重

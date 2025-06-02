@@ -29,7 +29,8 @@ class Server(AsyncServer):
 
         '''
         self.alpha = 0.72
-        self.agg_num = 15
+        self.agg_num = 10
+        self.buff_len=10
 
     def is_package_empty(self, received_packages: dict):
         """

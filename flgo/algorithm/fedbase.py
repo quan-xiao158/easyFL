@@ -524,7 +524,6 @@ class BasicServer(BasicParty):
             >>> m_new = self.aggregate(models)
         ```
         """
-        self.computeDifference(self.model,models)
         if len(models) == 0: return self.model
         nan_exists = [m.has_nan() for m in models]
         if any(nan_exists):

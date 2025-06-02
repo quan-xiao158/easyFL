@@ -13,7 +13,7 @@ def load_json_data(folder_path):
                 with open(file_path, 'r', encoding='utf-8') as json_file:
                     data = json.load(json_file)
                     if 'test_accuracy' in data:
-                        record_list.append(data['test_accuracy'][:4000])
+                        record_list.append(data['test_accuracy'][:3001])
             except (json.JSONDecodeError, KeyError) as e:
                 print(f"Error reading {file_name}: {e}")
     return record_list
@@ -24,12 +24,12 @@ def average_every_100(data):
     x_ticks = []  # 用于存储横坐标的真实值
     for series in data:
         # 将数据分成每100个一组
-        groups = [series[i:i + 50] for i in range(0, len(series), 50)]
+        groups = [series[i:i + 10] for i in range(0, len(series), 10)]
         # 对每组求平均值
         averaged_series = [np.mean(group) for group in groups]
         averaged_data.append(averaged_series)
         # 生成对应的横坐标（每组的起始点的索引）
-        x_ticks = [i * 50 for i in range(len(groups))]  # 每组的起始round数
+        x_ticks = [i * 10 for i in range(len(groups))]  # 每组的起始round数
     return averaged_data, x_ticks
 
 def plot_data(record_list, line_names, x_ticks):
